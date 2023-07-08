@@ -17,46 +17,38 @@ import {
   Switch,
 } from "@mantine/core";
 import { Zone } from "./zone";
-// "company_name": "Empresa L",
-//     "company_mail": "l@example.com",
-//     "company_cell": "22222223",
-//     "is_work_available_multiple_days": true,
-//     "shomer_shabat": true,
-//     "work_zone": [
-//       "גולן",
-//       "השרון"
-//     ]
+
 
 export function FormCompany() {
-
-
+  
   const form = useForm({
     initialValues: {
       company_name: "",
       company_cell: "",
       company_mail: "",
-
+      
       work_zone: [],
     },
   });
   // validate: {
-  //   name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
-  //   job: isNotEmpty('Enter your current job'),
-  //   email: isEmail('Invalid email'),
-  //   favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/, 'Enter a valid hex color'),
-  //   age: isInRange({ min: 18, max: 99 }, 'You must be 18-99 years old to register'),
-  // },
-  // console.log(initialValues, "initialValues")
-  // console.log(...form.getInputProps())
-  return (
-    
-    <Box
+    //   name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
+    //   job: isNotEmpty('Enter your current job'),
+    //   email: isEmail('Invalid email'),
+    //   favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/, 'Enter a valid hex color'),
+    //   age: isInRange({ min: 18, max: 99 }, 'You must be 18-99 years old to register'),
+    // },
+    // console.log(initialValues, "initialValues")
+    // console.log(...form.getInputProps())
+    console.log( form )
+    return (
+      
+      <Box
       component="form"
       maw={400}
       mx="auto"
       onSubmit={form.onSubmit(async (e) => {
         try {
-          const res = await fetch("http://localhosfst:4000/company", {
+          const res = await fetch("http://localhost:4000/company", {
             method: "POST",
             body: JSON.stringify(e),
             headers: {
@@ -104,7 +96,7 @@ export function FormCompany() {
       />
 
       <Zone {...form.getInputProps("work_zone")} />
-
+      
       <Switch
         label="I work multiplay day"
         description="work with tourist"

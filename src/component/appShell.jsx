@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import { Calendar } from "./calendar";
-import { FormCompany } from "./formCompany";
-import { ChipExample } from "./chipsExample";
+// import { allDays } from "./steps/alldays";
+
 import {
   AppShell,
   Navbar,
@@ -13,15 +12,12 @@ import {
   MediaQuery,
   Burger,
   useMantineTheme,
-  Card,
-  Paper,
+  Step,
+ 
 } from "@mantine/core";
-import { InputExample } from "./InputExample";
-import { Cards } from "./card";
-import { TableExample } from "./tableExapmle";
-import { ContainedInputs } from "./form";
-import TextExample from "./TextExample";
-import { StepForm } from "./Steps";
+import { StepForm } from "./steps/Steps";
+// import { AllDays } from "./steps/alldays";
+
 
 export function AppShellExample() {
   const theme = useMantineTheme();
@@ -102,20 +98,20 @@ export function AppShellExample() {
       >
         <Routes>
           <Route path="/home" element={ <div>
-          {/*<ChipExample />*/} 
-          <FormCompany/>
+            {/* <AllDays/> */}
+       
+          {/* <FormCompany/> */}
+   
           </div> 
           }/>
-          <Route path="/input" element={   <ContainedInputs />}/>
-          <Route path="/title" element={ <TextExample />}/>
-          <Route path="/steps" element={ <StepForm/> }  />
+          <Route path="/input" element={<> </>}/>
+          <Route path="/title" element={<>   </>}/>
+          <Route path="/steps" element={   <StepForm /> }  />
           
         </Routes>
       
-          <Calendar/>
-       
+          
      
-        {/* <InputExample /> */}
       
       </AppShell>
     </Router>

@@ -1,8 +1,6 @@
 import { MantineProvider, Text, Button ,Paper,Loader, ColorSchemeProvider } from '@mantine/core';
 
-import  {Cards}  from "./component/card.jsx";
-import LigtAndDarckButton from './component/ligthButtondark';
-import { Buttons } from './component/button';
+
 import { AppShellExample } from "./component/appShell";
 
 export default function App() {
@@ -13,7 +11,7 @@ export default function App() {
     <ColorSchemeProvider>
 
     <AppShellExample />
-  {/* <LigtAndDarckButton/> */}
+  
    
   </ColorSchemeProvider>
   </MantineProvider>

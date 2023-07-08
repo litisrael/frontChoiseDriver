@@ -3,7 +3,7 @@ import { useState } from "react";
 const data = Array(50).fill(0).map((_, index) => `Item ${index}`);
 
 export const Zone = (inputProps) => 
-// console.log(inputProps,"prop");
+ 
  (
      <MultiSelect
         data={data}
