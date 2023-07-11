@@ -26,7 +26,13 @@ const days = [
 const allDaysData = days.map((day) => {
   return {
     day,
-    data: [{ unavailable_starting: "", unavailable_until: "", vehicle_id: "", id: "id" }],
+    data: [
+      {
+        unavailable_starting: "00:00",
+        unavailable_until: "00:01",
+        vehicle_id: "",
+      },
+    ],
   };
 });
 
@@ -41,8 +47,28 @@ export function allDays() {
     <Flex key={index}>
       <Box bg="rgba(0, 0, 0, .3)" m="xs" p="xs">
         <Text align="center">{item.day}</Text>
+        <Button
+                onClick={() =>
+                  formDays.insertListItem( `days.${index}.data` , {
+                    unavailable_starting: "00:00",
+                    unavailable_until: "00:00",
+                  })
+                }
+              >
+                Add disable
+              </Button>
         {item.data.map((dataItem, dataIndex) => (
           <Flex key={dataIndex} m="xs" direction="column">
+            <Group position="center" mt="md">
+          
+              <ActionIcon
+                color="red"
+                onClick={() => formDays.removeListItem(`days.${index}.data`, dataIndex)}
+              >
+                <IconTrash size="1rem" />
+              </ActionIcon>
+              
+            </Group>
             <InputTime
               label="not available from time"
               {...formDays.getInputProps(
@@ -61,13 +87,13 @@ export function allDays() {
     </Flex>
   ));
 
-  return {formDays,
-    renderFormDays:
-    (
-    <Box maw={1000} mx="auto">
-      <Flex wrap="wrap"> {fields}</Flex>
+  return {
+    formDays,
+    renderFormDays: (
+      <Box maw={1000} mx="auto">
+        <Flex wrap="wrap"> {fields}</Flex>
 
-      {/* <Group position="center" mt="md">
+        {/* <Group position="center" mt="md">
         <Button
           onClick={() =>
             formDays.insertListItem("formDays", {
@@ -81,11 +107,11 @@ export function allDays() {
         </Button>
       </Group> */}
 
-      <Text size="sm" weight={500} mt="md">
-        Form values:
-      </Text>
-      {/* <Code block>{JSON.stringify(formDays.values, null, 2)}</Code> */}
-    </Box>
-  )
-    }   
+        <Text size="sm" weight={500} mt="md">
+          Form values:
+        </Text>
+        {/* <Code block>{JSON.stringify(formDays.values, null, 2)}</Code> */}
+      </Box>
+    ),
+  };
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 // import { allDays } from "./steps/alldays";
-
+import { Calendar } from "./calendar";
 import {
   AppShell,
   Navbar,
@@ -17,6 +17,7 @@ import {
 } from "@mantine/core";
 import { StepForm } from "./steps/Steps";
 // import { AllDays } from "./steps/alldays";
+import { DemoSpot } from "./DemoSpot";
 
 
 export function AppShellExample() {
@@ -104,8 +105,8 @@ export function AppShellExample() {
    
           </div> 
           }/>
-          <Route path="/input" element={<> </>}/>
-          <Route path="/title" element={<>   </>}/>
+          <Route path="/input" element={<>  <DemoSpot/> </>}/>
+          <Route path="/title" element={<>  <Calendar/> </>}/>
           <Route path="/steps" element={   <StepForm /> }  />
           
         </Routes>

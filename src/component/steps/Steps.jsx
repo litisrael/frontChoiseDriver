@@ -46,9 +46,9 @@ export function StepForm() {
     component="form"
     onSubmit={async (e) => {
       e.preventDefault()
-     
+    
       try {
-       
+        
         const res = await fetch("http://localhost:4000/Register", {
           method: "POST",
           body: JSON.stringify({
@@ -62,12 +62,13 @@ export function StepForm() {
             "Content-Type": "application/json"
           }
         });
-    
+    // console.log(formDays,"formDays")
         const responseData = await res.json();
     
         if (res.status === 200) {
           formCompany.reset(); // Resetea el formulario de la compañía
           formVehicle.reset(); // Resetea el formulario del vehículo
+          formDays.reset()
           console.log('¡Éxito!', responseData);
         } else {
           console.error('El servidor respondió con un error', responseData);

@@ -30,7 +30,8 @@ export function vehicule() {
   });
 
   const fields = formVehicle.values.vehicle.map((item, index) => (
-    <Group key={item.key} mt="xs">
+    <Group key={item.index} mt="xs">
+
       <TextInput
         placeholder="seats passenger in vehicle"
         withAsterisk
@@ -111,7 +112,7 @@ export function vehicule() {
                 mispar_rishuy: "",
                 build_date: "",
                 overtime_price: "",
-                company_id: "company_id",
+                company_id: "",
               })
             }
           >

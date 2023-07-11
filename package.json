@@ -12,7 +12,6 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@mantine/carousel": "^6.0.14",
-    "@mantine/core": "^6.0.14",
     "@mantine/dates": "^6.0.14",
     "@mantine/dropzone": "^6.0.14",
     "@mantine/form": "^6.0.14",
@@ -21,7 +20,7 @@
     "@mantine/notifications": "^6.0.14",
     "@mantine/nprogress": "^6.0.14",
     "@mantine/prism": "^6.0.14",
-    "@mantine/spotlight": "^6.0.14",
+    "@mantine/spotlight": "^6.0.16",
     "@mantine/tiptap": "^6.0.14",
     "@tabler/icons-react": "^2.22.0",
     "@tiptap/extension-link": "^2.0.3",
@@ -34,6 +33,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.14.0",
+    "uuid": "^9.0.0",
     "wretch": "^2.6.0"
   },
   "devDependencies": {
