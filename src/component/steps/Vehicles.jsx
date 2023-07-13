@@ -6,121 +6,103 @@ import {
   ActionIcon,
   Box,
   Text,
+  Flex,
   Button,
+  SimpleGrid,
   Code,
+  Accordion
 } from "@mantine/core";
-import { randomId } from "@mantine/hooks";
 import { IconTrash } from "@tabler/icons-react";
-import { allDays } from "./alldays";
-import { v4 as uuidv4 } from "uuid";
-export function vehicule() {
-  const { formDays, renderFormDays } = allDays();
-  const formVehicle = useForm({
-    initialValues: {
-      vehicle: [
-        {
-          number_of_seats: "",
-          mispar_rishuy: "",
-          build_date: "",
-          overtime_price: "",
-          company_id: "",
-        },
-      ],
-    },
-  });
+import { Calendar } from "./calendar";
+import { AllDays } from "./AllDays";
 
-  const fields = formVehicle.values.vehicle.map((item, index) => (
-    <Group key={item.index} mt="xs">
-
-      <TextInput
-        placeholder="seats passenger in vehicle"
-        withAsterisk
-        sx={{ flex: 1 }}
-        {...formVehicle.getInputProps(`vehicle.${index}.number_of_seats`)}
-      />
-      <TextInput
-        placeholder="mispar_rishuy"
-        withAsterisk
-        sx={{ flex: 1 }}
-        {...formVehicle.getInputProps(`vehicle.${index}.mispar_rishuy`)}
-      />
-      <TextInput
-        placeholder="build_date"
-        withAsterisk
-        sx={{ flex: 1 }}
-        {...formVehicle.getInputProps(`vehicle.${index}.build_date`)}
-      />
-      <TextInput
-        placeholder="overtime_price"
-        withAsterisk
-        sx={{ flex: 1 }}
-        {...formVehicle.getInputProps(`vehicle.${index}.overtime_price`)}
-      />
-      <Switch
-        label="Active"
-        {...formVehicle.getInputProps(`vehicle.${index}.active`, {
-          type: "checkbox",
-        })}
-      />
-      <ActionIcon
-        color="red"
-        onClick={() => formVehicle.removeListItem("vehicle", index)}
-      >
-        <IconTrash size="1rem" />
-      </ActionIcon>
-
-      {renderFormDays}
-    </Group>
-  ));
-
-  return {
-    formDays,
-    formVehicle,
-    renderFormVehicle: (
-      <Box maw={1000} mx="auto">
-        {fields.length > 0 ? (
-          <Group mb="xs">
-            <Text weight={500} size="sm" sx={{ flex: 1 }}>
-              number_of_seats
-            </Text>
-            <Text weight={500} size="sm" sx={{ flex: 1 }}>
-              mispar_rishuy
-            </Text>
-            <Text weight={500} size="sm" sx={{ flex: 1 }}>
-              build_date
-            </Text>
-            <Text weight={500} size="sm" sx={{ flex: 1 }}>
-              overtime_price
-            </Text>
-            <Text weight={500} size="sm" pr={90}>
-              Status
-            </Text>
+export function Vehicule({ formVehicle, formDays }) {
+  return (
+    <Box mx="auto">
+      {formVehicle.values.vehicle.map((item, index) => (
+        <Box key={item.index}>
+          <Group mt="xs">
+            <TextInput
+             label= "seats passenger in vehicle"
+            //  description=""
+              placeholder="seats passenger in vehicle"
+              withAsterisk
+             
+              {...formVehicle.getInputProps(`vehicle.${index}.number_of_seats`)}
+            />
+            <TextInput
+             label="the vehicle registration number"
+            //  description=""
+              placeholder="mispar_rishuy"
+              withAsterisk
+              // sx={{ flex: 1 }}
+              {...formVehicle.getInputProps(`vehicle.${index}.mispar_rishuy`)}
+            />
+            <TextInput
+             label="What is the year of the vehicle?"
+            //  description="What is the year of the vehicle?"
+              placeholder="build_date"
+              withAsterisk
+              // sx={{ flex: 1 }}
+              {...formVehicle.getInputProps(`vehicle.${index}.build_date`)}
+            />
+            <TextInput
+             label="charge for additional waiting hour"
+             description=""
+              placeholder="overtime price"
+              // withAsterisk
+              // sx={{ flex: 1 }}
+              {...formVehicle.getInputProps(`vehicle.${index}.overtime_price`)}
+            />
+            {/* <Switch
+              label="Active"
+              {...formVehicle.getInputProps(`vehicle.${index}.active`, {
+                type: "checkbox",
+              })}
+            /> */}
+            <Button 
+            leftIcon={<IconTrash />}variant="white" color="red"
+              
+              onClick={() => formVehicle.removeListItem("vehicle", index)}
+            >
+              remove vehicle
+            </Button>
           </Group>
-        ) : (
-          <Text color="dimmed" align="center">
-            No one here...
-          </Text>
-        )}
+          <Box>
+            <Calendar />
+          </Box>
+          <Box>
+            <AllDays formDays={formDays} />
+          </Box>
+        </Box>
+        
+      ))}
 
-        {fields}
+{formVehicle.values.vehicle.length > 0 ? null :(
+  <Text color="dimmed" align="center">
+    No one here...
+  </Text>
+) }
 
-        <Group position="center" mt="md">
-          <Button
-            onClick={() =>
-              formVehicle.insertListItem("vehicle", {
-                number_of_seats: "",
-                mispar_rishuy: "",
-                build_date: "",
-                overtime_price: "",
-                company_id: "",
-              })
-            }
-          >
-            Add vehicle
-          </Button>
-        </Group>
-        <Code block>{JSON.stringify(formVehicle.values, null, 2)}</Code>
-      </Box>
-    ),
-  };
+
+      <Group position="center" mt="md">
+        <Button
+          onClick={() =>
+            formVehicle.insertListItem("vehicle", {
+              number_of_seats: "",
+              mispar_rishuy: "",
+              build_date: "",
+              overtime_price: "",
+              company_id: "",
+            })
+          }
+        >
+          Add vehicle
+        </Button>
+        {/* <Button onClick={() => formVehicle.removeListItem("vehicle", index)}>
+          remove
+        </Button> */}
+      </Group>
+    </Box>
+  );
 }

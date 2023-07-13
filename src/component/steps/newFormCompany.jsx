@@ -19,22 +19,11 @@ import {
 import { Zone } from "../zone";
 import { v4 as uuidv4 } from "uuid";
 
-export function newFormCompany() {
+export function NewFormCompany({formCompany}) {
 
-  const formCompany = useForm({
-    initialValues: {
-      // company_id: uuidv4(),
-      company_name: "",
-      company_cell: "",
-      company_mail: "",
 
-      work_zone: [],
-    }
-  });
 
-  return {
-    formCompany,
-    renderFormCompany:(
+  return(
       <Box
         component="form"
         maw={400}
@@ -117,4 +106,4 @@ export function newFormCompany() {
       </Box>
     )
   }
-}
+

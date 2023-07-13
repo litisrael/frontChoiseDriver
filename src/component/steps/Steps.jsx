@@ -11,19 +11,71 @@ import {
 } from "@mantine/core";
 
 import { useForm } from "@mantine/form";
-import { newFormCompany } from "./newFormCompany.jsx";
-import { vehicule } from "./Vehicles";
-import { v4 as uuidv4 } from 'uuid';
+import { NewFormCompany } from "./newFormCompany.jsx";
+import { Vehicule } from "./Vehicles";
+
+
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+const allDaysData = days.map((day) => {
+  return {
+    day,
+    data: [
+      {
+        unavailable_starting: "00:00",
+        unavailable_until: "00:01",
+        vehicle_id: "",
+      },
+    ],
+  };
+});
+
 
 export function StepForm() {
   
 
   const [active, setActive] = useState(0);
-  const { formCompany, renderFormCompany } = newFormCompany();
-  const {formDays, formVehicle, renderFormVehicle} = vehicule()
+
+  // const {formDays, formVehicle, renderFormVehicle} = vehicule()
+  
+  const formCompany = useForm({
+    initialValues: {   
+      company_name: "",
+      company_cell: "",
+      company_mail: "",
+      work_zone: [],
+    }
+  });
+  const formVehicle = useForm({
+    initialValues: {
+      vehicle: [
+        {
+          number_of_seats: "",
+          mispar_rishuy: "",
+          build_date: "",
+          overtime_price: "",
+          company_id: "",
+        },
+      ],
+    },
+  });
+
+  const formDays = useForm({
+    initialValues: {
+      days: [...allDaysData],
+    },
+  });
   
   
-  const forms = [formCompany, formVehicle, formDays];
+  const forms = [formCompany, formVehicle];
   
 
 
@@ -32,7 +84,7 @@ export function StepForm() {
       if (forms[current].validate().hasErrors) {
         return current;
       }
-      return current < 3 ? current + 1 : current;
+      return current < forms.length ? current + 1 : current;
     });
 
   
@@ -86,7 +138,7 @@ export function StepForm() {
             Back
           </Button>
         )}
-        {active !== 3 && <Button fullWidth onClick={nextStep}>Next step</Button>}
+        {active !== forms.length  && <Button fullWidth onClick={nextStep}>Next step</Button>}
         {active === forms.length  && (
   <Button fullWidth type="submit">upload</Button>
 )}
@@ -95,7 +147,7 @@ export function StepForm() {
       <Stepper active={active} breakpoint="sm">
       
         <Stepper.Step label="First step" description="Profile settings">
-          {renderFormCompany}
+          <NewFormCompany formCompany={formCompany}/>
 
           {/* <TextInput label="Username" placeholder="Username" {...form1.getInputProps('username')} />
           <PasswordInput
@@ -107,7 +159,7 @@ export function StepForm() {
         </Stepper.Step>
 
         <Stepper.Step label="Second step" description="Personal information">
-        {renderFormVehicle}
+        <Vehicule formVehicle={formVehicle} formDays={formDays} />
           {/* <TextInput
             label="Name"
             placeholder="Name"
