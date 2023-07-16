@@ -16,12 +16,16 @@ import { IconTrash } from "@tabler/icons-react";
 import { Calendar } from "./calendar";
 import { AllDays } from "./AllDays";
 
-export function Vehicule({ formVehicle, formDays }) {
+export function Vehicule({ formVehicle, formDays ,calendarDisableTourist}) {
   return (
     <Box mx="auto">
       {formVehicle.values.vehicle.map((item, index) => (
-        <Box key={item.index}>
-          <Group mt="xs">
+        <Box key={index}
+         justify="center" 
+        align="center"
+        >
+          <Flex mt="xs" direction="row"justify="center" 
+        align="center"  wrap="wrap" >
             <TextInput
              label= "seats passenger in vehicle"
             //  description=""
@@ -60,20 +64,21 @@ export function Vehicule({ formVehicle, formDays }) {
                 type: "checkbox",
               })}
             /> */}
-            <Button 
-            leftIcon={<IconTrash />}variant="white" color="red"
+           
+          </Flex>
+          <Box align="center">
+            <Calendar calendarDisableTourist={calendarDisableTourist} />
+          </Box>
+          <Box align="center">
+            <AllDays formDays={formDays} />
+          </Box>
+          <Button   
+            leftIcon={<IconTrash />}variant="outline" color="red"
               
               onClick={() => formVehicle.removeListItem("vehicle", index)}
             >
               remove vehicle
             </Button>
-          </Group>
-          <Box>
-            <Calendar />
-          </Box>
-          <Box>
-            <AllDays formDays={formDays} />
-          </Box>
         </Box>
         
       ))}
@@ -84,7 +89,6 @@ export function Vehicule({ formVehicle, formDays }) {
   </Text>
 ) }
 
-
       <Group position="center" mt="md">
         <Button
           onClick={() =>
@@ -94,14 +98,14 @@ export function Vehicule({ formVehicle, formDays }) {
               build_date: "",
               overtime_price: "",
               company_id: "",
-            })
+           
+            }
+            )
           }
         >
           Add vehicle
         </Button>
-        {/* <Button onClick={() => formVehicle.removeListItem("vehicle", index)}>
-          remove
-        </Button> */}
+       
       </Group>
     </Box>
   );

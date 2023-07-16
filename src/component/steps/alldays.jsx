@@ -27,27 +27,25 @@ export function AllDays({ formDays }) {
       <Accordion.Control>calendar days week</Accordion.Control>
       <Accordion.Panel>
    
-      <Flex wrap="wrap"justify="center" align="center" >
+      <Flex wrap="wrap"justify="center"  align="flex-start" >
         {formDays.values.days.map((item, index) => (
           <Flex key={index}>
             <Box >
               <Text align="center">{item.day}</Text>
              
               {item.data.map((dataItem, dataIndex) => (
-                <Flex key={dataIndex} m="xs" direction="column">
-                  <Group position="center" mt="md">
-                   
-                  </Group>
+                <Flex key={dataIndex} m="xs" direction="column" >
+      
                   <InputTime
                     label="disable from time"
                     {...formDays.getInputProps(
-                      `days.${index}.data.${dataIndex}.unavailable_starting`
+                      `days.${item}.data.${dataIndex}.unavailable_starting`
                     )}
                   />
                   <InputTime
                     label="until time"
                     {...formDays.getInputProps(
-                      `days.${index}.data.${dataIndex}.unavailable_until`
+                      `days.${item}.data.${dataIndex}.unavailable_until`
                     )}
                   />
                   <Box justify="center" align="center" >
@@ -55,26 +53,29 @@ export function AllDays({ formDays }) {
                    <ActionIcon  
                       color="red"
                       onClick={() =>
-                        formDays.removeListItem(`days.${index}.data`, dataIndex)
+                        formDays.removeListItem(`days.${dataIndex}.data`, dataItem)
                       }
                       >
                       <IconTrash size="1rem" />
                     </ActionIcon>
-                   <Button  
+               
+                </Box>
+                </Flex>
+              ))}
+                  <Button  
                 onClick={() =>
-                  formDays.insertListItem(`days.${index}.data`, {
-                    unavailable_starting: "00:00",
-                    unavailable_until: "00:00",
+                  formDays.insertListItem(`days.${item}.data`, {
+                    unavailable_starting: "",
+                    unavailable_until: "",
                   })
                 }
                 >
                 Add disable
               </Button >
-                </Box>
-                </Flex>
-              ))}
             </Box>
+            
           </Flex>
+          
         ))}
       </Flex>
       </Accordion.Panel>

@@ -1,35 +1,94 @@
 import { useState } from "react";
-import { Group, Code, Accordion } from "@mantine/core";
-import { DatePickerInput } from "@mantine/dates";
+import { Group, Flex, Code, Accordion, Box ,ActionIcon, Button} from "@mantine/core";
+import { DateInput } from "@mantine/dates";
 
-export function Calendar() {
-  const [rangeValue, setRangeValue] = useState();
+import { IconTrash } from "@tabler/icons-react";
+export function Calendar({ calendarDisableTourist }) {
+  // const [rangeValue, setRangeValue] = useState();
 
   return (
     <Accordion>
       <Accordion.Item value="customization">
         <Accordion.Control>calendar tourist disable</Accordion.Control>
         <Accordion.Panel>
-    
-        <DatePickerInput
-        
-          valueFormat="YYYY-MM-DD" // Establece el formato de valor para recibir solo la fecha
-          // mt="md"
-          type="range"
-          value={rangeValue}
-          onChange={setRangeValue}
-          label="Pick dates"
-          placeholder="Pick dates"
-           maw={300}
-      mx="auto"
-        />
+          {calendarDisableTourist.values.calendarDisable.map((item, index) => (
+            <Flex key={index} m="xs" direction="column">
+              <DateInput
+                valueFormat="YYYY-MM-DD"
+                label="disable from day"
+                placeholder="disable from day"
+                {...calendarDisableTourist.getInputProps("disable_from")}
+              />
+              <DateInput
+                valueFormat="YYYY-MM-DD"
+                label="disable until day"
+                placeholder="disable until day"
+                {...calendarDisableTourist.getInputProps("disable_until")}
+              />
+              <Box justify="center" align="center">
+                <ActionIcon
+                  color="red"
+                  onClick={() => calendarDisableTourist.removeListItem(`calendarDisable`,index)}
+                >
+                  <IconTrash size="1rem" />
+                </ActionIcon>
+              </Box>
+            
+            </Flex>
+          ))}
+          <Button
+            onClick={() =>
+              calendarDisableTourist.insertListItem(`calendarDisable`, {
+                disable_from: "",
+                disable_until: "",
+              })
+            }
+          >
+            Add disable days
+          </Button>
 
-      {/* <Code block mt="xl">
+          {/* <Code block mt="xl">
         {JSON.stringify({ rangeValue })}
       </Code> */}
-
-</Accordion.Panel>
-       </Accordion.Item>
+        </Accordion.Panel>
+      </Accordion.Item>
     </Accordion>
   );
 }
+
+// export function Calendar({calendarDisableTourist}) {
+//   const [rangeValue, setRangeValue] = useState();
+
+//   return (
+//     <Accordion>
+//     <Accordion.Item value="customization">
+//       <Accordion.Control>calendar tourist disable</Accordion.Control>
+//       <Accordion.Panel>
+
+//       {calendarDisableTourist.value.map((item, index) => (
+//       <Flex key={index} m="xs" direction="column" >
+
+//       <DateInput
+//       valueFormat="YYYY-MM-DD"
+//       label="disable from time"
+//       placeholder="disable from time"
+//       {...calendarDisableTourist.getInputProps("disable_from" )}
+//     />
+//     < DateInput
+//     valueFormat="YYYY-MM-DD"
+//       label="until time"
+//       {...calendarDisableTourist.getInputProps("disable_until" )}
+//     />
+//     <Box justify="center" align="center" >
+// {/*
+//      <ActionIcon
+//         color="red"
+//         onClick={() =>
+//           calendarDisableTourist.removeListItem()
+//         }
+//         >
+//         <IconTrash size="1rem" />
+//       </ActionIcon> */}
+
+//   </Box>
+//   </Flex>

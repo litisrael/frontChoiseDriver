@@ -74,6 +74,12 @@ export function StepForm() {
     },
   });
   
+  const calendarDisableTourist = useForm({
+    initialValues:{ 
+   calendarDisable: [ { disable_from:"",
+    disable_until: "",}]
+   }
+  })
   
   const forms = [formCompany, formVehicle];
   
@@ -100,33 +106,35 @@ export function StepForm() {
       e.preventDefault()
     
       try {
-        
+     
+
         const res = await fetch("http://localhost:4000/Register", {
           method: "POST",
           body: JSON.stringify({
             data: {
               formCompany: formCompany.values,
               formVehicle: formVehicle.values,
-              formDays: formDays.values
+              formDays: formDays.values,
+              calendarDisableTourist: calendarDisableTourist.values
             }
           }),
           headers: {
             "Content-Type": "application/json"
           }
         });
-    // console.log(formDays,"formDays")
+
         const responseData = await res.json();
     
         if (res.status === 200) {
           formCompany.reset(); // Resetea el formulario de la compañía
           formVehicle.reset(); // Resetea el formulario del vehículo
           formDays.reset()
-          console.log('¡Éxito!', responseData);
+          console.log('Success!', responseData);
         } else {
-          console.error('El servidor respondió con un error', responseData);
+          console.error('The server responded with an error', responseData);
         }
       } catch (error) {
-        console.log('Esto es lo que salió mal:', error.message);
+        console.log('This is what went wrong:', error.message);
       }
     }}
     
@@ -159,7 +167,7 @@ export function StepForm() {
         </Stepper.Step>
 
         <Stepper.Step label="Second step" description="Personal information">
-        <Vehicule formVehicle={formVehicle} formDays={formDays} />
+        <Vehicule formVehicle={formVehicle} formDays={formDays} calendarDisableTourist={calendarDisableTourist} />
           {/* <TextInput
             label="Name"
             placeholder="Name"
