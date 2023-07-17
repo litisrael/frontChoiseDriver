@@ -24,7 +24,7 @@ export function Vehicule({ formVehicle, formDays ,calendarDisableTourist}) {
          justify="center" 
         align="center"
         >
-          <Flex mt="xs" direction="row"justify="center" 
+          <Flex mt="xs" direction="row"justify="center" gap= "md"
         align="center"  wrap="wrap" >
             <TextInput
              label= "seats passenger in vehicle"
@@ -111,6 +111,8 @@ export function Vehicule({ formVehicle, formDays ,calendarDisableTourist}) {
               build_date: "",
               overtime_price: "",
               company_id: "",
+                   shomer_shabat: null,
+          is_available_work_multiple_days:null,
            
             }
             )

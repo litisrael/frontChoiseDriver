@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 // import { allDays } from "./steps/alldays";
-import { Calendar } from "./steps/calendar";
+
 
 import {
   AppShell,
@@ -59,7 +59,7 @@ export function AppShellExample() {
                 title page
               </Text>
                 <Text component={Link} variant="Link" to="/steps">
-                steps form
+                 form new driver
               </Text>
               
             </div>
@@ -107,7 +107,7 @@ export function AppShellExample() {
           </div> 
           }/>
           <Route path="/input" element={<> <DemoSpot/></>}/>
-          <Route path="/title" element={<>  <Calendar/> </>}/>
+          <Route path="/title" element={<>   </>}/>
           <Route path="/steps" element={   <StepForm /> }  />
           
         </Routes>
