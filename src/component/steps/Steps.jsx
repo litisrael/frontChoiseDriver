@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 
 import { useForm } from "@mantine/form";
-import { NewFormCompany } from "./newFormCompany.jsx";
+import { NewFormCompany } from "./FormCompany.jsx";
 import { Vehicule } from "./Vehicles";
 
 
@@ -63,6 +63,8 @@ export function StepForm() {
           build_date: "",
           overtime_price: "",
           company_id: "",
+          shomer_shabat: null,
+          is_available_work_multiple_days:null,
         },
       ],
     },
@@ -76,8 +78,8 @@ export function StepForm() {
   
   const calendarDisableTourist = useForm({
     initialValues:{ 
-   calendarDisable: [ { disable_from:"",
-    disable_until: "",}]
+   calendarDisable: [ { disable_from:null,
+    disable_until: null,}]
    }
   })
   
@@ -129,6 +131,7 @@ export function StepForm() {
           formCompany.reset(); // Resetea el formulario de la compañía
           formVehicle.reset(); // Resetea el formulario del vehículo
           formDays.reset()
+          calendarDisableTourist.reset()
           console.log('Success!', responseData);
         } else {
           console.error('The server responded with an error', responseData);

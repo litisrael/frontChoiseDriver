@@ -64,7 +64,20 @@ export function Vehicule({ formVehicle, formDays ,calendarDisableTourist}) {
                 type: "checkbox",
               })}
             /> */}
-           
+            <Switch
+          label="shomer shabat?"
+          // description="bla "
+          labelPosition="left"
+          {...formVehicle.getInputProps("shomer_shabat", {
+            type: "checkbox",
+          })}
+        />
+           <Switch
+          label="available work multiplay day"
+          labelPosition="left"
+          {...formVehicle.getInputProps("is_available_work_multiple_days")}
+        />
+       
           </Flex>
           <Box align="center">
             <Calendar calendarDisableTourist={calendarDisableTourist} />

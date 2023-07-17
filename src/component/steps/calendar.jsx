@@ -17,13 +17,13 @@ export function Calendar({ calendarDisableTourist }) {
                 valueFormat="YYYY-MM-DD"
                 label="disable from day"
                 placeholder="disable from day"
-                {...calendarDisableTourist.getInputProps("disable_from")}
+                {...calendarDisableTourist.getInputProps(`calendarDisable.${index}.disable_from`)}
               />
               <DateInput
                 valueFormat="YYYY-MM-DD"
                 label="disable until day"
                 placeholder="disable until day"
-                {...calendarDisableTourist.getInputProps("disable_until")}
+                {...calendarDisableTourist.getInputProps(`calendarDisable.${index}.disable_until`)}
               />
               <Box justify="center" align="center">
                 <ActionIcon
@@ -39,8 +39,8 @@ export function Calendar({ calendarDisableTourist }) {
           <Button
             onClick={() =>
               calendarDisableTourist.insertListItem(`calendarDisable`, {
-                disable_from: "",
-                disable_until: "",
+                disable_from: null,
+                disable_until: null,
               })
             }
           >

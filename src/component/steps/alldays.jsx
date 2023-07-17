@@ -60,18 +60,19 @@ export function AllDays({ formDays }) {
                     </ActionIcon>
                
                 </Box>
-                </Flex>
-              ))}
                   <Button  
                 onClick={() =>
-                  formDays.insertListItem(`days.${item}.data`, {
-                    unavailable_starting: "",
-                    unavailable_until: "",
-                  })
+                  formDays.insertListItem(`days.${item.day}.data`, {
+                  
+                      unavailable_starting: "",
+                      unavailable_until: ""
+                })
                 }
                 >
                 Add disable
               </Button >
+                </Flex>
+              ))}
             </Box>
             
           </Flex>
