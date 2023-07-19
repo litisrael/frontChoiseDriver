@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-// import { allDays } from "./steps/alldays";
-
+import { AuthProvider } from "../context/authcontex";
 
 import {
   AppShell,
@@ -14,12 +13,18 @@ import {
   Burger,
   useMantineTheme,
   Step,
- 
 } from "@mantine/core";
-import { StepForm } from "./steps/Steps";
-// import { AllDays } from "./steps/alldays";
-import { DemoSpot } from "./DemoSpot";
+import { StepForm } from "./Formsteps/FormSteps";
 
+import { CardWithStats } from "./Card";
+
+import { User } from "../context/user/user"
+import { Auth0Provider } from "@auth0/auth0-react";
+
+
+
+const domain = import.meta.env.VITE_DOMAIN;
+const clientId = import.meta.env.VITE_CLIENT_ID;
 
 export function AppShellExample() {
   const theme = useMantineTheme();
@@ -52,16 +57,15 @@ export function AppShellExample() {
               <Text component={Link} variant="Link" to="/home">
                 Home page
               </Text>
-              <Text component={Link} variant="Link" to="/input">
-                input page
+              <Text component={Link} variant="Link" to="/login">
+                login page
               </Text>
               <Text component={Link} variant="Link" to="/title">
                 title page
               </Text>
-                <Text component={Link} variant="Link" to="/steps">
-                 form new driver
+              <Text component={Link} variant="Link" to="/steps">
+                form new driver
               </Text>
-              
             </div>
           </Navbar>
         }
@@ -98,23 +102,20 @@ export function AppShellExample() {
           </Header>
         }
       >
-        <Routes>
-          <Route path="/home" element={ <div>
-            {/* <AllDays/> */}
-       
-          {/* <FormCompany/> */}
+        <AuthProvider>
+        
+    <Auth0Provider domain={domain} clientId={clientId}
+   authorizationParams={{ redirect_uri: window.location.origin }}
    
-          </div> 
-          }/>
-          <Route path="/input" element={<> <DemoSpot/></>}/>
-          <Route path="/title" element={<>   </>}/>
-          <Route path="/steps" element={   <StepForm /> }  />
-          
-        </Routes>
-      
-          
-     
-      
+    >
+          <Routes>
+            <Route path="/home" element={<CardWithStats />} />
+            <Route  path="/login"element={<User />}/>
+            <Route path="/title" element={<> </>} />
+            <Route path="/steps" element={<StepForm />} />
+          </Routes>
+          </Auth0Provider>
+        </AuthProvider>
       </AppShell>
     </Router>
   );

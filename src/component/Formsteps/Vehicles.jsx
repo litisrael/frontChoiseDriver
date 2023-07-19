@@ -10,49 +10,51 @@ import {
   Button,
   SimpleGrid,
   Code,
-  Accordion
+  Accordion,
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { Calendar } from "./calendar";
 import { AllDays } from "./AllDays";
 
-export function Vehicule({ formVehicle, formDays ,calendarDisableTourist}) {
+export function Vehicule({ formVehicle, formDays, calendarDisableTourist }) {
   return (
     <Box mx="auto">
       {formVehicle.values.vehicle.map((item, index) => (
-        <Box key={index}
-         justify="center" 
-        align="center"
-        >
-          <Flex mt="xs" direction="row"justify="center" gap= "md"
-        align="center"  wrap="wrap" >
+        <Box key={index} justify="center" align="center">
+          <Flex
+            mt="xs"
+            direction="row"
+            justify="center"
+            gap="md"
+            align="center"
+            wrap="wrap"
+          >
             <TextInput
-             label= "seats passenger in vehicle"
-            //  description=""
+              label="seats passenger in vehicle"
+              //  description=""
               placeholder="seats passenger in vehicle"
               withAsterisk
-             
               {...formVehicle.getInputProps(`vehicle.${index}.number_of_seats`)}
             />
             <TextInput
-             label="the vehicle registration number"
-            //  description=""
+              label="the vehicle registration number"
+              //  description=""
               placeholder="mispar_rishuy"
               withAsterisk
               // sx={{ flex: 1 }}
               {...formVehicle.getInputProps(`vehicle.${index}.mispar_rishuy`)}
             />
             <TextInput
-             label="What is the year of the vehicle?"
-            //  description="What is the year of the vehicle?"
+              label="What is the year of the vehicle?"
+              //  description="What is the year of the vehicle?"
               placeholder="build_date"
               withAsterisk
               // sx={{ flex: 1 }}
               {...formVehicle.getInputProps(`vehicle.${index}.build_date`)}
             />
             <TextInput
-             label="charge for additional waiting hour"
-             description=""
+              label="charge for additional waiting hour"
+              description=""
               placeholder="overtime price"
               // withAsterisk
               // sx={{ flex: 1 }}
@@ -65,19 +67,18 @@ export function Vehicule({ formVehicle, formDays ,calendarDisableTourist}) {
               })}
             /> */}
             <Switch
-          label="shomer shabat?"
-          // description="bla "
-          labelPosition="left"
-          {...formVehicle.getInputProps("shomer_shabat", {
-            type: "checkbox",
-          })}
-        />
-           <Switch
-          label="available work multiplay day"
-          labelPosition="left"
-          {...formVehicle.getInputProps("is_available_work_multiple_days")}
-        />
-       
+              label="shomer shabat?"
+              // description="bla "
+              labelPosition="left"
+              {...formVehicle.getInputProps("shomer_shabat", {
+                type: "checkbox",
+              })}
+            />
+            <Switch
+              label="available work multiplay day"
+              labelPosition="left"
+              {...formVehicle.getInputProps("is_available_work_multiple_days")}
+            />
           </Flex>
           <Box align="center">
             <Calendar calendarDisableTourist={calendarDisableTourist} />
@@ -85,22 +86,22 @@ export function Vehicule({ formVehicle, formDays ,calendarDisableTourist}) {
           <Box align="center">
             <AllDays formDays={formDays} />
           </Box>
-          <Button   
-            leftIcon={<IconTrash />}variant="outline" color="red"
-              
-              onClick={() => formVehicle.removeListItem("vehicle", index)}
-            >
-              remove vehicle
-            </Button>
+          <Button
+            leftIcon={<IconTrash />}
+            variant="outline"
+            color="red"
+            onClick={() => formVehicle.removeListItem("vehicle", index)}
+          >
+            remove vehicle
+          </Button>
         </Box>
-        
       ))}
 
-{formVehicle.values.vehicle.length > 0 ? null :(
-  <Text color="dimmed" align="center">
-    No one here...
-  </Text>
-) }
+      {formVehicle.values.vehicle.length > 0 ? null : (
+        <Text color="dimmed" align="center">
+          No one here...
+        </Text>
+      )}
 
       <Group position="center" mt="md">
         <Button
@@ -111,16 +112,13 @@ export function Vehicule({ formVehicle, formDays ,calendarDisableTourist}) {
               build_date: "",
               overtime_price: "",
               company_id: "",
-                   shomer_shabat: null,
-          is_available_work_multiple_days:null,
-           
-            }
-            )
+              shomer_shabat: null,
+              is_available_work_multiple_days: null,
+            })
           }
         >
           Add vehicle
         </Button>
-       
       </Group>
     </Box>
   );

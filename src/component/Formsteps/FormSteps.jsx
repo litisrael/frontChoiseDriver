@@ -12,7 +12,7 @@ import {
 
 import { useForm } from "@mantine/form";
 import { NewFormCompany } from "./FormCompany.jsx";
-import { Vehicule } from "./Vehicles";
+import { Vehicule } from "./Vehicles.jsx";
 
 
 const days = [
@@ -30,8 +30,8 @@ const allDaysData = days.map((day) => {
     day,
     data: [
       {
-        unavailable_starting: "00:00",
-        unavailable_until: "00:01",
+        unavailable_starting: null,
+        unavailable_until: null,
         vehicle_id: "",
       },
     ],
