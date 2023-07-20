@@ -1,5 +1,5 @@
-import { createStyles, Card, Image, Text, Group, RingProgress, rem } from '@mantine/core';
 import { User } from "../context/user/user";
+import { createStyles, Card, Image, Text, Group, RingProgress, rem } from '@mantine/core';
 
 import { useAuth0 } from "@auth0/auth0-react";
 

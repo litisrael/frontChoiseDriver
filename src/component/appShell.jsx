@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import { AuthProvider } from "../context/authcontex";
-
+import { FaBus, FaHome,FaUser } from 'react-icons/fa';
+import { BiSolidLogIn} from 'react-icons/bi'
+import { OptionTravel } from "./OptionTravel";
 import {
   AppShell,
   Navbar,
@@ -13,15 +15,14 @@ import {
   Burger,
   useMantineTheme,
   Step,
+  NavLink,
 } from "@mantine/core";
 import { StepForm } from "./Formsteps/FormSteps";
 
 import { CardWithStats } from "./Card";
 
-import { User } from "../context/user/user"
+import { User } from "../context/user/user";
 import { Auth0Provider } from "@auth0/auth0-react";
-
-
 
 const domain = import.meta.env.VITE_DOMAIN;
 const clientId = import.meta.env.VITE_CLIENT_ID;
@@ -32,41 +33,41 @@ export function AppShellExample() {
   return (
     <Router>
       <AppShell
-        styles={{
-          main: {
-            background:
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[8]
-                : theme.colors.gray[0],
-          },
-        }}
+        styles={{}}
         navbarOffsetBreakpoint="sm"
         asideOffsetBreakpoint="sm"
         navbar={
           <Navbar
             align="center"
-            p="md"
+            // p="md"
             hiddenBreakpoint="sm"
             hidden={!opened}
             width={{ sm: 200, lg: 300 }}
           >
-            {/* <Navbar.Section>n
-            <Text align="center">argentina campeon</Text>
-          </Navbar.Section> */}
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <Text component={Link} variant="Link" to="/home">
-                Home page
-              </Text>
-              <Text component={Link} variant="Link" to="/login">
-                login page
-              </Text>
-              <Text component={Link} variant="Link" to="/title">
-                title page
-              </Text>
-              <Text component={Link} variant="Link" to="/steps">
-                form new driver
-              </Text>
-            </div>
+            <NavLink  icon={<FaHome size="1rem" stroke={1.5} />} 
+            component={Link} variant="Link" to="/home"
+            label="home" />
+            <NavLink  icon={<FaBus size="1rem" stroke={1.5} />}
+            label="drivers " childrenOffset={28}>
+              <NavLink
+                label="add company"
+                component={Link}
+                variant="Link"
+                to="/addcompany"
+              />
+              <NavLink label="edit" />
+              <NavLink label="delete" />
+            </NavLink>
+            <NavLink  icon={<FaUser size="1rem" stroke={1.5} />}
+             label="passengers"
+            
+             childrenOffset={28}>
+              <NavLink label="one way" />
+              <NavLink label="Second child link" />
+            </NavLink>
+            <NavLink  icon={<BiSolidLogIn size="1rem" stroke={1.5} />} 
+            component={Link} variant="Link" to="/login"
+            label="login" />
           </Navbar>
         }
         //   aside={
@@ -103,17 +104,17 @@ export function AppShellExample() {
         }
       >
         <AuthProvider>
-        
-    <Auth0Provider domain={domain} clientId={clientId}
-   authorizationParams={{ redirect_uri: window.location.origin }}
-   
-    >
-          <Routes>
-            <Route path="/home" element={<CardWithStats />} />
-            <Route  path="/login"element={<User />}/>
-            <Route path="/title" element={<> </>} />
-            <Route path="/steps" element={<StepForm />} />
-          </Routes>
+          <Auth0Provider
+            domain={domain}
+            clientId={clientId}
+            authorizationParams={{ redirect_uri: window.location.origin }}
+          >
+            <Routes>
+              <Route path="/home" element={<OptionTravel />} />
+              <Route path="/login" element={<User />} />
+              <Route path="/title" element={<> </>} />
+              <Route path="/addcompany" element={<StepForm />} />
+            </Routes>
           </Auth0Provider>
         </AuthProvider>
       </AppShell>
