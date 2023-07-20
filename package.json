@@ -23,6 +23,7 @@
     "@mantine/prism": "^6.0.14",
     "@mantine/spotlight": "^6.0.16",
     "@mantine/tiptap": "^6.0.14",
+    "@react-google-maps/api": "^2.19.0",
     "@tabler/icons-react": "^2.22.0",
     "@tiptap/extension-link": "^2.0.3",
     "@tiptap/react": "^2.0.3",

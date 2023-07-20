@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import { AuthProvider } from "../context/authcontex";
 import { FaBus, FaHome,FaUser } from 'react-icons/fa';
 import { BiSolidLogIn} from 'react-icons/bi'
-import { OptionTravel } from "./OptionTravel";
+import { OptionTravel } from "./cards/OptionTravel";
 import {
   AppShell,
   Navbar,
@@ -17,9 +17,9 @@ import {
   Step,
   NavLink,
 } from "@mantine/core";
-import { StepForm } from "./Formsteps/FormSteps";
-
-import { CardWithStats } from "./Card";
+import { StepForm } from "./FormDriver/FormSteps";
+import { FormOneWay } from "./FormPassenger/FormOneWay";
+import { CardWithStats } from "./cards/Card";
 
 import { User } from "../context/user/user";
 import { Auth0Provider } from "@auth0/auth0-react";
@@ -62,7 +62,9 @@ export function AppShellExample() {
              label="passengers"
             
              childrenOffset={28}>
-              <NavLink label="one way" />
+              <NavLink label="one way"
+              component={Link} variant="Link" to="/oneway"
+              />
               <NavLink label="Second child link" />
             </NavLink>
             <NavLink  icon={<BiSolidLogIn size="1rem" stroke={1.5} />} 
@@ -114,6 +116,7 @@ export function AppShellExample() {
               <Route path="/login" element={<User />} />
               <Route path="/title" element={<> </>} />
               <Route path="/addcompany" element={<StepForm />} />
+              <Route path="/oneway" element={<FormOneWay />} />
             </Routes>
           </Auth0Provider>
         </AuthProvider>
