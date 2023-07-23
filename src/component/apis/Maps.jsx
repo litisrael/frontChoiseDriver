@@ -1,5 +1,5 @@
 import React from "react";
-import { useJsApiLoader, GoogleMap } from "@react-google-maps/api";
+import { useJsApiLoader, GoogleMap, } from "@react-google-maps/api";
 import { Box, rem } from '@mantine/core';
 
 
@@ -7,7 +7,8 @@ const clave = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const libraries = ["places"];
 
-    export const Maps = ({ center, zoom, children }) => {
+export const Maps = ({ center = { lat: 31.76904, lng: 35.21633 }, zoom = 8, children }) => {
+    
         const { isLoaded, loadError } = useJsApiLoader({
           googleMapsApiKey: clave,
           libraries,
