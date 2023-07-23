@@ -1,6 +1,5 @@
 import { useForm } from "@mantine/form";
 import { AutocomletInputAdress } from "../apis/AutocomletInputAdress";
-import { Maps } from "../apis/Maps";
 import {
   Button,
   Group,
@@ -16,8 +15,7 @@ import {
   useJsApiLoader,
   GoogleMap,
   Marker,
-  Autocomplete, 
-  Circle
+  Autocomplete 
  
 
 } from "@react-google-maps/api";
@@ -30,14 +28,14 @@ const libraries = ["places"];
 
 
 export function FormOneWay() {
-   
+    const [searchResult, setSearchResult] = useState("Result: none");
   const form = useForm({
     initialValues: {
       number_of_passengers: "",
       // from_region: "",
       // from_street: "",
       from_address: "",
- 
+      from_address1: "",
       to_address: "",
       // to_city: "",
       // to_street: "",
@@ -46,24 +44,48 @@ export function FormOneWay() {
     },
   });
 
+  function onLoad(autocomplete) {
+    setSearchResult(autocomplete);
+  }
 
-
+  function onPlaceChanged() {
+    if (searchResult != null) {
+      const place = searchResult.getPlace();
+      const name = place.name;
+      const status = place.business_status;
+      const formattedAddress = place.formatted_address;
+      console.log(searchResult);
+      console.log(`Name: ${name}`);
+      console.log(`Business Status: ${status}`);
+      console.log(`Formatted Address: ${formattedAddress}`);
+    //    setFormattedAddress(formattedAddress);
+    // setFormattedAddress(formattedAddress);
+    form.setFieldValue('from_address', formattedAddress);
+    setFromAddressError(false);
+  } else {
+    setFromAddressError(true);
+    alert("Please enter text");
+  }
+  }
+  const [mapBounds, setMapBounds] = useState(null);
+  const [formattedAddress, setFormattedAddress] = useState("");
+  const [direction ,setdirection ]= useState()
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: clave,
     libraries,
   });
   if (!isLoaded) {
-    return <Text>loanding....</Text>;
+    return <Text>bla</Text>;
   }
 
   return (
     <Grid grow>
       <Grid.Col span={6}>
-     
+        {" "}
         <GoogleMap
           center={center}
-          zoom={8}
+          zoom={15}
           mapContainerStyle={{ width: "100%", height: "100%" }}
           options={{
             zoomControl: false,
@@ -71,7 +93,7 @@ export function FormOneWay() {
             mapTypeControl: false,
             fullscreenControl: false,
           }}
-      
+          onLoad={(map) => setMapBounds(map.getBounds())}
         >
           <Marker position={center} />
         </GoogleMap>{" "}
@@ -89,28 +111,35 @@ export function FormOneWay() {
             withAsterisk
             {...form.getInputProps("number_of_passengers")}
           />
-       
-         
+          <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onLoad}
+        //   options={{
+        //     // Opciones adicionales para el componente Autocomplete (opcional)
+        //   }}
+          restrictions={{ country: "IL" }}
+          >
+          
+            <TextInput
+              label="from address"
+              placeholder="from_address"
+              withAsterisk
+              mt="md"
+              value={formattedAddress}
+          
+        {...form.getInputProps("from_address")}
              
 
-       <AutocomletInputAdress
-  label="from origin"
-  placeholder="Enter from address"
-  value={form.values.from_address} 
-  onChange={(value) => form.setFieldValue("from_address", value)}
-  onPlaceChanged={(place) => console.log("Selected place:", place)}
+            />
+          </Autocomplete>
+          <Autocomplete>
 
-/>
- 
-<AutocomletInputAdress
-  label="destination"
-//   placeholder="Enter to address"
-  value={form.values.to_address} 
-  onChange={(value) => form.setFieldValue("to_address", value)}
-  onPlaceChanged={(place) => console.log("Selected place:", place)}
-
-/>
- 
+          <TextInput
+            label="to_address"
+            placeholder="to_address"
+            withAsterisk
+            mt="md"
+            // {...form.getInputProps("to_address")}
+            />
+            </Autocomplete>
           <TextInput
             label="departure_date"
             placeholder="departure_date"
@@ -125,7 +154,15 @@ export function FormOneWay() {
             mt="md"
             {...form.getInputProps("departure_hour")}
           />
-
+          <AutocomletInputAdress
+  label="from bla"
+  placeholder="Enter from address"
+  value={form.values.from_address1} 
+  onChange={(value) => form.setFieldValue("from_address1", value)}
+  onPlaceChanged={(place) => console.log("Selected place:", place)}
+  mapBounds={mapBounds}
+/>
+ 
           <Group position="right" mt="md">
             <Button type="submit">Submit</Button>
           </Group>
