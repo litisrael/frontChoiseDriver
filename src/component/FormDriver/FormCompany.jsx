@@ -17,8 +17,6 @@ import {
   Switch,
 } from "@mantine/core";
 import { Zone } from "../zone";
-import { v4 as uuidv4 } from "uuid";
-
 export function NewFormCompany({formCompany}) {
 
 

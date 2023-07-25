@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Autocomplete } from "@react-google-maps/api";
 import { TextInput } from "@mantine/core";
 
+
 export const AutocomletInputAdress = ({ label, placeholder, onChange, onPlaceChanged,  }) => {
   const [searchResult, setSearchResult] = useState(null);
   const [formattedAddress, setFormattedAddress] = useState("");

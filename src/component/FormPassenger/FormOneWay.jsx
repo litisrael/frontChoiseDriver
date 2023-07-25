@@ -1,3 +1,23 @@
+// const onLoad = useCallback((map) => (mapRef.current = map), []);
+
+// const fetchDirections = (originLocation) => {
+//   if (!originLocation) return;
+
+//   const service = new google.maps.DirectionsService();
+//   service.route(
+//     {
+//       originLocation,
+//       destinationLocation,
+//       travelMode: google.maps.TravelMode.DRIVING,
+//     },
+//     (result, status) => {
+//       if (status === "OK" && result) {
+//         setDestinationLocation(result);
+//       }
+//     }
+//   );
+// };
+
 import { useForm } from "@mantine/form";
 import { AutocomletInputAdress } from "../apis/AutocomletInputAdress";
 import { Maps } from "../apis/Maps";
@@ -15,72 +35,83 @@ import {
   DirectionsService,
   Marker,
   DirectionsRenderer,
-  useJsApiLoader, GoogleMap,
+  useJsApiLoader,
+  GoogleMap,
 } from "@react-google-maps/api";
-import { useState, useRef } from "react";
-
-
-
+import { useState, useRef, useMemo, useEffect } from "react";
 
 export function FormOneWay() {
-    const form = useForm({
-        initialValues: {
-            number_of_passengers: "",
-            // from_region: "",
-            // from_street: "",
-            from_address: "",
-            
-            to_address: "",
-            // to_city: "",
-            // to_street: "",
-            departure_date: "",
-            departure_hour: "",
-        },
+  const form = useForm({
+    initialValues: {
+      number_of_passengers: "",
+      // from_region: "",
+      // from_street: "",
+      from_address: "",
+
+      to_address: "",
+      // to_city: "",
+      // to_street: "",
+      departure_date: "",
+      departure_hour: "",
+    },
+  });
+
+  const initialCenter = { lat: 31.76904, lng: 35.21633 };
+  const [center, setCenter] = useState(initialCenter)
+  const [directionResponse, setDirectionResponse] = useState(null);
+  const [originLocation, setOriginLocation] = useState(null);
+  const [destinationLocation, setDestinationLocation] = useState(null);
+
+  useEffect(() => {
+    // Set the center to initialCenter when the component mounts
+    setCenter(initialCenter);
+  }, []);
+
+  const fetchDirection = async (originRef) => {
+    if (!originLocation || !destinationLocation) {
+      return;
+    }
+    const DirectionsService = new google.maps.DirectionsService();
+    const result = await DirectionsService.route({
+      origin: originLocation, // Use 'origin' instead of 'originRef'
+      destination: destinationLocation, // Use 'destination' instead of 'destinationRef'
+      travelMode: google.maps.TravelMode.DRIVING,
     });
-    const [directionRes, setDirectionRes] = useState(null);
-    const [originLocation, setOriginLocation] = useState(null);
-    const [destinationLocation, setDestinationLocation] = useState(null);
-  
 
-//   const calculate= async ()=>{
-//       if(originRef.current.value === "" || destinationRef.current.value === ""){
-//           return
-//       }
-//       const DirectionsService = new google.maps.DirectionsService()
-     
-//       const Result = await DirectionsService.route({
-//           origin: originRef.current.value,
-//           destination : destinationRef.current.value,
-//           travelMode : google.travelMode.DRIVING
-
-//       })
-     
-//       setdirectionRes(Result)
-
-//   }
+    setDirectionResponse(result);
+  };
   const originRef = useRef(); // Asignar la referencia
   const destinationRef = useRef(); // Asignar la referencia
 
+  useEffect(() => {
+    // Call fetchDirection whenever originLocation or destinationLocation is updated
+    fetchDirection();
+  }, [originLocation, destinationLocation]);
+
   const handleOriginPlaceChanged = (place) => {
-    form.setFieldValue("from_address", place.formatted_address); // Actualizar el valor del formulario
+    !place.formatted_address
+      ? setOriginLocation(null)
+      : form.setFieldValue("from_address", place.formatted_address); // Actualizar el valor del formulario
     setOriginLocation(place.geometry.location); // Actualizar la ubicación de origen
+   
   };
 
   const handleDestinationPlaceChanged = (place) => {
-    form.setFieldValue("to_address", place.formatted_address); // Actualizar el valor del formulario
-    setDestinationLocation(place.geometry.location); // Actualizar la ubicación de destino
+    !place.formatted_address
+      ? setOriginLocation(null)
+      : form.setFieldValue("to_address", place.formatted_address); // Actualizar el valor del formulario
+    setDestinationLocation(place.geometry.location);
+  
   };
+  
 
-  const center = { lat: 31.76904, lng: 35.21633 };
   return (
     <Grid grow>
       <Grid.Col span={6}>
-        <Maps>
-          <Marker position={center} />
-         {/* {directionRes && <DirectionsRenderer directions={directionRes} />} */}
-         {originLocation && <Marker position={originLocation} />} {/* Show the origin marker */}
-          {destinationLocation && <Marker position={destinationLocation} />} {/* Show the destination marker */}
-         
+      <Maps center={center}> {/* Use the center state for the center of the map */}
+          {directionResponse && <DirectionsRenderer directions={directionResponse} />}
+          {originLocation && <Marker position={originLocation} />}
+          {destinationLocation && <Marker position={destinationLocation} />}
         </Maps>
       </Grid.Col>
       <Grid.Col span={6}>
@@ -89,7 +120,6 @@ export function FormOneWay() {
           maw={400}
           mx="auto"
           onSubmit={form.onSubmit(() => {
-            calculate();
             console.log(form.values);
           })}
         >
@@ -106,7 +136,7 @@ export function FormOneWay() {
             ref={originRef}
             value={form.values.from_address}
             onChange={(value) => form.setFieldValue("from_address", value)}
-              onPlaceChanged={handleOriginPlaceChanged} 
+            onPlaceChanged={handleOriginPlaceChanged}
           />
 
           <AutocomletInputAdress
@@ -115,7 +145,7 @@ export function FormOneWay() {
             ref={destinationRef}
             value={form.values.to_address}
             onChange={(value) => form.setFieldValue("to_address", value)}
-            onPlaceChanged={handleDestinationPlaceChanged} 
+            onPlaceChanged={handleDestinationPlaceChanged}
           />
 
           <TextInput

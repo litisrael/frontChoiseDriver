@@ -20,7 +20,7 @@ import {
 import { StepForm } from "./FormDriver/FormSteps";
 import { FormOneWay } from "./FormPassenger/FormOneWay";
 import { CardWithStats } from "./cards/Card";
-
+import {LoadScriptApi  } from "./apis/LoadScript";
 import { User } from "../context/user/user";
 import { Auth0Provider } from "@auth0/auth0-react";
 
@@ -111,6 +111,7 @@ export function AppShellExample() {
             clientId={clientId}
             authorizationParams={{ redirect_uri: window.location.origin }}
           >
+            <LoadScriptApi>
             <Routes>
               <Route path="/home" element={<OptionTravel />} />
               <Route path="/login" element={<User />} />
@@ -118,6 +119,7 @@ export function AppShellExample() {
               <Route path="/addcompany" element={<StepForm />} />
               <Route path="/oneway" element={<FormOneWay />} />
             </Routes>
+            </LoadScriptApi>
           </Auth0Provider>
         </AuthProvider>
       </AppShell>
