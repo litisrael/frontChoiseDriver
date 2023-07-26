@@ -11,7 +11,7 @@ export function CardWithStats() {
         {!isAuthenticated ?    <Text >
    hace login <User />
          </Text> : <Text >
-   hola {user.name}
+   hola {user.name} <User />
          </Text>}
      
 

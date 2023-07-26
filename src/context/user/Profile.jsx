@@ -8,7 +8,7 @@ export const Profile = () => {
   return (
     isAuthenticated && (
       <div>
-        <h1>{user.name}</h1>
+        <h1>{user}</h1>
       </div>
     )
   );

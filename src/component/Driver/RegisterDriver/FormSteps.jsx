@@ -15,6 +15,9 @@ import { NewFormCompany } from "./FormCompany.jsx";
 import { Vehicule } from "../RegisterDriver/Vehicles.jsx";
 
 
+import { useAuth0 } from "@auth0/auth0-react";
+
+
 const days = [
   "Sunday",
   "Monday",
@@ -41,6 +44,12 @@ const allDaysData = days.map((day) => {
 
 export function StepForm() {
   
+  const { user, isAuthenticated } = useAuth0();
+
+  // Verifica si el usuario está autenticado
+  if (!isAuthenticated) {
+    return <div>Inicia sesión para acceder al formulario.</div>;
+  }
 
   const [active, setActive] = useState(0);
 
@@ -48,9 +57,10 @@ export function StepForm() {
   
   const formCompany = useForm({
     initialValues: {   
-      company_name: "",
-      company_cell: "",
-      company_mail: "",
+      authId: user.sub,
+      company_name: user.name,
+      company_cell: user.phone_number,
+      company_mail: user.email,
       work_zone: [],
     }
   });

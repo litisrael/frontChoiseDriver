@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import { AuthProvider } from "../context/authcontex";
+
 import { FaBus, FaHome,FaUser } from 'react-icons/fa';
 import { BiSolidLogIn} from 'react-icons/bi'
 import { OptionTravel } from "./cards/OptionTravel";
@@ -105,7 +105,7 @@ export function AppShellExample() {
           </Header>
         }
       >
-        <AuthProvider>
+      
           <Auth0Provider
             domain={domain}
             clientId={clientId}
@@ -121,7 +121,7 @@ export function AppShellExample() {
             </Routes>
             </LoadScriptApi>
           </Auth0Provider>
-        </AuthProvider>
+       
       </AppShell>
     </Router>
   );

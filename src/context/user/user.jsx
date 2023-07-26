@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import{useEffect }from "react"
 export const User = () => {
   const { logout, loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
-//   if (isLoading) return <Loader size="lg" />;
+  //  if (isLoading){ return <Loader size="lg" />;}
 
   return (
     <Flex justify={"center"}>
@@ -14,7 +14,7 @@ export const User = () => {
         <Button onClick={() => loginWithRedirect()}>login </Button>
       )}
 
-      <Profile />
+     
     </Flex>
   );
 };
