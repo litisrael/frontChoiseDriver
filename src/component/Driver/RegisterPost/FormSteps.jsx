@@ -12,7 +12,7 @@ import {
 
 import { useForm } from "@mantine/form";
 import { NewFormCompany } from "./FormCompany.jsx";
-import { Vehicule } from "../RegisterDriver/Vehicles.jsx";
+import { Vehicule } from "./Vehicles.jsx";
 
 
 import { useAuth0 } from "@auth0/auth0-react";
@@ -57,7 +57,7 @@ export function StepForm() {
   
   const formCompany = useForm({
     initialValues: {   
-      authId: user.sub,
+      auth_id: user.sub,
       company_name: user.name,
       company_cell: user.phone_number,
       company_mail: user.email,

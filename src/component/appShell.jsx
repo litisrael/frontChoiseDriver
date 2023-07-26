@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-
+import { GetDataDriver } from "./Driver/update/get1";
 import { FaBus, FaHome,FaUser } from 'react-icons/fa';
 import { BiSolidLogIn} from 'react-icons/bi'
 import { OptionTravel } from "./cards/OptionTravel";
@@ -17,7 +17,7 @@ import {
   Step,
   NavLink,
 } from "@mantine/core";
-import { StepForm } from "./Driver/RegisterDriver/FormSteps";
+import { StepForm } from "./Driver/RegisterPost/FormSteps";
 import { FormOneWay } from "./FormPassenger/FormOneWay";
 import { CardWithStats } from "./cards/Card";
 import {LoadScriptApi  } from "./apis/LoadScript";
@@ -55,7 +55,9 @@ export function AppShellExample() {
                 variant="Link"
                 to="/addcompany"
               />
-              <NavLink label="edit" />
+              <NavLink  
+            component={Link} variant="Link" to="/get"
+            label="get" />
               <NavLink label="delete" />
             </NavLink>
             <NavLink  icon={<FaUser size="1rem" stroke={1.5} />}
@@ -115,7 +117,7 @@ export function AppShellExample() {
             <Routes>
               <Route path="/home" element={<OptionTravel />} />
               <Route path="/login" element={<User />} />
-              <Route path="/title" element={<> </>} />
+              <Route path="/get" element={ <GetDataDriver />} />
               <Route path="/addcompany" element={<StepForm />} />
               <Route path="/oneway" element={<FormOneWay />} />
             </Routes>
