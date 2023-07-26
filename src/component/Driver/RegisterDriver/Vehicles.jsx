@@ -17,6 +17,7 @@ import { Calendar } from "./calendar";
 import { AllDays } from "./AllDays";
 
 export function Vehicule({ formVehicle, formDays, calendarDisableTourist }) {
+  
   return (
     <Box mx="auto">
       {formVehicle.values.vehicle.map((item, index) => (

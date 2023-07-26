@@ -12,7 +12,7 @@ import {
 
 import { useForm } from "@mantine/form";
 import { NewFormCompany } from "./FormCompany.jsx";
-import { Vehicule } from "./Vehicles.jsx";
+import { Vehicule } from "../RegisterDriver/Vehicles.jsx";
 
 
 const days = [

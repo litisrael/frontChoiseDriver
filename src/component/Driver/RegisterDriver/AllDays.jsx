@@ -14,7 +14,7 @@ import {
 } from "@mantine/core";
 
 import { IconTrash } from "@tabler/icons-react";
-import { InputTime } from "../InputTime";
+import { InputTime } from "../../InputTime";
 
 export function AllDays({ formDays }) {
   return (

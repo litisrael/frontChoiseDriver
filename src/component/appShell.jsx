@@ -17,7 +17,7 @@ import {
   Step,
   NavLink,
 } from "@mantine/core";
-import { StepForm } from "./FormDriver/FormSteps";
+import { StepForm } from "./Driver/RegisterDriver/FormSteps";
 import { FormOneWay } from "./FormPassenger/FormOneWay";
 import { CardWithStats } from "./cards/Card";
 import {LoadScriptApi  } from "./apis/LoadScript";

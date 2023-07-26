@@ -119,9 +119,11 @@ export function FormOneWay() {
           component="form"
           maw={400}
           mx="auto"
-          onSubmit={form.onSubmit(() => {
+          onSubmit={((e) => {
+            e.preventDefault()
             console.log(form.values);
           })}
+          
         >
           <NumberInput
             label="number of passengers"

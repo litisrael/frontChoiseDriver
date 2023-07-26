@@ -16,7 +16,7 @@ import {
   Chip,
   Switch,
 } from "@mantine/core";
-import { Zone } from "../zone";
+import { Zone } from "../../zone";
 export function NewFormCompany({formCompany}) {
 
 
