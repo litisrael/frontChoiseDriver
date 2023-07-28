@@ -16,12 +16,14 @@ import {
   useMantineTheme,
   Step,
   NavLink,
+  Image
 } from "@mantine/core";
 import { StepForm } from "./Driver/RegisterPost/FormSteps";
 import { FormOneWay } from "./FormPassenger/FormOneWay";
 import { CardWithStats } from "./cards/Card";
 import {LoadScriptApi  } from "./apis/LoadScript";
-import { User } from "../context/user/user";
+import { User } from "../context/user/User";
+
 import { Auth0Provider } from "@auth0/auth0-react";
 
 const domain = import.meta.env.VITE_DOMAIN;
@@ -88,6 +90,11 @@ export function AppShellExample() {
         }
         header={
           <Header height={{ base: 50, md: 70 }} p="md">
+             {/* <Image 
+        src="https://drive.google.com/uc?id=1UsQiYWNJPXN-xll5ocqbNkg91Ccz9Er1"
+         height={200} fit="none"
+        alt="Norway"
+      /> */}
             <Text pl="xl " align="flex-start" justify="center">
               Application header
             </Text>

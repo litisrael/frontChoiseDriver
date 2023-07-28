@@ -1,22 +1,4 @@
-// const onLoad = useCallback((map) => (mapRef.current = map), []);
 
-// const fetchDirections = (originLocation) => {
-//   if (!originLocation) return;
-
-//   const service = new google.maps.DirectionsService();
-//   service.route(
-//     {
-//       originLocation,
-//       destinationLocation,
-//       travelMode: google.maps.TravelMode.DRIVING,
-//     },
-//     (result, status) => {
-//       if (status === "OK" && result) {
-//         setDestinationLocation(result);
-//       }
-//     }
-//   );
-// };
 
 import { useForm } from "@mantine/form";
 import { AutocomletInputAdress } from "../apis/AutocomletInputAdress";
@@ -41,6 +23,7 @@ import {
 import { useState, useRef, useMemo, useEffect } from "react";
 
 export function FormOneWay() {
+
   const form = useForm({
     initialValues: {
       number_of_passengers: "",
@@ -53,6 +36,8 @@ export function FormOneWay() {
       // to_street: "",
       departure_date: "",
       departure_hour: "",
+      coordinates_origin:"",
+      coordinates_destine: ""
     },
   });
 
@@ -61,25 +46,47 @@ export function FormOneWay() {
   const [directionResponse, setDirectionResponse] = useState(null);
   const [originLocation, setOriginLocation] = useState(null);
   const [destinationLocation, setDestinationLocation] = useState(null);
+  
+  const [duration, setDuration] = useState(null);
+  const [distance, setDistance] = useState(null);
 
   useEffect(() => {
     // Set the center to initialCenter when the component mounts
     setCenter(initialCenter);
   }, []);
+// ... (previous code remains unchanged)
 
-  const fetchDirection = async (originRef) => {
-    if (!originLocation || !destinationLocation) {
-      return;
-    }
-    const DirectionsService = new google.maps.DirectionsService();
-    const result = await DirectionsService.route({
-      origin: originLocation, // Use 'origin' instead of 'originRef'
-      destination: destinationLocation, // Use 'destination' instead of 'destinationRef'
-      travelMode: google.maps.TravelMode.DRIVING,
-    });
+const fetchDirection = async () => {
+  if (!originLocation || !destinationLocation) {
+    return;
+  }
 
-    setDirectionResponse(result);
-  };
+  const DirectionsService = new google.maps.DirectionsService();
+  const result = await DirectionsService.route({
+    origin: originLocation,
+    destination: destinationLocation,
+    travelMode: google.maps.TravelMode.DRIVING,
+  });
+
+  setDirectionResponse(result);
+  setDistance(result.routes[0].legs[0].distance.text)
+   setDuration(result.routes[0].legs[0].duration.text)
+
+  // Extract LatLng of the origin and destination
+  if (result?.routes?.length > 0) {
+    const route = result.routes[0];
+    console.log(route,"---------------------------------------------------------")
+    const originLatLng = route.legs[0].start_location.toJSON();
+    const destinationLatLng = route.legs[route.legs.length - 1].end_location.toJSON();
+
+    // Update the form fields with the LatLng values
+    form.setFieldValue("coordinates_origin", `${originLatLng.lat},${originLatLng.lng}`);
+    form.setFieldValue("coordinates_destine", `${destinationLatLng.lat},${destinationLatLng.lng}`);
+  }
+};
+
+// ... (rest of the code remains unchanged)
+
   const originRef = useRef(); // Asignar la referencia
   const destinationRef = useRef(); // Asignar la referencia
 
@@ -106,6 +113,7 @@ export function FormOneWay() {
   
 
   return (
+    
     <Grid grow>
       <Grid.Col span={6}>
       <Maps center={center}> {/* Use the center state for the center of the map */}
@@ -170,6 +178,8 @@ export function FormOneWay() {
           </Group>
         </Box>
       </Grid.Col>
+      <Text fz="lg">distance {distance}</Text>
+      <Text fz="lg">duration approximate {duration}</Text>
     </Grid>
   );
 }
