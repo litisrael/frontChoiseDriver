@@ -12,7 +12,7 @@ export const User = () => {
       {isAuthenticated ? (
         <>
         <Button onClick={() => logout()}>logut </Button>
-        <Text>hola {user.name}</Text>
+        <Text>hellow  {user.name}</Text>
         </>
       ) : (
         <Button onClick={() => loginWithRedirect()}>login </Button>

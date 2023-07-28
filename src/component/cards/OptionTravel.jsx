@@ -2,11 +2,8 @@
 import { Grid, Flex, Image, Text, Group, RingProgress, rem } from '@mantine/core';
 import {  CardWithStats} from "./Card";
 import { CardOneWay } from "./CardOneWay";
-import { Auth0Provider } from "@auth0/auth0-react";
 
 
-const domain = import.meta.env.VITE_DOMAIN;
-const clientId = import.meta.env.VITE_CLIENT_ID;
 
 import { Maps } from "../apis/Maps";
 const center = { lat: 31.76904, lng: 35.21633 };

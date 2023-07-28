@@ -1,5 +1,5 @@
 
-
+import { User } from "../../context/user/User";
 import { useForm } from "@mantine/form";
 import { AutocomletInputAdress } from "../apis/AutocomletInputAdress";
 import { Maps } from "../apis/Maps";
@@ -22,7 +22,17 @@ import {
 } from "@react-google-maps/api";
 import { useState, useRef, useMemo, useEffect } from "react";
 
+import { useAuth0 } from "@auth0/auth0-react";
+
+
 export function FormOneWay() {
+  
+  const { user, isAuthenticated } = useAuth0();
+
+  // Verifica si el usuario está autenticado
+  if (!isAuthenticated) {
+    return <Text>Please log in to access the form. <User /> </Text>;
+  }
 
   const form = useForm({
     initialValues: {
@@ -113,7 +123,7 @@ const fetchDirection = async () => {
   
 
   return (
-    
+    <>
     <Grid grow>
       <Grid.Col span={6}>
       <Maps center={center}> {/* Use the center state for the center of the map */}
@@ -178,8 +188,14 @@ const fetchDirection = async () => {
           </Group>
         </Box>
       </Grid.Col>
-      <Text fz="lg">distance {distance}</Text>
-      <Text fz="lg">duration approximate {duration}</Text>
+
     </Grid>
+    <Box  justify="center"
+      align="center"
+      direction="row" >
+       <Text fz="lg">distance {distance}</Text>
+      <Text fz="lg">duration approximate {duration}</Text>
+    </Box>
+    </>
   );
 }
