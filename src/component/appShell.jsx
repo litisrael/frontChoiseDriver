@@ -21,13 +21,9 @@ import {
 import { StepForm } from "./Driver/RegisterPost/FormSteps";
 import { FormOneWay } from "./FormPassenger/FormOneWay";
 import { CardWithStats } from "./cards/Card";
-import {LoadScriptApi  } from "./apis/LoadScript";
+
 import { User } from "../context/user/User";
 
-import { Auth0Provider } from "@auth0/auth0-react";
-
-const domain = import.meta.env.VITE_DOMAIN;
-const clientId = import.meta.env.VITE_CLIENT_ID;
 
 export function AppShellExample() {
   const theme = useMantineTheme();
@@ -115,12 +111,8 @@ export function AppShellExample() {
         }
       >
       
-          <Auth0Provider
-            domain={domain}
-            clientId={clientId}
-            authorizationParams={{ redirect_uri: window.location.origin }}
-          >
-            <LoadScriptApi>
+         
+            
             <Routes>
               <Route path="/home" element={<OptionTravel />} />
               <Route path="/login" element={<User />} />
@@ -128,8 +120,8 @@ export function AppShellExample() {
               <Route path="/addcompany" element={<StepForm />} />
               <Route path="/oneway" element={<FormOneWay />} />
             </Routes>
-            </LoadScriptApi>
-          </Auth0Provider>
+          
+         
        
       </AppShell>
     </Router>
