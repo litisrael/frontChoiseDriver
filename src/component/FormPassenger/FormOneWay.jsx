@@ -40,6 +40,7 @@ export function FormOneWay() {
       passenger_name: user.name,
       passenger_mail: user.email,
       passenger_cell: user.phone_number,
+      auth_id: user.sub,
     },
   });
 
@@ -157,9 +158,116 @@ export function FormOneWay() {
             component="form"
             maw={400}
             mx="auto"
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
               console.log(formOneWay.values);
+
+              try {
+                const auth0Id = FormPassenger.values.auth_id;
+                console.log(auth0Id, "auth0Id");
+                const passengerRes = await fetch(
+                  `http://localhost:4000/passenger/${auth0Id}`,
+                  {
+                    method: "GET",
+                  }
+                );
+
+                const passengerData = await passengerRes.json();
+
+                if (passengerData && passengerData.id) {
+                  // El pasajero ya existe, usar su ID para la reserva
+
+                  const reservationData = {
+                    ...formOneWay.values,
+                    passenger_id: passengerData.id,
+                    // Convertir las coordenadas a formato GeoJSON antes de enviarlas
+                    coordinates_origin: {
+                      type: "Point",
+                      coordinates: formOneWay.values.coordinates_origin
+                        .split(",")
+                        .reverse()
+                        .map(parseFloat),
+                    },
+                    coordinates_destine: {
+                      type: "Point",
+                      coordinates: formOneWay.values.coordinates_destine
+                        .split(",")
+                        .reverse()
+                        .map(parseFloat),
+                    },
+                    // Resto de los datos de la reserva...
+                  };
+                  const reservationRes = await fetch(
+                    "http://localhost:4000/reservationoneway",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify(reservationData),
+                    }
+                  );
+
+                  if (reservationRes.status === 200) {
+                    const responseData = await reservationRes.json();
+                    console.log("Success!", responseData);
+                  } else {
+                    const errorData = await reservationRes.json(); // Leer los datos de error de la respuesta
+                    console.error(
+                      "The server responded with an error",
+                      errorData
+                    );
+                  }
+                } else {
+                  // El pasajero no existe, subir los datos del pasajero al servidor
+                  const passengerResponse = await fetch(
+                    "http://localhost:4000/passenger",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify(FormPassenger.values),
+                    }
+                  );
+
+                  const newPassengerData = await passengerResponse.json();
+
+                  // Obtener el id del pasajero recién creado
+                  const newPassengerId = newPassengerData.id;
+
+                  // Crear la reserva con el id del pasajero recién creado
+                  const reservationData = {
+                    ...formOneWay.values,
+                    passengerId: newPassengerId,
+                    // Resto de los datos de la reserva...
+                  };
+
+                  const reservationRes = await fetch(
+                    "http://localhost:4000/reservationoneway",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify(reservationData),
+                    }
+                  );
+
+                  const responseData = await reservationRes.json();
+
+                  if (reservationRes.status === 200) {
+                    console.log("Success!", responseData);
+                  } else {
+                    console.error(
+                      "The server responded with an error",
+                      responseData
+                    );
+                  }
+                }
+              } catch (error) {
+                console.log("This is what went wrong:", error.message);
+              }
             }}
           >
             <TextInput
