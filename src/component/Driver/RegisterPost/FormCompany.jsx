@@ -17,76 +17,77 @@ import {
   Switch,
 } from "@mantine/core";
 import { Zone } from "../../zone";
-export function NewFormCompany({formCompany}) {
 
+import { AutoCompleteInputAddress } from "../../apis/AutocomletInputAdress";
 
+export function NewFormCompany({
+  formCompany,
+  setMarkerPosition,
+  setMapCenter,
+  setRadius,
+}) {
+  const handleOriginPlaceChanged = (place) => {
+    if (place.geometry && place.geometry.location) {
+      const markerPosition = place.geometry.location.toJSON();
+      const geoJson = {
+        type: "Point",
+        coordinates: [markerPosition.lng, markerPosition.lat], // Longitud (lng) primero, latitud (lat) después
+      };
+      formCompany.setFieldValue("work_zone", geoJson);
 
-  return(
-      <Box
-        component="form"
-        maw={400}
-        mx="auto"
-        //   onSubmit={form.onSubmit(async (e) => {
-        //     try {
-        //       const res = await fetch("http://localhosfst:4000/company", {
-        //         method: "POST",
-        //         body: JSON.stringify(e),
-        //         headers: {
-        //           "Content-Type": "application/json",
-        //         },
-        //       });
+      // formCompany.setFieldValue("work_zone", place.formatted_address);
+      setMarkerPosition(markerPosition);
+      setMapCenter(markerPosition);
+    }
+  };
+  // const handleRadiusChange = (event) => {
+  //   const newRadius = parseFloat(event.target.value);
+  //   setRadius(newRadius);
+  // };
+  return (
+    <Box component="form" maw={400} mx="auto">
+      <TextInput
+        label="Name company label "
+        placeholder="Name company"
+        {...formCompany.getInputProps("company_name")}
+      />
 
-        //       const responseData = await res.json();
+      <TextInput
+        label="company_cell"
+        placeholder="cel"
+        withAsterisk
+        mt="md"
+        {...formCompany.getInputProps("company_cell")}
+      />
 
-        //       if (res.status === 200) {
-        //         form.reset()
-        //         console.log('success!', responseData)
-        //       } else {
-        //         console.error('server responded with error', responseData)
-        //       }
-        //     } catch ({message}) {
-        //       console.log('This is what went wrong:', message)
-        //     }
-        //   })}
-      >
-        <TextInput
-          label="Name company label "
-          placeholder="Name company"
-        
-          {...formCompany.getInputProps("company_name")}
-        />
+      <TextInput
+        label="Your email"
+        placeholder="Your email"
+        withAsterisk
+        mt="md"
+        {...formCompany.getInputProps("company_mail")}
+      />
 
-        <TextInput
-          label="company_cell"
-          placeholder="cel"
-          withAsterisk
-          mt="md"
-          {...formCompany.getInputProps("company_cell")}
-        />
+      <AutoCompleteInputAddress
+        label="choose work zone "
+        placeholder="choose work zone"
+        onPlaceChanged={handleOriginPlaceChanged}
+        mt="md"
+        {...formCompany.getInputProps("work_zone")}
+      />
 
-        <TextInput
-          label="Your email"
-          placeholder="Your email"
-          withAsterisk
-          mt="md"
-          {...formCompany.getInputProps("company_mail")}
-        />
-
-        <Zone {...formCompany.getInputProps("work_zone")} />
+<NumberInput
+        label="Radius"
+        // defaultValue={radiusValue}
+        precision={2}
+        min={0}
+        step={3000}
+        max={80000}
+        // {...formCompany.getInputProps("radius")}
+  onChange={(newValue) => setRadius(newValue)}
+      />
 
      
-
-        {/* <Group position="center">
-      <Chip color="cyan" variant="filled" size="md" radius="md">shomer_shabat</Chip>
-     
-      <Chip defaultChecked color="cyan" variant="filled" size="md" radius="md">work multiple days </Chip>
-      </Group>
-      */}
-        {/* 
-      <Group position="right" mt="md">
-        <Button type="submit">Submit</Button>
-      </Group> */}
-      </Box>
-    )
-  }
-
+    </Box>
+  );
+}

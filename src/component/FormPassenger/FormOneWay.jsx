@@ -1,7 +1,8 @@
 import { User } from "../../context/user/User";
 import { useForm } from "@mantine/form";
-import { AutocomletInputAdress } from "../apis/AutocomletInputAdress";
+import { AutoCompleteInputAddress } from "../apis/AutocomletInputAdress";
 import { Maps } from "../apis/Maps";
+import { createPassenger,updatePassenger,prepareReservationData } from "./reservation.js";
 import {
   Button,
   Group,
@@ -160,103 +161,89 @@ export function FormOneWay() {
             mx="auto"
             onSubmit={async (e) => {
               e.preventDefault();
+             
               console.log(formOneWay.values);
-
+              let reservationData
               try {
                 const auth0Id = FormPassenger.values.auth_id;
                 console.log(auth0Id, "auth0Id");
+            
                 const passengerRes = await fetch(
                   `http://localhost:4000/passenger/${auth0Id}`,
                   {
                     method: "GET",
                   }
                 );
-
-                const passengerData = await passengerRes.json();
-
-                if (passengerData && passengerData.id) {
-                  // El pasajero ya existe, usar su ID para la reserva
-
-                  const reservationData = {
-                    ...formOneWay.values,
-                    passenger_id: passengerData.id,
-                    // Convertir las coordenadas a formato GeoJSON antes de enviarlas
-                    coordinates_origin: {
-                      type: "Point",
-                      coordinates: formOneWay.values.coordinates_origin
-                        .split(",")
-                        .reverse()
-                        .map(parseFloat),
-                    },
-                    coordinates_destine: {
-                      type: "Point",
-                      coordinates: formOneWay.values.coordinates_destine
-                        .split(",")
-                        .reverse()
-                        .map(parseFloat),
-                    },
-                    // Resto de los datos de la reserva...
-                  };
-                  const reservationRes = await fetch(
-                    "http://localhost:4000/reservationoneway",
-                    {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify(reservationData),
-                    }
+            
+                if (!passengerRes.ok) {
+                  // Si no se encuentra el pasajero, crea uno nuevo
+                  const newPassengerId = await createPassenger(FormPassenger.values);
+                  const passengerData = { ...FormPassenger.values, id: newPassengerId };
+                   reservationData = await prepareReservationData(
+                    passengerData,
+                    formOneWay
                   );
+                 
+                  
+                  // const reservationRes = await fetch("http://localhost:4000/reservationoneway", {
+                  //   method: "POST",
+                  //   headers: {
+                  //     "Content-Type": "application/json",
+                  //   },
+                  //   body: JSON.stringify(reservationData),
+                  // });
+                  // if (reservationRes.status === 200) {
+                  //   formOneWay.reset()
+                  //   FormPassenger.reset()
+                  //   console.log("Success!", responseData);
+                  // } else {
+                  //   console.error(
+                  //     "The server responded with an error",
+                  //     responseData
+                  //   );
+                  // }
 
-                  if (reservationRes.status === 200) {
-                    const responseData = await reservationRes.json();
-                    console.log("Success!", responseData);
+                  
+                } else {
+                  const passengerData = await passengerRes.json();
+                 
+            
+                  if (
+                    formOneWay.values.passenger_name === passengerData.passenger_name &&
+                    formOneWay.values.passenger_mail === passengerData.passenger_mail &&
+                    formOneWay.values.passenger_cell === passengerData.passenger_cell
+                  ) {
+                    // Si los datos del pasajero no han cambiado, preparar los datos de la reserva directamente
+                    reservationData = await prepareReservationData(
+                      passengerData,
+                     formOneWay
+                    );
                   } else {
-                    const errorData = await reservationRes.json(); // Leer los datos de error de la respuesta
-                    console.error(
-                      "The server responded with an error",
-                      errorData
+                    // Si los datos del pasajero han cambiado, actualizar el pasajero y luego preparar los datos de la reserva
+                    
+                    const updatedPassengerRes = await  updatePassenger(auth0Id, FormPassenger.values);
+                  
+                    reservationData = await prepareReservationData(
+                      updatedPassengerRes,
+                      formOneWay
                     );
                   }
-                } else {
-                  // El pasajero no existe, subir los datos del pasajero al servidor
-                  const passengerResponse = await fetch(
-                    "http://localhost:4000/passenger",
-                    {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify(FormPassenger.values),
-                    }
-                  );
-
-                  const newPassengerData = await passengerResponse.json();
-
-                  // Obtener el id del pasajero recién creado
-                  const newPassengerId = newPassengerData.id;
-
-                  // Crear la reserva con el id del pasajero recién creado
-                  const reservationData = {
-                    ...formOneWay.values,
-                    passengerId: newPassengerId,
-                    // Resto de los datos de la reserva...
-                  };
-
-                  const reservationRes = await fetch(
-                    "http://localhost:4000/reservationoneway",
-                    {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify(reservationData),
-                    }
-                  );
-
-                  const responseData = await reservationRes.json();
+            
+                  // Lógica para realizar la reserva con los datos preparados
+                  // (por ejemplo, realizar la llamada a la API de reserva)
+                }
+                const reservationRes = await fetch("http://localhost:4000/reservationoneway", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(reservationData),
+                });
+                const responseData = await reservationRes.json();
 
                   if (reservationRes.status === 200) {
+                    formOneWay.reset()
+                    FormPassenger.reset()
                     console.log("Success!", responseData);
                   } else {
                     console.error(
@@ -264,9 +251,9 @@ export function FormOneWay() {
                       responseData
                     );
                   }
-                }
+                
               } catch (error) {
-                console.log("This is what went wrong:", error.message);
+                console.log("Error:", error.message);
               }
             }}
           >
@@ -280,13 +267,14 @@ export function FormOneWay() {
 
             <TextInput
               label="mail"
+              disabled
               placeholder="mail"
               withAsterisk
               mt="md"
               {...FormPassenger.getInputProps("passenger_mail")}
             />
             <TextInput
-              label="cell"
+              label="cell "
               placeholder="cell"
               withAsterisk
               mt="md"
@@ -299,7 +287,7 @@ export function FormOneWay() {
               withAsterisk
               {...formOneWay.getInputProps("number_of_passengers")}
             />
-            <AutocomletInputAdress
+            <AutoCompleteInputAddress
               label="from origin"
               placeholder="Enter from address"
               ref={originRef}
@@ -309,7 +297,7 @@ export function FormOneWay() {
               }
               onPlaceChanged={handleOriginPlaceChanged}
             />
-            <AutocomletInputAdress
+            <AutoCompleteInputAddress
               label="destination"
               placeholder="Enter to address"
               ref={destinationRef}
