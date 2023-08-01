@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Stepper,
   Button,
@@ -16,7 +16,7 @@ import { useForm } from "@mantine/form";
 import { NewFormCompany } from "./FormCompany.jsx";
 import { Vehicule } from "./Vehicles.jsx";
 import { User } from "../../../context/user/User";
-import { GoogleMap, Marker, Circle } from "@react-google-maps/api";
+
 import { useAuth0 } from "@auth0/auth0-react";
 
 const days = [
@@ -53,27 +53,9 @@ export function StepForm() {
       </Text>
     );
   }
-
   const [active, setActive] = useState(0);
-  const [radius, setRadius] = useState(25000);
-  const [markerPosition, setMarkerPosition] = useState(null);
-  const [mapCenter, setMapCenter] = useState();
-  const circleOptions = {
-    strokeColor: "#87CEFA", // Color celeste claro
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
-    fillColor: "#87CEFA",
-    fillOpacity: 0.35,
-  };
-  useEffect(() => {
-    if (markerPosition) {
-      // Actualizar el círculo con la nueva posición del marker
-      setMapCenter(markerPosition);
-    }
-  }, [markerPosition]);
-
-  // const {formDays, formVehicle, renderFormVehicle} = vehicule()
-
+  
+  const initialRadius = 25000;
   const formCompany = useForm({
     initialValues: {
       auth_id: user.sub,
@@ -81,7 +63,7 @@ export function StepForm() {
       company_cell: user.phone_number,
       company_mail: user.email,
       work_zone: null,
-      radius:radius
+      radius: initialRadius,
     },
   });
   const formVehicle = useForm({
@@ -124,9 +106,6 @@ export function StepForm() {
 
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
-
-  
-    
 
   return (
     <>
@@ -186,32 +165,7 @@ export function StepForm() {
         </Flex>
         <Stepper active={active} breakpoint="sm">
           <Stepper.Step label="First step" description="Profile settings">
-            <Grid grow>
-              <Grid.Col span={6}>
-                <Maps center={mapCenter} markerPosition={markerPosition}
-                
-                    >
-                  {markerPosition && <Marker position={markerPosition} />}
-                  {markerPosition && (
-                    <Circle
-                      center={markerPosition}
-                      radius={radius} 
-                      options={circleOptions}
-                    />
-                  )}
-                </Maps>
-              </Grid.Col>
-              <Grid.Col span={6}>
-                <NewFormCompany
-                  formCompany={formCompany}
-                  setMarkerPosition={setMarkerPosition}
-                  setMapCenter={setMapCenter}
-                  setRadius={setRadius}
-                />
-              </Grid.Col>
-
-             
-            </Grid>
+            <NewFormCompany formCompany={formCompany} initialRadius={initialRadius} />
           </Stepper.Step>
 
           <Stepper.Step label="Second step" description="Personal information">

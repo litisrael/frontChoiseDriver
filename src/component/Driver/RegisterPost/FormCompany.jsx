@@ -13,81 +13,105 @@ import {
   NumberInput,
   Box,
   Select,
+  Grid,
   Chip,
   Switch,
 } from "@mantine/core";
+import { GoogleMap, Marker, Circle } from "@react-google-maps/api";
 import { Zone } from "../../zone";
-
+import { useState, useEffect } from "react";
 import { AutoCompleteInputAddress } from "../../apis/AutocomletInputAdress";
+import { Maps } from "../../apis/Maps";
 
-export function NewFormCompany({
-  formCompany,
-  setMarkerPosition,
-  setMapCenter,
-  setRadius,
-}) {
+export function NewFormCompany({ formCompany, initialRadius}) {
+  const [radius, setRadius] = useState(initialRadius);
+  const [markerPosition, setMarkerPosition] = useState(null);
+  const [mapCenter, setMapCenter] = useState();
+  const circleOptions = {
+    strokeColor: "#87CEFA", // Color celeste claro
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: "#87CEFA",
+    fillOpacity: 0.35,
+  };
   const handleOriginPlaceChanged = (place) => {
     if (place.geometry && place.geometry.location) {
       const markerPosition = place.geometry.location.toJSON();
       const geoJson = {
         type: "Point",
-        coordinates: [markerPosition.lng, markerPosition.lat], // Longitud (lng) primero, latitud (lat) después
+        coordinates: [markerPosition.lat, markerPosition.lng], // Latitud (lat) primero, longitud (lng) después
       };
       formCompany.setFieldValue("work_zone", geoJson);
 
-      // formCompany.setFieldValue("work_zone", place.formatted_address);
       setMarkerPosition(markerPosition);
       setMapCenter(markerPosition);
     }
   };
-  // const handleRadiusChange = (event) => {
-  //   const newRadius = parseFloat(event.target.value);
-  //   setRadius(newRadius);
-  // };
+
+  
+  const handleRadius = (radius) => {
+    setRadius(radius);
+    formCompany.setFieldValue("radius", radius);
+  };
+  
+  
   return (
-    <Box component="form" maw={400} mx="auto">
-      <TextInput
-        label="Name company label "
-        placeholder="Name company"
-        {...formCompany.getInputProps("company_name")}
-      />
+    <Grid grow>
+      <Grid.Col span={6}>
+        <Maps center={mapCenter} markerPosition={markerPosition}>
+          {markerPosition && <Marker position={markerPosition} />}
+          {markerPosition && (
+            <Circle
+              center={markerPosition}
+              radius={radius}
+              options={circleOptions}
+            />
+          )}
+        </Maps>
+      </Grid.Col>
+      <Grid.Col span={6}>
+        <Box component="form" maw={400} mx="auto">
+          <TextInput
+            label="Name company label "
+            placeholder="Name company"
+            {...formCompany.getInputProps("company_name")}
+          />
 
-      <TextInput
-        label="company_cell"
-        placeholder="cel"
-        withAsterisk
-        mt="md"
-        {...formCompany.getInputProps("company_cell")}
-      />
+          <TextInput
+            label="company_cell"
+            placeholder="cel"
+            withAsterisk
+            mt="md"
+            {...formCompany.getInputProps("company_cell")}
+          />
 
-      <TextInput
-        label="Your email"
-        placeholder="Your email"
-        withAsterisk
-        mt="md"
-        {...formCompany.getInputProps("company_mail")}
-      />
+          <TextInput
+            label="Your email"
+            placeholder="Your email"
+            withAsterisk
+            mt="md"
+            {...formCompany.getInputProps("company_mail")}
+          />
 
-      <AutoCompleteInputAddress
-        label="choose work zone "
-        placeholder="choose work zone"
-        onPlaceChanged={handleOriginPlaceChanged}
-        mt="md"
-        {...formCompany.getInputProps("work_zone")}
-      />
+          <AutoCompleteInputAddress
+            label="choose work zone "
+            placeholder="choose work zone"
+            onPlaceChanged={handleOriginPlaceChanged}
+            mt="md"
+            // {...formCompany.getInputProps("work_zone")}
+          />
 
-<NumberInput
-        label="Radius"
-        // defaultValue={radiusValue}
-        precision={2}
-        min={0}
-        step={3000}
-        max={80000}
-        // {...formCompany.getInputProps("radius")}
-  onChange={(newValue) => setRadius(newValue)}
-      />
-
-     
-    </Box>
+          <NumberInput
+            label="Radius"
+            value={radius}
+            // precision={2}
+            min={0}
+            step={3000}
+            max={80000}
+            onChange={handleRadius}
+          />
+        </Box>
+      </Grid.Col>
+    </Grid>
   );
 }
