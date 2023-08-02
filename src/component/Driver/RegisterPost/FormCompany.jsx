@@ -22,9 +22,11 @@ import { Zone } from "../../zone";
 import { useState, useEffect } from "react";
 import { AutoCompleteInputAddress } from "../../apis/AutocomletInputAdress";
 import { Maps } from "../../apis/Maps";
-
-export function NewFormCompany({ formCompany, initialRadius}) {
-  const [radius, setRadius] = useState(initialRadius);
+import { Bottones } from "./Bottones";
+export function NewFormCompany({ formCompany, 
+  // initialRadius 
+}) {
+  const [radius, setRadius] = useState(0);
   const [markerPosition, setMarkerPosition] = useState(null);
   const [mapCenter, setMapCenter] = useState();
   const circleOptions = {
@@ -34,7 +36,9 @@ export function NewFormCompany({ formCompany, initialRadius}) {
     fillColor: "#87CEFA",
     fillOpacity: 0.35,
   };
+  
   const handleOriginPlaceChanged = (place) => {
+    
     if (place.geometry && place.geometry.location) {
       const markerPosition = place.geometry.location.toJSON();
       const geoJson = {
@@ -45,28 +49,26 @@ export function NewFormCompany({ formCompany, initialRadius}) {
 
       setMarkerPosition(markerPosition);
       setMapCenter(markerPosition);
+  
     }
   };
 
-  
   const handleRadius = (radius) => {
     setRadius(radius);
     formCompany.setFieldValue("radius", radius);
   };
-  
-  
+
+
   return (
     <Grid grow>
       <Grid.Col span={6}>
         <Maps center={mapCenter} markerPosition={markerPosition}>
           {markerPosition && <Marker position={markerPosition} />}
-          {markerPosition && (
-            <Circle
-              center={markerPosition}
-              radius={radius}
-              options={circleOptions}
-            />
-          )}
+          { markerPosition && <Circle
+                center={markerPosition}
+                radius={radius}
+                options={circleOptions}
+              />}
         </Maps>
       </Grid.Col>
       <Grid.Col span={6}>
@@ -101,13 +103,14 @@ export function NewFormCompany({ formCompany, initialRadius}) {
             // {...formCompany.getInputProps("work_zone")}
           />
 
-          <NumberInput
-            label="Radius"
+          <Bottones setRadius={setRadius}
+            // label="Radius"
             value={radius}
             // precision={2}
-            min={0}
-            step={3000}
-            max={80000}
+            // min={0}
+            // defaultValue={1000}
+            // step={3000}
+            // max={80000}
             onChange={handleRadius}
           />
         </Box>

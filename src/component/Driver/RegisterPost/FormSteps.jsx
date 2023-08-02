@@ -41,8 +41,9 @@ const allDaysData = days.map((day) => {
     ],
   };
 });
-
+console.log(location.origin);
 export function StepForm() {
+
   const { user, isAuthenticated } = useAuth0();
 
   // Verifica si el usuario está autenticado
@@ -55,7 +56,7 @@ export function StepForm() {
   }
   const [active, setActive] = useState(0);
   
-  const initialRadius = 25000;
+  // const initialRadius = 25000;
   const formCompany = useForm({
     initialValues: {
       auth_id: user.sub,
@@ -63,7 +64,7 @@ export function StepForm() {
       company_cell: user.phone_number,
       company_mail: user.email,
       work_zone: null,
-      radius: initialRadius,
+      radius: 0,
     },
   });
   const formVehicle = useForm({
@@ -165,7 +166,9 @@ export function StepForm() {
         </Flex>
         <Stepper active={active} breakpoint="sm">
           <Stepper.Step label="First step" description="Profile settings">
-            <NewFormCompany formCompany={formCompany} initialRadius={initialRadius} />
+            <NewFormCompany formCompany={formCompany} 
+            // initialRadius={initialRadius} 
+            />
           </Stepper.Step>
 
           <Stepper.Step label="Second step" description="Personal information">

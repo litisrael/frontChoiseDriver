@@ -71,10 +71,10 @@ export function FormOneWay() {
   const [duration, setDuration] = useState(null);
   const [distance, setDistance] = useState(null);
 
-  useEffect(() => {
-    // Set the center to initialCenter when the component mounts
-    setCenter(initialCenter);
-  }, []);
+  // useEffect(() => {
+  //   // Set the center to initialCenter when the component mounts
+  //   setCenter(initialCenter);
+  // }, []);
   // ... (previous code remains unchanged)
 
   const fetchDirection = async () => {

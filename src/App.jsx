@@ -9,7 +9,7 @@ const clientId = import.meta.env.VITE_CLIENT_ID;
 
 
 export default function App() {
-  
+
   return (
     <div className='App'>
   <MantineProvider> 
