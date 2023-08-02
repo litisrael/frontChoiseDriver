@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { NumberInput, Group, ActionIcon, rem } from '@mantine/core';
 
-export function Bottones({setRadius ,value}) {
+export function Bottones({ value, onChange }) {
 //   const [value, setValue] = useState(3000);
   const handlers = useRef();
 
@@ -14,7 +14,7 @@ export function Bottones({setRadius ,value}) {
       <NumberInput
         hideControls
         value={value}
-        onChange={(val) => setRadius(val)}
+        onChange={(val) => onChange(val)}
         handlersRef={handlers}
         max={80000}
         min={0}

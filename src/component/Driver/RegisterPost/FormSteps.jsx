@@ -56,7 +56,6 @@ export function StepForm() {
   }
   const [active, setActive] = useState(0);
   
-  // const initialRadius = 25000;
   const formCompany = useForm({
     initialValues: {
       auth_id: user.sub,

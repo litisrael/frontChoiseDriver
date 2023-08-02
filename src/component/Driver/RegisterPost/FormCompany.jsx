@@ -37,6 +37,8 @@ export function NewFormCompany({ formCompany,
     fillOpacity: 0.35,
   };
   
+
+
   const handleOriginPlaceChanged = (place) => {
     
     if (place.geometry && place.geometry.location) {
@@ -52,13 +54,21 @@ export function NewFormCompany({ formCompany,
   
     }
   };
+  useEffect(() => {
+    // Establecer el estado inicial de radius después de que el marcador se haya establecido.
+    if (markerPosition && radius === 0) {
+      setRadius(25000);
+      formCompany.setFieldValue("radius", 25000);
+    }
+  }, [markerPosition]);
 
   const handleRadius = (radius) => {
-    setRadius(radius);
-    formCompany.setFieldValue("radius", radius);
+    console.log("New Radius:", radius);
+      setRadius(radius);
+      formCompany.setFieldValue("radius", radius);
+    
   };
-
-
+console.log(radius);
   return (
     <Grid grow>
       <Grid.Col span={6}>
@@ -103,15 +113,7 @@ export function NewFormCompany({ formCompany,
             // {...formCompany.getInputProps("work_zone")}
           />
 
-          <Bottones setRadius={setRadius}
-            // label="Radius"
-            value={radius}
-            // precision={2}
-            // min={0}
-            // defaultValue={1000}
-            // step={3000}
-            // max={80000}
-            onChange={handleRadius}
+          <Bottones value={radius} onChange={handleRadius}
           />
         </Box>
       </Grid.Col>
