@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Button } from "@mantine/core";
+import { Button,Text } from "@mantine/core";
 import { useAuth0 } from "@auth0/auth0-react";
+import { User } from "../../../context/user/User";
 
 export const GetDataDriver = () => {
   const { user, isAuthenticated } = useAuth0();
   const [companyData, setCompanyData] = useState(null);
 
   // Verifica si el usuario está autenticado
-  if (!isAuthenticated) {
-    return <div>Inicia sesión para acceder al formulario.</div>;
+  if (!isAuthenticated) {  <Text>
+    Please log in to access the form. <User />{" "}
+  </Text>
   }
 
   const handleFetchData = async () => {
@@ -46,5 +48,3 @@ export const GetDataDriver = () => {
     </>
   );
 };
-
-export default GetDataDriver;

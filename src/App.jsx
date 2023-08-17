@@ -1,9 +1,9 @@
 import { MantineProvider, Text, Button ,Paper,Loader, ColorSchemeProvider } from '@mantine/core';
 
-
-import { AppShellExample } from "./component/appShell";
+import {  HeaderTabs} from "./component/principal/HeaderTabs";
+import { AppShellExample } from "./component/principal/appShell";
 import { Auth0Provider } from "@auth0/auth0-react";
-import {LoadScriptApi  } from "./component/apis/LoadScript";
+import {LoadScriptApi  } from "./context/apis/LoadScript";
 const domain = import.meta.env.VITE_DOMAIN;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
@@ -22,8 +22,8 @@ export default function App() {
             authorizationParams={{ redirect_uri: window.location.origin }}
           >
     <ColorSchemeProvider>
-    <AppShellExample />
-   
+    {/* <AppShellExample /> */}
+    <HeaderTabs   />
   </ColorSchemeProvider>
     </Auth0Provider>
     </LoadScriptApi>

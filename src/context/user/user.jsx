@@ -1,5 +1,5 @@
 import { Flex, Text, Button } from "@mantine/core";
-import { Profile } from "./Profile";
+
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 

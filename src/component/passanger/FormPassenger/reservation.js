@@ -63,3 +63,44 @@ export async function prepareReservationData(passengerData,formOneWay) {
   return reservationData;
 }
 
+export async function findOrCreatePassengerAccount(FormPassenger, formOneWay) {
+  try {
+    
+    const auth0Id = FormPassenger.values.auth_id;
+    console.log(auth0Id, "auth0Id");
+
+    const passengerRes = await fetch(`http://localhost:4000/passenger/${auth0Id}`, {
+      method: "GET",
+    });
+
+    if (!passengerRes.ok) {
+      // Si no se encuentra el pasajero, crea uno nuevo
+      const newPassengerId = await createPassenger(FormPassenger.values);
+      const passengerData = {
+        ...FormPassenger.values,
+        id: newPassengerId,
+      };
+      return await prepareReservationData(passengerData, formOneWay);
+    } else {
+      const passengerData = await passengerRes.json();
+
+      if (
+        formOneWay.values.passenger_name === passengerData.passenger_name &&
+        formOneWay.values.passenger_mail === passengerData.passenger_mail &&
+        formOneWay.values.passenger_cell === passengerData.passenger_cell
+      ) {
+        // Si los datos del pasajero no han cambiado, preparar los datos de la reserva directamente
+        return await prepareReservationData(passengerData, formOneWay);
+      } else {
+        // Si los datos del pasajero han cambiado, actualizar el pasajero y luego preparar los datos de la reserva
+
+        const updatedPassengerRes = await updatePassenger(auth0Id, FormPassenger.values);
+
+        return await prepareReservationData(updatedPassengerRes, formOneWay);
+      }
+    }
+  } catch (error) {
+    console.error("Error processing reservation:", error);
+    throw error;
+  }
+}

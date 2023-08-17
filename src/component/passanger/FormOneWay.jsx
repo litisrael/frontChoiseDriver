@@ -1,14 +1,14 @@
 import { User } from "../../context/user/User";
 import { useForm } from "@mantine/form";
-import { AutoCompleteInputAddress } from "../apis/AutocomletInputAdress";
-import { Maps } from "../apis/Maps";
+import { AutoCompleteInputAddress } from "../../context/apis/AutocomletInputAdress";
+import { Maps } from "../../context/apis/Maps";
 
-import { OfferedOneWay } from "../Driver/offeredPrice/OfferedPriceOneWay";
 import {
+  findOrCreatePassengerAccount,
   createPassenger,
   updatePassenger,
   prepareReservationData,
-} from "./reservation.js";
+} from "./FormPassenger/reservation.js";
 import {
   Button,
   Group,
@@ -16,6 +16,7 @@ import {
   TextInput,
   NumberInput,
   Box,
+  Paper,
   Grid,
 } from "@mantine/core";
 
@@ -90,12 +91,7 @@ export function FormOneWay() {
     // Extract LatLng of the origin and destination
     if (result?.routes?.length > 0) {
       const route = result.routes[0];
-      console.log(
-        route,
-        "---------------------------------------------------------"
-        );
-        console.log(result.routes[0].legs[0].start_address,"originLocationoriginLocationoriginLocation");
-        console.log(route.legs[0].start_address,"routerouterouterouterouteroute");
+    
 
       const originLatLng = route.legs[0].start_location.toJSON();
       const destinationLatLng =
@@ -161,20 +157,10 @@ export function FormOneWay() {
   };
   return (
     <>
-    <OfferedOneWay formData={formData}/>
       <Grid grow>
-        <Grid.Col span={6}>
-          <Maps center={center}>
-            {" "}
-            {/* Use the center state for the center of the map */}
-            {directionResponse && (
-              <DirectionsRenderer directions={directionResponse} />
-            )}
-            {originLocation && <Marker position={originLocation} />}
-            {destinationLocation && <Marker position={destinationLocation} />}
-          </Maps>
-        </Grid.Col>
-        <Grid.Col span={6}>
+        <Grid.Col span={4}>
+      <Paper shadow="md" withBorder p="xl" radius="xl">
+          
           <Box
             component="form"
             maw={400}
@@ -182,65 +168,10 @@ export function FormOneWay() {
             onSubmit={async (e) => {
               e.preventDefault();
 
-              console.log(formOneWay.values);
-              let reservationData;
-              try {
-                const auth0Id = FormPassenger.values.auth_id;
-                console.log(auth0Id, "auth0Id");
+             
+          
+               const reservationData = await findOrCreatePassengerAccount(FormPassenger, formOneWay);
 
-                const passengerRes = await fetch(
-                  `http://localhost:4000/passenger/${auth0Id}`,
-                  {
-                    method: "GET",
-                  }
-                );
-
-                if (!passengerRes.ok) {
-                  // Si no se encuentra el pasajero, crea uno nuevo
-                  const newPassengerId = await createPassenger(
-                    FormPassenger.values
-                  );
-                  const passengerData = {
-                    ...FormPassenger.values,
-                    id: newPassengerId,
-                  };
-                  reservationData = await prepareReservationData(
-                    passengerData,
-                    formOneWay
-                  );
-                } else {
-                  const passengerData = await passengerRes.json();
-
-                  if (
-                    formOneWay.values.passenger_name ===
-                      passengerData.passenger_name &&
-                    formOneWay.values.passenger_mail ===
-                      passengerData.passenger_mail &&
-                    formOneWay.values.passenger_cell ===
-                      passengerData.passenger_cell
-                  ) {
-                    // Si los datos del pasajero no han cambiado, preparar los datos de la reserva directamente
-                    reservationData = await prepareReservationData(
-                      passengerData,
-                      formOneWay
-                    );
-                  } else {
-                    // Si los datos del pasajero han cambiado, actualizar el pasajero y luego preparar los datos de la reserva
-
-                    const updatedPassengerRes = await updatePassenger(
-                      auth0Id,
-                      FormPassenger.values
-                    );
-
-                    reservationData = await prepareReservationData(
-                      updatedPassengerRes,
-                      formOneWay
-                    );
-                  }
-
-                  // Lógica para realizar la reserva con los datos preparados
-                  // (por ejemplo, realizar la llamada a la API de reserva)
-                }
                 const reservationRes = await fetch(
                   "http://localhost:4000/reservationoneway",
                   {
@@ -263,9 +194,7 @@ export function FormOneWay() {
                     responseData
                   );
                 }
-              } catch (error) {
-                console.log("Error:", error.message);
-              }
+        
             }}
           >
             <TextInput
@@ -336,12 +265,27 @@ export function FormOneWay() {
               <Button type="submit">Submit</Button>
             </Group>
           </Box>
+        </Paper>
         </Grid.Col>
+        <Grid.Col span={8}>
+          
+          <Maps center={center}>
+            {" "}
+            {/* Use the center state for the center of the map */}
+            {directionResponse && (
+              <DirectionsRenderer directions={directionResponse} />
+            )}
+            {originLocation && <Marker position={originLocation} />}
+            {destinationLocation && <Marker position={destinationLocation} />}
+          </Maps>
+        </Grid.Col>
+
       </Grid>
       <Box justify="center" align="center" direction="row">
         <Text fz="lg">distance {distance}</Text>
         <Text fz="lg">duration approximate {duration}</Text>
       </Box>
+   
     </>
   );
 }

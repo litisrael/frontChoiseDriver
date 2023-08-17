@@ -20,12 +20,15 @@ import {
 import { GoogleMap, Marker, Circle } from "@react-google-maps/api";
 
 import { useState, useEffect } from "react";
-import { AutoCompleteInputAddress } from "../../apis/AutocomletInputAdress";
-import { Maps } from "../../apis/Maps";
+import { AutoCompleteInputAddress } from "../../../context/apis/AutocomletInputAdress";
+import { Maps } from "../../../context/apis/Maps";
 import { Bottones } from "./Bottones";
+
+
 export function NewFormCompany({ formCompany, 
   // initialRadius 
-}) {
+})
+ {
   const [radius, setRadius] = useState(0);
   const [markerPosition, setMarkerPosition] = useState(null);
   const [mapCenter, setMapCenter] = useState();

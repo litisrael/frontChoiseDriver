@@ -14,7 +14,7 @@ import {
 } from "@mantine/core";
 
 import { IconTrash } from "@tabler/icons-react";
-import { InputTime } from "../../InputTime";
+import { InputTime } from "../../kitComponent/InputTime";
 
 export function AllDays({ formDays }) {
   return (
@@ -24,12 +24,12 @@ export function AllDays({ formDays }) {
         <Accordion.Panel>
           <Flex wrap="wrap" justify="center" align="flex-start">
             {formDays.values.days.map((item, index) => (
-              <Flex key={index}>
+              <Flex key={`${item}_${index}`}>
                 <Box>
                   <Text align="center">{item.day}</Text>
 
                   {item.data.map((dataItem, dataIndex) => (
-                    <Flex key={dataIndex} m="xs" direction="column">
+                    <Flex key={dataItem.dataIndex} m="xs" direction="column">
                       <InputTime
                         label="disable from time"
                         {...formDays.getInputProps(
@@ -46,9 +46,10 @@ export function AllDays({ formDays }) {
                         {/* <ActionIcon
                           color="red"
                           onClick={() =>
-                            formDays.removeListItem(
-                              `days.${index}.data`,
-                              dataItem
+                           
+                              formDays.removeListItem(
+                                `days.${index}.data`,
+                                dataIndex 
                             )
                           }
                         >
@@ -57,7 +58,7 @@ export function AllDays({ formDays }) {
                       </Box>
                       {/* <Button
                         onClick={() =>
-                          formDays.insertListItem(`days.${index}.data`, {
+                          formDays.insertListItem(`days.${index}.data`, dataIndex,{
                             unavailable_starting: "",
                             unavailable_until: "",
                           })

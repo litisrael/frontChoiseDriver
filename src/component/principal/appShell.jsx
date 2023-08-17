@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import { GetDataDriver } from "./Driver/update/get1";
+import { GetDataDriver } from "../Driver/update/get1";
 import { FaBus, FaHome,FaUser } from 'react-icons/fa';
 import { BiSolidLogIn} from 'react-icons/bi'
-import { OptionTravel } from "./cards/OptionTravel";
-import { OfferedPriceOneWay } from "../component/Driver/offeredPrice/OfferedPriceOneWay";
+import { AvailableTripsTable } from "../Driver/offeredPrice/OfferedOneWay";
+
 import {
   AppShell,
   Navbar,
@@ -19,12 +19,11 @@ import {
   NavLink,
   Image
 } from "@mantine/core";
-import { StepForm } from "./Driver/RegisterPost/FormSteps";
-import { FormOneWay } from "./FormPassenger/FormOneWay";
-import { CardWithStats } from "./cards/Card";
+import { StepForm } from "../Driver/RegisterPost/FormSteps";
+import { FormOneWay } from "../passanger/FormOneWay";
 
-import { User } from "../context/user/User";
 
+import { User } from "../../context/user/User";
 
 export function AppShellExample() {
   const theme = useMantineTheme();
@@ -57,7 +56,8 @@ export function AppShellExample() {
               <NavLink  
             component={Link} variant="Link" to="/get"
             label="get" />
-              <NavLink label="Offered Price" />
+              <NavLink label="Offered Price" 
+              component={Link} variant="Link" to="/offerPrice"/>
             </NavLink>
             <NavLink  icon={<FaUser size="1rem" stroke={1.5} />}
              label="passengers"
@@ -115,12 +115,11 @@ export function AppShellExample() {
          
             
             <Routes>
-              <Route path="/home" element={<OptionTravel />} />
               <Route path="/login" element={<User />} />
               <Route path="/get" element={ <GetDataDriver />} />
               <Route path="/addcompany" element={<StepForm />} />
               <Route path="/oneway" element={<FormOneWay />} />
-              <Route path="/offerPrice" element={<OfferedPriceOneWay />} />
+              <Route path="/offerPrice" element={<AvailableTripsTable />} />
             </Routes>
           
          

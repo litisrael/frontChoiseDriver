@@ -11,7 +11,7 @@ import {
   Box,
   Code,
 } from "@mantine/core";
-import { Maps } from "../../apis/Maps";
+import { Maps } from "../../../context/apis/Maps";
 import { useForm } from "@mantine/form";
 import { NewFormCompany } from "./FormCompany.jsx";
 import { Vehicule } from "./Vehicles.jsx";
