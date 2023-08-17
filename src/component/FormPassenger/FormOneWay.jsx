@@ -2,7 +2,13 @@ import { User } from "../../context/user/User";
 import { useForm } from "@mantine/form";
 import { AutoCompleteInputAddress } from "../apis/AutocomletInputAdress";
 import { Maps } from "../apis/Maps";
-import { createPassenger,updatePassenger,prepareReservationData } from "./reservation.js";
+
+import { OfferedOneWay } from "../Driver/offeredPrice/OfferedPriceOneWay";
+import {
+  createPassenger,
+  updatePassenger,
+  prepareReservationData,
+} from "./reservation.js";
 import {
   Button,
   Group,
@@ -48,13 +54,8 @@ export function FormOneWay() {
   const formOneWay = useForm({
     initialValues: {
       number_of_passengers: "",
-      // from_region: "",
-      // from_street: "",
       from_address: "",
-
       to_address: "",
-      // to_city: "",
-      // to_street: "",
       departure_date: "",
       departure_hour: "",
       coordinates_origin: "",
@@ -71,12 +72,6 @@ export function FormOneWay() {
   const [duration, setDuration] = useState(null);
   const [distance, setDistance] = useState(null);
 
-  // useEffect(() => {
-  //   // Set the center to initialCenter when the component mounts
-  //   setCenter(initialCenter);
-  // }, []);
-  // ... (previous code remains unchanged)
-
   const fetchDirection = async () => {
     if (!originLocation || !destinationLocation) {
       return;
@@ -88,35 +83,48 @@ export function FormOneWay() {
       destination: destinationLocation,
       travelMode: google.maps.TravelMode.DRIVING,
     });
-
     setDirectionResponse(result);
     setDistance(result.routes[0].legs[0].distance.text);
     setDuration(result.routes[0].legs[0].duration.text);
-
+    
     // Extract LatLng of the origin and destination
     if (result?.routes?.length > 0) {
       const route = result.routes[0];
       console.log(
         route,
         "---------------------------------------------------------"
-      );
+        );
+        console.log(result.routes[0].legs[0].start_address,"originLocationoriginLocationoriginLocation");
+        console.log(route.legs[0].start_address,"routerouterouterouterouteroute");
+
       const originLatLng = route.legs[0].start_location.toJSON();
       const destinationLatLng =
         route.legs[route.legs.length - 1].end_location.toJSON();
+        const startAddress = route.legs[0].start_address
+        const endAddress = route.legs[0].end_address
 
       // Update the form fields with the LatLng values
       formOneWay.setFieldValue(
         "coordinates_origin",
         `${originLatLng.lat},${originLatLng.lng}`
       );
+      
       formOneWay.setFieldValue(
         "coordinates_destine",
         `${destinationLatLng.lat},${destinationLatLng.lng}`
+        );
+   
+        formOneWay.setFieldValue(
+          "from_address",
+          startAddress
+        );
+   
+        formOneWay.setFieldValue(
+        "to_address",
+        endAddress
       );
     }
   };
-
-  // ... (rest of the code remains unchanged)
 
   const originRef = useRef(); // Asignar la referencia
   const destinationRef = useRef(); // Asignar la referencia
@@ -140,8 +148,20 @@ export function FormOneWay() {
     setDestinationLocation(place.geometry.location);
   };
 
+
+  const formData = {
+    ...FormPassenger.values,
+    ...formOneWay.values,
+    center,
+    directionResponse,
+    originLocation,
+    destinationLocation,
+    duration,
+    distance,
+  };
   return (
     <>
+    <OfferedOneWay formData={formData}/>
       <Grid grow>
         <Grid.Col span={6}>
           <Maps center={center}>
@@ -161,97 +181,88 @@ export function FormOneWay() {
             mx="auto"
             onSubmit={async (e) => {
               e.preventDefault();
-             
+
               console.log(formOneWay.values);
-              let reservationData
+              let reservationData;
               try {
                 const auth0Id = FormPassenger.values.auth_id;
                 console.log(auth0Id, "auth0Id");
-            
+
                 const passengerRes = await fetch(
                   `http://localhost:4000/passenger/${auth0Id}`,
                   {
                     method: "GET",
                   }
                 );
-            
+
                 if (!passengerRes.ok) {
                   // Si no se encuentra el pasajero, crea uno nuevo
-                  const newPassengerId = await createPassenger(FormPassenger.values);
-                  const passengerData = { ...FormPassenger.values, id: newPassengerId };
-                   reservationData = await prepareReservationData(
+                  const newPassengerId = await createPassenger(
+                    FormPassenger.values
+                  );
+                  const passengerData = {
+                    ...FormPassenger.values,
+                    id: newPassengerId,
+                  };
+                  reservationData = await prepareReservationData(
                     passengerData,
                     formOneWay
                   );
-                 
-                  
-                  // const reservationRes = await fetch("http://localhost:4000/reservationoneway", {
-                  //   method: "POST",
-                  //   headers: {
-                  //     "Content-Type": "application/json",
-                  //   },
-                  //   body: JSON.stringify(reservationData),
-                  // });
-                  // if (reservationRes.status === 200) {
-                  //   formOneWay.reset()
-                  //   FormPassenger.reset()
-                  //   console.log("Success!", responseData);
-                  // } else {
-                  //   console.error(
-                  //     "The server responded with an error",
-                  //     responseData
-                  //   );
-                  // }
-
-                  
                 } else {
                   const passengerData = await passengerRes.json();
-                 
-            
+
                   if (
-                    formOneWay.values.passenger_name === passengerData.passenger_name &&
-                    formOneWay.values.passenger_mail === passengerData.passenger_mail &&
-                    formOneWay.values.passenger_cell === passengerData.passenger_cell
+                    formOneWay.values.passenger_name ===
+                      passengerData.passenger_name &&
+                    formOneWay.values.passenger_mail ===
+                      passengerData.passenger_mail &&
+                    formOneWay.values.passenger_cell ===
+                      passengerData.passenger_cell
                   ) {
                     // Si los datos del pasajero no han cambiado, preparar los datos de la reserva directamente
                     reservationData = await prepareReservationData(
                       passengerData,
-                     formOneWay
+                      formOneWay
                     );
                   } else {
                     // Si los datos del pasajero han cambiado, actualizar el pasajero y luego preparar los datos de la reserva
-                    
-                    const updatedPassengerRes = await  updatePassenger(auth0Id, FormPassenger.values);
-                  
+
+                    const updatedPassengerRes = await updatePassenger(
+                      auth0Id,
+                      FormPassenger.values
+                    );
+
                     reservationData = await prepareReservationData(
                       updatedPassengerRes,
                       formOneWay
                     );
                   }
-            
+
                   // Lógica para realizar la reserva con los datos preparados
                   // (por ejemplo, realizar la llamada a la API de reserva)
                 }
-                const reservationRes = await fetch("http://localhost:4000/reservationoneway", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(reservationData),
-                });
+                const reservationRes = await fetch(
+                  "http://localhost:4000/reservationoneway",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(reservationData),
+                  }
+                );
                 const responseData = await reservationRes.json();
 
-                  if (reservationRes.status === 200) {
-                    formOneWay.reset()
-                    FormPassenger.reset()
-                    console.log("Success!", responseData);
-                  } else {
-                    console.error(
-                      "The server responded with an error",
-                      responseData
-                    );
-                  }
-                
+                if (reservationRes.status === 200) {
+                  formOneWay.reset();
+                  FormPassenger.reset();
+                  console.log("Success!", responseData);
+                } else {
+                  console.error(
+                    "The server responded with an error",
+                    responseData
+                  );
+                }
               } catch (error) {
                 console.log("Error:", error.message);
               }
@@ -290,7 +301,7 @@ export function FormOneWay() {
             <AutoCompleteInputAddress
               label="from origin"
               placeholder="Enter from address"
-              ref={originRef}
+              // ref={originRef}
               value={formOneWay.values.from_address}
               onChange={(value) =>
                 formOneWay.setFieldValue("from_address", value)
@@ -300,7 +311,7 @@ export function FormOneWay() {
             <AutoCompleteInputAddress
               label="destination"
               placeholder="Enter to address"
-              ref={destinationRef}
+              // ref={destinationRef}
               value={formOneWay.values.to_address}
               onChange={(value) =>
                 formOneWay.setFieldValue("to_address", value)

@@ -4,6 +4,7 @@ import { GetDataDriver } from "./Driver/update/get1";
 import { FaBus, FaHome,FaUser } from 'react-icons/fa';
 import { BiSolidLogIn} from 'react-icons/bi'
 import { OptionTravel } from "./cards/OptionTravel";
+import { OfferedPriceOneWay } from "../component/Driver/offeredPrice/OfferedPriceOneWay";
 import {
   AppShell,
   Navbar,
@@ -56,7 +57,7 @@ export function AppShellExample() {
               <NavLink  
             component={Link} variant="Link" to="/get"
             label="get" />
-              <NavLink label="delete" />
+              <NavLink label="Offered Price" />
             </NavLink>
             <NavLink  icon={<FaUser size="1rem" stroke={1.5} />}
              label="passengers"
@@ -119,6 +120,7 @@ export function AppShellExample() {
               <Route path="/get" element={ <GetDataDriver />} />
               <Route path="/addcompany" element={<StepForm />} />
               <Route path="/oneway" element={<FormOneWay />} />
+              <Route path="/offerPrice" element={<OfferedPriceOneWay />} />
             </Routes>
           
          

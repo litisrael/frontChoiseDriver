@@ -17,9 +17,8 @@ export const AutoCompleteInputAddress = ({ label, placeholder, onChange, onPlace
       const name = place.name;
       const status = place.business_status;
       const formattedAddress = place.formatted_address;
-console.log(place
-  );
-      console.log(`Name: ${name}`);
+console.log(place );
+     console.log(`Name: ${name}`);
       console.log(`Business Status: ${status}`);
       console.log(`Formatted Address: ${formattedAddress}`);
 

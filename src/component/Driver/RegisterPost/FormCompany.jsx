@@ -18,7 +18,7 @@ import {
   Switch,
 } from "@mantine/core";
 import { GoogleMap, Marker, Circle } from "@react-google-maps/api";
-import { Zone } from "../../zone";
+
 import { useState, useEffect } from "react";
 import { AutoCompleteInputAddress } from "../../apis/AutocomletInputAdress";
 import { Maps } from "../../apis/Maps";
@@ -63,12 +63,12 @@ export function NewFormCompany({ formCompany,
   }, [markerPosition]);
 
   const handleRadius = (radius) => {
-    console.log("New Radius:", radius);
+  
       setRadius(radius);
       formCompany.setFieldValue("radius", radius);
     
   };
-console.log(radius);
+
   return (
     <Grid grow>
       <Grid.Col span={6}>
