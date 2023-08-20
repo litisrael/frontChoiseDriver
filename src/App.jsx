@@ -10,12 +10,11 @@ import { ConditionalHeaderContainer } from "./component/principal/Conditional";
 const domain = import.meta.env.VITE_DOMAIN;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
+const redirectUri = window.location.href;
 
 
 
 export default function App() {
-  const isPassenger = true; // Cambia esto a `false` si quieres mostrar el HeaderDriver
-
   return (
     <div className='App'>
   <MantineProvider> 
@@ -26,7 +25,7 @@ export default function App() {
     <Auth0Provider
             domain={domain}
             clientId={clientId}
-            authorizationParams={{ redirect_uri: window.location.origin }}
+            authorizationParams={{ redirect_uri: redirectUri }}
             >
     <ColorSchemeProvider>
     {/* <AppShellExample /> */}

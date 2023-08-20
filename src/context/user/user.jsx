@@ -7,6 +7,10 @@ export const User = () => {
   const { logout, loginWithRedirect, isAuthenticated, isLoading, user } = useAuth0();
   //  if (isLoading){ return <Loader size="lg" />;}
 
+  const handleLoginClick = (event) => {
+    event.preventDefault(); // Evita la acción predeterminada del botón
+    loginWithRedirect();
+  };
   return (
     <Flex justify={"center"}>
       {isAuthenticated ? (
@@ -15,7 +19,7 @@ export const User = () => {
         <Text>hellow  {user.name}</Text>
         </>
       ) : (
-        <Button onClick={() => loginWithRedirect()}>login </Button>
+        <Button onClick={handleLoginClick}>login </Button>
       )}
     </Flex>
   );

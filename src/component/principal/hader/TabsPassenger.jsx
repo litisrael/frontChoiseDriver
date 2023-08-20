@@ -12,11 +12,17 @@ import { ConditionalHeaderContainer } from "../Conditional";
 
 
 import { PassengerPages } from "../../../pages/PassangerPages";
+
+console.log(window.location.origin);
+
+
 export const TabsPassenger = ({ classes }) => {
   const navigate = useNavigate();
   const { tabValue } = useParams();
 
   return (
+    <>
+
     <Tabs
     
     // defaultValue="Home"
@@ -35,12 +41,11 @@ export const TabsPassenger = ({ classes }) => {
         <Tabs.Tab value="twoWay">ROUND WAY</Tabs.Tab>
         <Tabs.Tab value="pricesOfPassenger">PRICES OF DRIVER</Tabs.Tab>
 
-        {/* <ConditionalHeaderContainer /> */}
         {/* <Button ml="auto" leftIcon={<IconDatabase />} variant="white" color="yellow" 
        component={Link}
-  
+       
        to="/drivers"
-        >
+       >
       TO DRIVERS  */}
     {/* </Button> */}
         {/* <Tabs.Tab value="DRIVER" >   </Tabs.Tab> */}
@@ -50,5 +55,7 @@ export const TabsPassenger = ({ classes }) => {
       <PassengerPages />
     </Tabs>
     
+    
+       </>
   );
 };
