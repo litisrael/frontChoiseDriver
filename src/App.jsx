@@ -10,7 +10,10 @@ import { ConditionalHeaderContainer } from "./component/principal/Conditional";
 const domain = import.meta.env.VITE_DOMAIN;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
+
 const redirectUri = window.location.href;
+
+
 
 
 
