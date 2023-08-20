@@ -169,7 +169,6 @@ export function FormOneWay() {
               e.preventDefault();
 
              
-          
                const reservationData = await findOrCreatePassengerAccount(FormPassenger, formOneWay);
 
                 const reservationRes = await fetch(
@@ -267,8 +266,8 @@ export function FormOneWay() {
           </Box>
         </Paper>
         </Grid.Col>
+
         <Grid.Col span={8}>
-          
           <Maps center={center}>
             {" "}
             {/* Use the center state for the center of the map */}
@@ -278,6 +277,7 @@ export function FormOneWay() {
             {originLocation && <Marker position={originLocation} />}
             {destinationLocation && <Marker position={destinationLocation} />}
           </Maps>
+          
         </Grid.Col>
 
       </Grid>

@@ -1,12 +1,16 @@
 
 import { useState, useMemo, useCallback, useRef } from "react";
 import {  GoogleMap,Marker } from "@react-google-maps/api";
-import { Box, rem } from '@mantine/core';
+import { Container } from '@mantine/core';
+
+import { useMediaQuery } from "@mantine/hooks";
 
 
-
-export const Maps = ({ center = { lat: 31.76904, lng: 35.21633 }, zoom = 8, children }) => {
-     
+export const Maps = ({ center = { lat: 31.76904, lng: 35.21633 }, zoom = 8, children,
+}) => {
+  const isMobile = useMediaQuery("(max-width:574px)"); // Verifica si es un dispositivo móvil
+  const width = isMobile ? "100%" : "100%";
+  const height = isMobile ? "400px" : "100%"; 
   const options = useMemo(
     () => ({
       mapId: "b430ba23dd1825ca",
@@ -16,18 +20,24 @@ export const Maps = ({ center = { lat: 31.76904, lng: 35.21633 }, zoom = 8, chil
     }),
     []
   );
+
+  const mapContainerStyle = {
+    width,
+    height, // Valor por defecto de la altura
+    borderRadius: "15px",
+  };
   return (
    
     <GoogleMap
-   
       center={center}
       zoom={zoom}
-      mapContainerStyle={{ width: "100%", height: "100%" }}
+      mapContainerStyle={mapContainerStyle}
       options={options}
     >
       {children}
+
     </GoogleMap>
-  
+   
   );
 };
 

@@ -1,25 +1,23 @@
-import { useRef } from 'react';
-import { TimeInput } from '@mantine/dates';
-import { ActionIcon } from '@mantine/core';
+
 import { IconClock } from '@tabler/icons-react';
+import { hoursArray } from "../../data/data.js";
+import { NativeSelect } from '@mantine/core';
 
 export function InputTime(inputprops) {
-    
-    const ref = useRef()
 
+  const valueFromFormDays = inputprops.value; // Obtener el valor de formDays.getInputProps()
+
+  const adjustedValue = valueFromFormDays === "HH:MM" ? null : valueFromFormDays;
 
   return (
-    <TimeInput
-      label="Click icon to show browser picker"
-      ref={ref}
+    <NativeSelect
+    data={hoursArray}
+    placeholder="Your email"
+    value={adjustedValue}
+      icon={<IconClock size="1rem" stroke={1.5} />}
       {...inputprops}
-      rightSection={
-        <ActionIcon onClick={() => ref.current.showPicker()}>
-          <IconClock size="1rem" stroke={1.5} />
-        </ActionIcon>
-      }
-      maw={400}
-      mx="auto"
+   
+   
     />
   );
-}
+} 
