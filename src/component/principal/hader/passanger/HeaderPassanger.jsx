@@ -8,13 +8,18 @@ import {
   rem,
   ScrollArea,
 } from "@mantine/core";
-import { UserMenu } from "./hader/UserMenu";
-import { User } from "../../context/user/User";
-
+import { UserMenu } from "../UserMenu";
+// import { HeaderDriver } from "./HeaderDriver";
+import { User } from "../../../../context/user/User";
+import { FormOneWay } from "../../../passanger/FormOneWay";
+import { PricesOfPassenger } from "../../../passanger/PricesOfPassenger";
 import { useAuth0 } from "@auth0/auth0-react";
-import { TabsPassenger } from "./hader/TabsPassenger";
-import { Hamburger } from "./hader/Hamburger";
-import { TabsDriver } from "../principal/hader/TabsDriver";
+import { TabsPassenger } from "./TabsPassenger";
+import { HamburgerPassenger } from "./HamburgerPassenger";
+
+import { PassengerPages } from "../../../../pages/Pages";
+
+
 const useStyles = createStyles((theme) => ({
   header: {
     paddingTop: theme.spacing.sm,
@@ -92,7 +97,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function HeaderDriver() {
+export function HeaderPassenger() {
   const { classes, theme, cx } = useStyles();
 
   const { user, isAuthenticated } = useAuth0();
@@ -106,18 +111,17 @@ export function HeaderDriver() {
 
   return (
     <div className={classes.header}>
-   
+    
         <Container className={classes.mainSection}>
           <Group position="apart">
-            {/* <Hamburger classes={classes} /> */}
+            <HamburgerPassenger classes={classes} />
             <UserMenu user={user} classes={classes} cx={cx} />
           </Group>
         </Container>
         <Container>
-          <TabsDriver  classes={classes} />
+          <TabsPassenger  classes={classes} />
         </Container>
-
-   
+        {/* <PassengerPages /> */}
     </div>
   );
 }

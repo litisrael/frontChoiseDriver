@@ -1,10 +1,9 @@
 import { Menu, Burger } from "@mantine/core";
 import { FaBus, FaHome, FaUser } from "react-icons/fa";
-import { FormOneWay } from "../../passanger/FormOneWay";
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import {  Link, Routes } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 
-export const Hamburger = ({ classes }) => {
+export const HamburgerPassenger = ({ classes }) => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
 
@@ -39,10 +38,10 @@ export const Hamburger = ({ classes }) => {
           home
         </Menu.Item>
 
-        <Menu.Item component={Link} variant="Link" to="/oneway">
+        <Menu.Item component={Link} variant="Link" to="/passenger/oneWay">
           ONE WAY
         </Menu.Item>
-        <Menu.Item component={Link} variant="Link" to="/passangerprices">
+        <Menu.Item component={Link} variant="Link" to="/passenger/pricesOfPassenger">
         PRICES OF DRIVER
         </Menu.Item>
         
@@ -67,6 +66,7 @@ export const Hamburger = ({ classes }) => {
 
         <Menu.Divider />
       </Menu.Dropdown>
+     
     </Menu>
   );
 };

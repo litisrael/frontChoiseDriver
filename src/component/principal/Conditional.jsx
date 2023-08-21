@@ -1,20 +1,17 @@
+import React from "react";
+import { HeaderPassenger } from "./hader/passanger/HeaderPassanger"; // Asegúrate de que la ruta al archivo sea correcta
+import { HeaderDriver } from "./hader/driver/HeaderDriver"; // Asegúrate de que la ruta al archivo sea correcta
+import { Button } from '@mantine/core';
+import { useToggle } from '@mantine/hooks';
 
-import {  HeaderPassenger} from "./HeaderPassanger";
-import { useState } from "react";
-import {  HeaderDriver} from "./HeaderDriver";
+import { useLocation } from 'react-router-dom';
 export const ConditionalHeaderContainer = () => {
-    const [isPassenger, setIsPassenger] = useState(true);
-  
-    const toggleHeader = () => {
-      setIsPassenger(!isPassenger);
-    };
-  
-    return (
-      <div>
-        <button onClick={toggleHeader}>
-          {isPassenger ? "Show Driver" : "Show Passenger"}
-        </button>
-        {isPassenger ? <HeaderPassenger /> : <HeaderDriver />}
-      </div>
-    );
-}
+  const location = useLocation();
+  const isPassenger = location.pathname.startsWith('/passenger');;
+
+  return (
+    <div>
+      {isPassenger ? <HeaderPassenger /> : <HeaderDriver />}
+    </div>
+  );
+};

@@ -41,12 +41,12 @@ const allDaysData = days.map((day) => {
     ],
   };
 });
-console.log(location.origin);
-export function StepForm() {
+
+
+export function FormAddCompany() {
 
   const { user, isAuthenticated } = useAuth0();
 
-  // Verifica si el usuario está autenticado
   if (!isAuthenticated) {
     return (
       <Text>
@@ -54,7 +54,6 @@ export function StepForm() {
       </Text>
     );
   }
-  const [active, setActive] = useState(0);
   
   const formCompany = useForm({
     initialValues: {
@@ -94,21 +93,7 @@ export function StepForm() {
     },
   });
 
-  const forms = [formCompany, formVehicle];
-
-  const nextStep = () =>
-    setActive((current) => {
-      if (forms[current].validate().hasErrors) {
-        return current;
-      }
-      return current < forms.length ? current + 1 : current;
-    });
-
-  const prevStep = () =>
-    setActive((current) => (current > 0 ? current - 1 : current));
-
   return (
-    <>
       <Box
         component="form"
         onSubmit={async (e) => {
@@ -146,69 +131,21 @@ export function StepForm() {
           }
         }}
       >
-        <Flex direction={"row"} position="right" m="xl">
-          {active !== 0 && (
-            <Button fullWidth variant="default" onClick={prevStep}>
-              Back
-            </Button>
-          )}
-          {active !== forms.length && (
-            <Button fullWidth onClick={nextStep}>
-              Next step
-            </Button>
-          )}
-          {active === forms.length && (
-            <Button fullWidth type="submit">
-              upload
-            </Button>
-          )}
-        </Flex>
-        <Stepper active={active} breakpoint="sm">
-          <Stepper.Step label="First step" description="Profile settings">
+     
             <NewFormCompany formCompany={formCompany} 
             // initialRadius={initialRadius} 
             />
-          </Stepper.Step>
-
-          <Stepper.Step label="Second step" description="Personal information">
+       
             <Vehicule
               formVehicle={formVehicle}
               formDays={formDays}
               calendarDisableTourist={calendarDisableTourist}
             />
-            {/* <TextInput
-            label="Name"
-            placeholder="Name"
-            {...form2.getInputProps("name")}
-          />
-          <TextInput
-            mt="md"
-            label="Email"
-            placeholder="Email"
-            {...form2.getInputProps("email")}
-          /> */}
-          </Stepper.Step>
-
-          <Stepper.Step
-            label="Final step"
-            description="Social media"
-          ></Stepper.Step>
-          <Stepper.Completed>
-            Completed! Form values:
-            {/* <Code block mt="xl">
-            {JSON.stringify(
-              {
-                formCompany: formCompany.values,
-                formVehicle: formVehicle.values,
-                formDays: formDays.values,
-              },
-              null,
-              2
-            )} */}
-            {/* </Code> */}
-          </Stepper.Completed>
-        </Stepper>
-      </Box>
-    </>
-  );
+             <Button fullWidth type="submit">
+              upload
+            </Button>
+         </Box>
+            )
+         
+  
 }
