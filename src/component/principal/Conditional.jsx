@@ -10,8 +10,9 @@ export const ConditionalHeaderContainer = () => {
   const isPassenger = location.pathname.startsWith('/passenger');;
 
   return (
-    <div>
+  <>
       {isPassenger ? <HeaderPassenger /> : <HeaderDriver />}
-    </div>
+  </>
+   
   );
 };

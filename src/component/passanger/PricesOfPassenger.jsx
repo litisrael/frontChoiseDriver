@@ -34,10 +34,6 @@ import {
     
     const [data, setData] = useState([]);
   
-    if(data.length< 1){ 
-      return <Text> no trips </Text>
-  
-    }
       const fetchData = async () => {
 
 
@@ -53,6 +49,9 @@ const endpoint= user.sub
     
     
 
+      if(data.length< 1){ 
+        return <Text> no trips </Text>
+      }
     return (
       <>
         <Container size="25rem" my="-20px">

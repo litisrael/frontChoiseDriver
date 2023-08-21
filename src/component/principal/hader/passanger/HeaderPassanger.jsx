@@ -30,7 +30,7 @@ const useStyles = createStyles((theme) => ({
     borderBottom: `${rem(1)} solid ${
       theme.colorScheme === "dark" ? "transparent" : theme.colors.gray[2]
     }`,
-    marginBottom: rem(120),
+    marginBottom: rem(20),
   },
 
   mainSection: {

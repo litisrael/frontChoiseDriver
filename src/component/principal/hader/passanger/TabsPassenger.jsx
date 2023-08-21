@@ -8,7 +8,7 @@ export const TabsPassenger = ({ classes }) => {
   const { tabValue } = useParams();
 
   return (
-    <>
+
       <Tabs
         defaultValue="passenger"
         variant="outline"
@@ -35,6 +35,6 @@ export const TabsPassenger = ({ classes }) => {
           </Button>
         </Tabs.List>
       </Tabs>
-    </>
+  
   );
 };
