@@ -8,9 +8,22 @@ import {
   } from "@tabler/icons-react";
   import { useState } from "react";
   import { Menu, Group,  UnstyledButton, Avatar ,rem,Text,Button} from "@mantine/core";
+  
+import { useAuth0 } from '@auth0/auth0-react';
+
+
+
 export const UserMenu =({user, classes, cx})=>{
 
     const [userMenuOpened, setUserMenuOpened] = useState(false);
+
+    
+  const { logout } = useAuth0();
+
+  const handleLogoutClick = () => {
+    logout({ returnTo: window.location.origin });
+  }
+
 
 return (<Menu
 width={260}
@@ -53,9 +66,13 @@ withinPortal
   >
     Change account
   </Menu.Item>
-  <Menu.Item icon={<IconLogout size="0.9rem" stroke={1.5} />}>
-    Logout
-  </Menu.Item>
+  <Button
+          leftIcon={<IconLogout size="0.9rem" stroke={1.5} />}
+          onClick={handleLogoutClick}
+          variant="link"
+        >
+          Logout
+        </Button>
 
   <Menu.Divider />
 
