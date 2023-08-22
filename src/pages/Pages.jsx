@@ -6,7 +6,7 @@ import {  AvailableTripsTable} from "../component/Driver/offeredPrice/OfferedOne
 import { FormAddCompany } from "../component/Driver/addCompany/FormAddCompany";
 import { GetDataDriver } from "../component/Driver/update/get1";
 import { MantineProvider, Container } from '@mantine/core';
-import { User } from "../context/user/User";
+import { User } from "../component/User";
 export const Pages = () => {
 
     return (

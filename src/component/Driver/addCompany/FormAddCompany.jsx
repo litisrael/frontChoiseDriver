@@ -15,7 +15,7 @@ import { Maps } from "../../../context/apis/Maps";
 import { useForm } from "@mantine/form";
 import { NewFormCompany } from "./FormCompany.jsx";
 import { Vehicule } from "./Vehicles.jsx";
-import { User } from "../../../context/user/User";
+import { User } from "../../User";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
