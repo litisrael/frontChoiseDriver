@@ -18,7 +18,7 @@ import {
   import { queryGetMulti } from "../../data/data.js";
 
   
-  // import { User } from "../../context/user/User.jsx";
+  import { User } from "../../context/user/User";
   
   
 const apiBaseUrl = import.meta.env.REACT_APP_API_URL ||"http://localhost:4000/"
@@ -29,9 +29,9 @@ const apiBaseUrl = import.meta.env.REACT_APP_API_URL ||"http://localhost:4000/"
     const { user, isAuthenticated } = useAuth0();
   
     // Verifica si el usuario está autenticado
-    // if (!isAuthenticated) {
-    //   return <User/>
-    // }
+    if (!isAuthenticated) {
+      return <User/>
+    }
   
   
     
