@@ -18,7 +18,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { getDataById, postOfferPriceDriverOneWay} from "../../../data/data.js";
 
 
-const apiBaseUrl = import.meta.env.REACT_APP_API_URL ||"http://localhost:4000/"
+const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
 
 // habria que limitar la posinilidad de enviar mas de una ves
 // o borrar una ves que enviaste el precio ya agregue una columna para verificar si ya hay
