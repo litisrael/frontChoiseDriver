@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import { UserMenu } from "../UserMenu";
 // import { HeaderDriver } from "./HeaderDriver";
-import { User } from "../../../../context/user/User";
+// import { User } from "../../../../context/user/User";
 import { FormOneWay } from "../../../passanger/FormOneWay";
 import { PricesOfPassenger } from "../../../passanger/PricesOfPassenger";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -104,7 +104,8 @@ export function HeaderPassenger() {
   if (!isAuthenticated) {
     return (
       <Text>
-        Please log in to access the form. <User />{" "}
+        Please log in to access the form. 
+        {/* <User />{" "} */}
       </Text>
     );
   }
