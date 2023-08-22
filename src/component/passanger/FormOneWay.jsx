@@ -1,4 +1,4 @@
-import { User } from "../../context/user/User";
+
 import { useForm } from "@mantine/form";
 import { AutoCompleteInputAddress } from "../../context/apis/AutocomletInputAdress";
 import { Maps } from "../../context/apis/Maps";
@@ -42,7 +42,7 @@ export function FormOneWay() {
   if (!isAuthenticated) {
     return (
       <Text>
-        Please log in to access the form. <User />{" "}
+        Please log in to access the form. 
       </Text>
     );
   }
