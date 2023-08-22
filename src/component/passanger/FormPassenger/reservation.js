@@ -1,7 +1,10 @@
+
+const apiBaseUrl = import.meta.env.REACT_APP_API_URL ||"http://localhost:4000/"
+
 export const updatePassenger = async (auth0Id, formValues) => {
     try {
       const updatedPassengerRes = await fetch(
-        `http://localhost:4000/passenger/${auth0Id}`,
+        `${apiBaseUrl}passenger/${auth0Id}`,
         {
           method: "PUT",
           headers: {
@@ -25,7 +28,7 @@ export const updatePassenger = async (auth0Id, formValues) => {
 // Función para realizar la operación de creación (POST) del pasajero
 export const createPassenger = async (values) => {
  
-    const passengerResponse = await fetch("http://localhost:4000/passenger", {
+    const passengerResponse = await fetch(`${apiBaseUrl}passenger`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +72,7 @@ export async function findOrCreatePassengerAccount(FormPassenger, formOneWay) {
     const auth0Id = FormPassenger.values.auth_id;
     console.log(auth0Id, "auth0Id");
 
-    const passengerRes = await fetch(`http://localhost:4000/passenger/${auth0Id}`, {
+    const passengerRes = await fetch(`${apiBaseUrl}passenger/${auth0Id}`, {
       method: "GET",
     });
 

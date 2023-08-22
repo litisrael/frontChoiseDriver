@@ -126,8 +126,8 @@ export function FormOneWay() {
     }
   };
 
-  const originRef = useRef(); // Asignar la referencia
-  const destinationRef = useRef(); // Asignar la referencia
+  // const originRef = useRef(); // Asignar la referencia
+  // const destinationRef = useRef(); // Asignar la referencia
 
   useEffect(() => {
     // Call fetchDirection whenever originLocation or destinationLocation is updated
