@@ -19,6 +19,7 @@ import {
   import { User } from "../../context/user/User.jsx";
   
   
+const apiBaseUrl = import.meta.env.REACT_APP_API_URL ||"http://localhost:4000/"
   // habria que limitar la posinilidad de enviar mas de una ves
   // o borrar una ves que enviaste el precio
   
@@ -37,7 +38,7 @@ import {
       const fetchData = async () => {
 
 
-const route = "http://localhost:4000/PricesOneWay"
+const route = `${apiBaseUrl}PricesOneWay`
 const endpoint= user.sub
         const data = await queryGetMulti(route , endpoint);
         setData(data);

@@ -31,6 +31,10 @@ import { useState, useRef, useMemo, useEffect } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
+
+const apiBaseUrl = import.meta.env.REACT_APP_API_URL ||"http://localhost:4000/"
+
+
 export function FormOneWay() {
   const { user, isAuthenticated } = useAuth0();
 
@@ -172,7 +176,8 @@ export function FormOneWay() {
                const reservationData = await findOrCreatePassengerAccount(FormPassenger, formOneWay);
 
                 const reservationRes = await fetch(
-                  "http://localhost:4000/reservationoneway",
+                  
+                  `${apiBaseUrl}reservationoneway`,
                   {
                     method: "POST",
                     headers: {

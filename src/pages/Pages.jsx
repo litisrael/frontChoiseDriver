@@ -7,7 +7,7 @@ import { FormAddCompany } from "../component/Driver/addCompany/FormAddCompany";
 import { GetDataDriver } from "../component/Driver/update/get1";
 import { MantineProvider, Container } from '@mantine/core';
 
-export const PassengerPages = () => {
+export const Pages = () => {
 
     return (
       <Container >

@@ -51,10 +51,10 @@ export const hoursArray = [ "HH:MM",
   };
 
 
-  export const queryDriversOfferedOneWay = async (userId) => {
+  export const getDataById = async (url,userId) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/GetAvailableOneWay/${userId}`
+        `${url}/${userId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -69,8 +69,36 @@ export const hoursArray = [ "HH:MM",
 
 
 
+
+  export async function sendDataToServer(url, method, data) {
+    try {
+      const res = await fetch(url, {
+        method: method,
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      const responseData = await res.json();
+  
+      if (res.status === 200) {
+        console.log("Success!", responseData);
+        return true;
+      } else {
+        console.error("The server responded with an error", responseData);
+        return false;
+      }
+    } catch (error) {
+      console.log("This is what went wrong:", error.message);
+      return false;
+    }
+  }
   // console.log(await queryDriversOfferedOneWay( "google-oauth2|104855243921331044464"))
 
+
+
+  
 export  const postOfferPriceDriverOneWay = async (id_one_way,company_id, company_name, driver_price,) => {
     try {
       const res = await fetch(`http://localhost:4000/responseoneway/${id_one_way}`, {

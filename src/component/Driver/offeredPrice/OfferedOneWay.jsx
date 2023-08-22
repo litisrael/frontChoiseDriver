@@ -15,12 +15,13 @@ import {
 import { useForm } from "@mantine/form";
 import { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { queryDriversOfferedOneWay, postOfferPriceDriverOneWay} from "../../../data/data.js";
+import { getDataById, postOfferPriceDriverOneWay} from "../../../data/data.js";
 
 
+const apiBaseUrl = import.meta.env.REACT_APP_API_URL ||"http://localhost:4000/"
 
 // habria que limitar la posinilidad de enviar mas de una ves
-// o borrar una ves que enviaste el precio
+// o borrar una ves que enviaste el precio ya agregue una columna para verificar si ya hay
 
 export const AvailableTripsTable = () => {
   const { user, isAuthenticated } = useAuth0();
@@ -39,10 +40,10 @@ export const AvailableTripsTable = () => {
 
   console.log(trips.length)
  
-
   useEffect(() => {
     const fetchData = async () => {
-      const tripsData = await queryDriversOfferedOneWay(user.sub);
+      const url = `${apiBaseUrl}GetAvailableOneWay`
+      const tripsData = await getDataById(url,user.sub);
       setTrips(tripsData);
       setFormPrices(new Array(tripsData.length).fill(0));
     };

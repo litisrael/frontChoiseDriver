@@ -19,6 +19,8 @@ import { User } from "../../../context/user/User";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
+const apiBaseUrl = import.meta.env.REACT_APP_API_URL ||"http://localhost:4000/"
+
 const days = [
   "Sunday",
   "Monday",
@@ -100,7 +102,8 @@ export function FormAddCompany() {
           e.preventDefault();
 
           try {
-            const res = await fetch("http://localhost:4000/Register", {
+            // const REACT_APP_API_URL
+            const res = await fetch(`${apiBaseUrl}Register`, {
               method: "POST",
               body: JSON.stringify({
                 data: {

@@ -3,6 +3,9 @@ import { Button,Text } from "@mantine/core";
 import { useAuth0 } from "@auth0/auth0-react";
 import { User } from "../../../context/user/User";
 
+
+const apiBaseUrl = import.meta.env.REACT_APP_API_URL ||"http://localhost:4000/"
+
 export const GetDataDriver = () => {
   const { user, isAuthenticated } = useAuth0();
   const [companyData, setCompanyData] = useState(null);
@@ -16,7 +19,7 @@ export const GetDataDriver = () => {
   const handleFetchData = async () => {
     try {
       // Construir la URL para la solicitud GET con el auth_id del usuario autenticado
-      const url = `http://localhost:4000/Register/${user.sub}`;
+      const url = `${apiBaseUrl}${user.sub}`;
 
       const res = await fetch(url);
       const responseData = await res.json();

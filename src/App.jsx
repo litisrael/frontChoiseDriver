@@ -1,11 +1,10 @@
 import { MantineProvider, Text, Button ,Paper,Loader, ColorSchemeProvider } from '@mantine/core';
 
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import {  HeaderPassenger} from "./component/principal/hader/passanger/HeaderPassanger";
-import {HeaderDriver  } from "./component/principal/hader/driver/HeaderDriver";
+import { BrowserRouter as Router,  } from "react-router-dom";
+
 import { Auth0Provider } from "@auth0/auth0-react";
 import {LoadScriptApi  } from "./context/apis/LoadScript";
-import { PassengerPages } from "./pages/Pages";
+import { Pages } from "./pages/Pages";
 import { ConditionalHeaderContainer } from "./component/principal/Conditional";
 const domain = import.meta.env.VITE_DOMAIN;
 const clientId = import.meta.env.VITE_CLIENT_ID;
@@ -33,7 +32,7 @@ export default function App() {
     <ConditionalHeaderContainer />
 {/* <HeaderPassenger /> */}
 
- < PassengerPages />
+ < Pages />
     </Auth0Provider>
 
             </Router>

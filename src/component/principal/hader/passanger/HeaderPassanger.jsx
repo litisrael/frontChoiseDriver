@@ -17,7 +17,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { TabsPassenger } from "./TabsPassenger";
 import { HamburgerPassenger } from "./HamburgerPassenger";
 
-import { PassengerPages } from "../../../../pages/Pages";
+import { Pages } from "../../../../pages/Pages";
 
 
 const useStyles = createStyles((theme) => ({
