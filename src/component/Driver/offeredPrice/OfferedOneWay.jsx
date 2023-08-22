@@ -36,10 +36,12 @@ export const AvailableTripsTable = () => {
   const [trips, setTrips] = useState([]);
   const [formPrices, setFormPrices] = useState([]);
   
-  console.log(trips)
 
-  console.log(trips.length)
- 
+  if(trips.length === 0 ||trips == null){ 
+    return <Text> no trips </Text>
+  }
+    
+
   useEffect(() => {
     const fetchData = async () => {
       const url = `${apiBaseUrl}GetAvailableOneWay`
@@ -51,9 +53,8 @@ export const AvailableTripsTable = () => {
     fetchData();
   }, [user.sub]);
 
- if(trips.length === 0){ 
-    return <Text> no trips </Text>
-  }
+
+  
 
   return (
     <>

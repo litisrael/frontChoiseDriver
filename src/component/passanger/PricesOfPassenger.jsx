@@ -51,10 +51,13 @@ const endpoint= user.sub
       }, []);
     
     
-
-      if(data.length< 1){ 
-        return <Text> no trips </Text>
+      if (data.length === 0) {
+        return <Text>No trips</Text>;
       }
+      if (data === null) {
+        return <Text>Loading...</Text>;
+      }
+      
     return (
       <>
         <Container size="25rem" my="-20px">

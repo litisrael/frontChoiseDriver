@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Button,Text } from "@mantine/core";
 import { useAuth0 } from "@auth0/auth0-react";
-import { User } from "../../../context/user/User";
+// import { User } from "../../../context/user/User";
 
 
-const apiBaseUrl = import.meta.env.REACT_APP_API_URL ||"http://localhost:4000/"
+const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
 
 export const GetDataDriver = () => {
   const { user, isAuthenticated } = useAuth0();
@@ -12,7 +12,8 @@ export const GetDataDriver = () => {
 
   // Verifica si el usuario está autenticado
   if (!isAuthenticated) {  <Text>
-    Please log in to access the form. <User />{" "}
+    Please log in to access the form. 
+    {/* <User />{" "} */}
   </Text>
   }
 
@@ -20,7 +21,7 @@ export const GetDataDriver = () => {
     try {
       // Construir la URL para la solicitud GET con el auth_id del usuario autenticado
       const url = `${apiBaseUrl}Register/${user.sub}`;
-
+console.log(url);
       const res = await fetch(url);
       const responseData = await res.json();
 
