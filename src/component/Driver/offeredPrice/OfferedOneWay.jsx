@@ -11,6 +11,7 @@ import {
   Code,
   Text,
   Paper,
+  Loader
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useState, useEffect } from "react";
@@ -57,7 +58,7 @@ export const AvailableTripsTable = () => {
   }, [user.sub]);
 
   if (isLoading  ) {
-    return <Text>wait</Text>;
+    return <Loader />;
 
 }
 if (trips.length < 1  ) { console.log("trips.length < 1 ");

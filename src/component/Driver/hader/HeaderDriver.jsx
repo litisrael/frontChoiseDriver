@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import { UserMenu } from "../../Menu/UserMenu";
 import { User } from "../../User";
-
+import {LoginToggle  } from "../../loginToggle";
 import { useAuth0 } from "@auth0/auth0-react";
 import { TabsPassenger } from "../../passanger/hader/TabsPassenger";
 import { HamburgerPassenger } from "../../passanger/hader/HamburgerPassenger";
@@ -100,7 +100,7 @@ export function HeaderDriver() {
   if (!isAuthenticated) {
     return (
       <Text>
-        Please log in to access the form. <User />{" "}
+        Please log in to access the drivers page. <LoginToggle />{" "}
       </Text>
     );
   }

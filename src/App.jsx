@@ -23,7 +23,7 @@ const redirectUri = window.location.href;
 export default function App() {
   return (
     <div className='App'>
-  <MantineProvider> 
+  <MantineProvider > 
   <LoadScriptApi>
 <Router>
 {/* <PublicPages /> */}

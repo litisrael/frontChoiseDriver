@@ -66,21 +66,16 @@ withinPortal
   >
     Change account
   </Menu.Item>
- 
-  <Button
-          leftIcon={<IconLogout size="0.9rem" stroke={1.5} />}
-          onClick={handleLogoutClick}
-          variant="link"
-        >
-          Logout
-        </Button>
-       
-  <Menu.Divider />
   <LoginToggle
+   leftIcon={<IconLogout size="0.9rem" stroke={1.5} />}
   className={cx(classes.user, {
     [classes.userActive]: userMenuOpened,
   })}
 />
+
+       
+  <Menu.Divider />
+
 
   <Menu.Label>Danger zone</Menu.Label>
   <Menu.Item icon={<IconPlayerPause size="0.9rem" stroke={1.5} />}>

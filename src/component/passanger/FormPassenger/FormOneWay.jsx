@@ -29,6 +29,7 @@ import {
 } from "@react-google-maps/api";
 import { useState, useRef, useMemo, useEffect } from "react";
 
+import { LoginToggle } from "../../loginToggle.jsx";
 import { useAuth0 } from "@auth0/auth0-react";
 
 
@@ -37,12 +38,13 @@ const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
 
 export function FormOneWay() {
   const { user, isAuthenticated } = useAuth0();
-  const [confirmationMessage, setConfirmationMessage] = useState("");
-  // Verifica si el usuario está autenticado
+
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
   if (!isAuthenticated) {
     return (
       <Text>
-        Please log in to access the form. 
+        Please log in to access the form. <LoginToggle />
       </Text>
     );
   }
@@ -188,24 +190,11 @@ export function FormOneWay() {
                 );
                 const responseData = await reservationRes.json();
 
-          //       if (reservationRes.status === 200) {
-          //         formOneWay.reset();
-          //         FormPassenger.reset();
-          //         console.log("Success!", responseData);
-          //       } else {
-          //         console.error(
-          //           "The server responded with an error",
-          //           responseData
-          //         );
-          //       }
-        
-          //   }}
-          // >
 
           if (reservationRes.status === 200) {
             formOneWay.reset();
             FormPassenger.reset();
-            setConfirmationMessage("¡Reserva enviada exitosamente!");
+           setShowSuccessAlert(true);
             setTimeout(() => {
              
               window.location.href = window.location.origin;
@@ -215,6 +204,14 @@ export function FormOneWay() {
           }
         }}
       >
+{showSuccessAlert && (
+  <Alert
+    color="green"
+    title="¡Formulario enviado exitosamente!"
+    onClose={() => setShowSuccessAlert(false)}
+    mt="md"
+  />
+)}
 
             
             <TextInput

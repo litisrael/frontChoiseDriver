@@ -11,13 +11,14 @@ import {
     Code,
     Text,
     Paper,
+    Loader
   } from "@mantine/core";
   import { useForm } from "@mantine/form";
   import { useState, useEffect } from "react";
   import { useAuth0 } from "@auth0/auth0-react";
   import { queryGetMulti } from "../../../data/data.js";
 
-  
+  import { LoginToggle } from "../../loginToggle.jsx";
   // import { User } from "../../context/user/User";
   
   
@@ -28,8 +29,14 @@ const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
   export const PricesOfPassenger = () => {
     const { user, isAuthenticated } = useAuth0();
 
+    if(!isAuthenticated){
+      return <Text>     Please log in to access the form.   <LoginToggle />  </Text>
+    }
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true); 
+
+
+
       const fetchData = async () => {
 
 const route = `${apiBaseUrl}PricesOneWay`
@@ -48,7 +55,7 @@ const endpoint= user.sub
 
 
       if (isLoading) {
-        return <Text>wait</Text>;
+        return < Loader/>;
       }
 if (data.length < 1 ) {
   return <Text>no trip</Text>;

@@ -101,14 +101,7 @@ export function HeaderPassenger() {
   const { classes, theme, cx } = useStyles();
 
   const { user, isAuthenticated } = useAuth0();
-  // if (!isAuthenticated) {
-  //   return (
-  //     <Text>
-  //       Please log in to access the form. 
-  //       {/* <User />{" "} */}
-  //     </Text>
-  //   );
-  // }
+
 
   return (
     <div className={classes.header}>
