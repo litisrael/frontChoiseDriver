@@ -37,24 +37,24 @@ export const AvailableTripsTable = () => {
   const [formPrices, setFormPrices] = useState([]);
   
 
-  if(trips.length === 0 ||trips == null){ 
-    return <Text> no trips </Text>
-  }
-    
+
 
   useEffect(() => {
     const fetchData = async () => {
       const url = `${apiBaseUrl}GetAvailableOneWay`
       const tripsData = await getDataById(url,user.sub);
       setTrips(tripsData);
-      setFormPrices(new Array(tripsData.length).fill(0));
+      setFormPrices(new Array(tripsData.length).fill(0))
+  
     };
 
     fetchData();
-  }, [user.sub]);
+  }, [user.sub, trips]);
 
-
-  
+ 
+  if (!trips || trips.length < 1) {
+    return <Text>No trips</Text>;
+  }
 
   return (
     <>

@@ -40,6 +40,7 @@ const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
       const fetchData = async () => {
 
 
+
 const route = `${apiBaseUrl}PricesOneWay`
 const endpoint= user.sub
         const data = await queryGetMulti(route , endpoint);
@@ -48,16 +49,14 @@ const endpoint= user.sub
 
       useEffect(() => {
         fetchData();
-      }, []);
+      }, [[user.sub, data]]);
     
-    
-      if (data.length === 0) {
-        return <Text>No trips</Text>;
-      }
-      if (data === null) {
-        return <Text>Loading...</Text>;
-      }
-      
+      // console.log("2",data);
+
+
+if (!data || data.length < 1) {
+  return <Text>No trips</Text>;
+}
     return (
       <>
         <Container size="25rem" my="-20px">
