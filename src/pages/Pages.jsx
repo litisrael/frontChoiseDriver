@@ -1,7 +1,7 @@
 
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import { FormOneWay } from "../component/passanger/FormOneWay";
-import { PricesOfPassenger } from "../component/passanger/PricesOfPassenger";
+import { FormOneWay } from "../component/passanger/FormPassenger/FormOneWay";
+import { PricesOfPassenger } from "../component/passanger/FormPassenger/PricesOfPassenger";
 import {  AvailableTripsTable} from "../component/Driver/offeredPrice/OfferedOneWay";
 import { FormAddCompany } from "../component/Driver/addCompany/FormAddCompany";
 import { GetDataDriver } from "../component/Driver/update/get1";

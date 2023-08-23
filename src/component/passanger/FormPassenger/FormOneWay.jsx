@@ -1,14 +1,14 @@
 
 import { useForm } from "@mantine/form";
-import { AutoCompleteInputAddress } from "../../context/apis/AutocomletInputAdress";
-import { Maps } from "../../context/apis/Maps";
+import { AutoCompleteInputAddress } from "../../../context/apis/AutocomletInputAdress";
+import { Maps } from "../../../context/apis/Maps";
 
 import {
   findOrCreatePassengerAccount,
   createPassenger,
   updatePassenger,
   prepareReservationData,
-} from "./FormPassenger/reservation.js";
+} from "./reservation.js";
 import {
   Button,
   Group,
@@ -37,7 +37,7 @@ const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
 
 export function FormOneWay() {
   const { user, isAuthenticated } = useAuth0();
-
+  const [confirmationMessage, setConfirmationMessage] = useState("");
   // Verifica si el usuario está autenticado
   if (!isAuthenticated) {
     return (
@@ -188,19 +188,35 @@ export function FormOneWay() {
                 );
                 const responseData = await reservationRes.json();
 
-                if (reservationRes.status === 200) {
-                  formOneWay.reset();
-                  FormPassenger.reset();
-                  console.log("Success!", responseData);
-                } else {
-                  console.error(
-                    "The server responded with an error",
-                    responseData
-                  );
-                }
+          //       if (reservationRes.status === 200) {
+          //         formOneWay.reset();
+          //         FormPassenger.reset();
+          //         console.log("Success!", responseData);
+          //       } else {
+          //         console.error(
+          //           "The server responded with an error",
+          //           responseData
+          //         );
+          //       }
         
-            }}
-          >
+          //   }}
+          // >
+
+          if (reservationRes.status === 200) {
+            formOneWay.reset();
+            FormPassenger.reset();
+            setConfirmationMessage("¡Reserva enviada exitosamente!");
+            setTimeout(() => {
+             
+              window.location.href = window.location.origin;
+            }, 3000); // Redirige después de 3 segundos (ajusta según tus necesidades)
+          } else {
+            console.error("The server responded with an error", responseData);
+          }
+        }}
+      >
+
+            
             <TextInput
               label="name"
               placeholder="name"

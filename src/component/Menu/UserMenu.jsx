@@ -8,12 +8,12 @@ import {
   } from "@tabler/icons-react";
   import { useState } from "react";
   import { Menu, Group,  UnstyledButton, Avatar ,rem,Text,Button} from "@mantine/core";
-  
+  import { LoginToggle } from "../loginToggle";
 import { useAuth0 } from '@auth0/auth0-react';
 
 
 
-export const UserMenu =({user, classes, cx})=>{
+export const UserMenu =({ user = "no user", classes, cx})=>{
 
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
@@ -66,6 +66,7 @@ withinPortal
   >
     Change account
   </Menu.Item>
+ 
   <Button
           leftIcon={<IconLogout size="0.9rem" stroke={1.5} />}
           onClick={handleLogoutClick}
@@ -73,8 +74,13 @@ withinPortal
         >
           Logout
         </Button>
-
+       
   <Menu.Divider />
+  <LoginToggle
+  className={cx(classes.user, {
+    [classes.userActive]: userMenuOpened,
+  })}
+/>
 
   <Menu.Label>Danger zone</Menu.Label>
   <Menu.Item icon={<IconPlayerPause size="0.9rem" stroke={1.5} />}>

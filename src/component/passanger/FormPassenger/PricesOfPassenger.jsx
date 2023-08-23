@@ -15,7 +15,7 @@ import {
   import { useForm } from "@mantine/form";
   import { useState, useEffect } from "react";
   import { useAuth0 } from "@auth0/auth0-react";
-  import { queryGetMulti } from "../../data/data.js";
+  import { queryGetMulti } from "../../../data/data.js";
 
   
   // import { User } from "../../context/user/User";
@@ -27,35 +27,31 @@ const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
   
   export const PricesOfPassenger = () => {
     const { user, isAuthenticated } = useAuth0();
-  
-    // // Verifica si el usuario está autenticado
-    // if (!isAuthenticated) {
-    //   return <User/>
-    // }
-  
-  
-    
+
     const [data, setData] = useState([]);
-  
+    const [isLoading, setIsLoading] = useState(true); 
       const fetchData = async () => {
-
-
 
 const route = `${apiBaseUrl}PricesOneWay`
 const endpoint= user.sub
         const data = await queryGetMulti(route , endpoint);
+        if(!data){return}
         setData(data);
+        setIsLoading(false)
       };
 
       useEffect(() => {
         fetchData();
-      }, [[user.sub, data]]);
+      }, [user.sub]);
     
       // console.log("2",data);
 
 
-if (!data || data.length < 1) {
-  return <Text>No trips</Text>;
+      if (isLoading) {
+        return <Text>wait</Text>;
+      }
+if (data.length < 1 ) {
+  return <Text>no trip</Text>;
 }
     return (
       <>

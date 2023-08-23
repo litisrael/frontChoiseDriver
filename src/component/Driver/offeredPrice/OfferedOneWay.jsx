@@ -35,27 +35,38 @@ export const AvailableTripsTable = () => {
   
   const [trips, setTrips] = useState([]);
   const [formPrices, setFormPrices] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); 
+
   
 
 
 
-  useEffect(() => {
+ 
     const fetchData = async () => {
       const url = `${apiBaseUrl}GetAvailableOneWay`
       const tripsData = await getDataById(url,user.sub);
+      if (tripsData === null){ return }
       setTrips(tripsData);
       setFormPrices(new Array(tripsData.length).fill(0))
+      setIsLoading(false)
   
     };
 
+    useEffect(() => {
     fetchData();
-  }, [user.sub, trips]);
+  }, [user.sub]);
 
- 
-  if (!trips || trips.length < 1) {
-    return <Text>No trips</Text>;
-  }
+  if (isLoading  ) {
+    return <Text>wait</Text>;
 
+}
+if (trips.length < 1  ) { console.log("trips.length < 1 ");
+return <Text>no trips</Text>;
+}
+
+   
+
+  
   return (
     <>
       <Container size="25rem" my="-20px">

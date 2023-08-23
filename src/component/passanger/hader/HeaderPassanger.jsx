@@ -8,14 +8,18 @@ import {
   rem,
   ScrollArea,
 } from "@mantine/core";
-import { UserMenu } from "../UserMenu";
-import { User } from "../../../User";
-
+import { UserMenu } from "../../Menu/UserMenu";
+// import { HeaderDriver } from "./HeaderDriver";
+// import { User } from "../../../../context/user/User";
+import { FormOneWay } from "../FormPassenger/FormOneWay";
+import { PricesOfPassenger } from "../FormPassenger/PricesOfPassenger";
 import { useAuth0 } from "@auth0/auth0-react";
-import { TabsPassenger } from "../passanger/TabsPassenger";
-import { HamburgerPassenger } from "../passanger/HamburgerPassenger";
-import { TabsDriver } from "./TabsDriver";
-// import { DriverPages } from "../../pages/DriversPages";
+import { TabsPassenger } from "./TabsPassenger";
+import { HamburgerPassenger } from "./HamburgerPassenger";
+
+import { Pages } from "../../../pages/Pages";
+
+
 const useStyles = createStyles((theme) => ({
   header: {
     paddingTop: theme.spacing.sm,
@@ -93,32 +97,32 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function HeaderDriver() {
+export function HeaderPassenger() {
   const { classes, theme, cx } = useStyles();
 
   const { user, isAuthenticated } = useAuth0();
-  if (!isAuthenticated) {
-    return (
-      <Text>
-        Please log in to access the form. <User />{" "}
-      </Text>
-    );
-  }
+  // if (!isAuthenticated) {
+  //   return (
+  //     <Text>
+  //       Please log in to access the form. 
+  //       {/* <User />{" "} */}
+  //     </Text>
+  //   );
+  // }
 
   return (
     <div className={classes.header}>
-   
+    
         <Container className={classes.mainSection}>
           <Group position="apart">
-            {/* <Hamburger classes={classes} /> */}
+            <HamburgerPassenger classes={classes} />
             <UserMenu user={user} classes={classes} cx={cx} />
           </Group>
         </Container>
         <Container>
-          <TabsDriver  classes={classes} />
+          <TabsPassenger  classes={classes} />
         </Container>
-
-        {/* <DriverPages /> */}
+        {/* <PassengerPages /> */}
     </div>
   );
 }

@@ -8,18 +8,14 @@ import {
   rem,
   ScrollArea,
 } from "@mantine/core";
-import { UserMenu } from "../UserMenu";
-// import { HeaderDriver } from "./HeaderDriver";
-// import { User } from "../../../../context/user/User";
-import { FormOneWay } from "../../../passanger/FormOneWay";
-import { PricesOfPassenger } from "../../../passanger/PricesOfPassenger";
+import { UserMenu } from "../../Menu/UserMenu";
+import { User } from "../../User";
+
 import { useAuth0 } from "@auth0/auth0-react";
-import { TabsPassenger } from "./TabsPassenger";
-import { HamburgerPassenger } from "./HamburgerPassenger";
-
-import { Pages } from "../../../../pages/Pages";
-
-
+import { TabsPassenger } from "../../passanger/hader/TabsPassenger";
+import { HamburgerPassenger } from "../../passanger/hader/HamburgerPassenger";
+import { TabsDriver } from "./TabsDriver";
+// import { DriverPages } from "../../pages/DriversPages";
 const useStyles = createStyles((theme) => ({
   header: {
     paddingTop: theme.spacing.sm,
@@ -97,32 +93,32 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function HeaderPassenger() {
+export function HeaderDriver() {
   const { classes, theme, cx } = useStyles();
 
   const { user, isAuthenticated } = useAuth0();
   if (!isAuthenticated) {
     return (
       <Text>
-        Please log in to access the form. 
-        {/* <User />{" "} */}
+        Please log in to access the form. <User />{" "}
       </Text>
     );
   }
 
   return (
     <div className={classes.header}>
-    
+   
         <Container className={classes.mainSection}>
           <Group position="apart">
-            <HamburgerPassenger classes={classes} />
+            {/* <Hamburger classes={classes} /> */}
             <UserMenu user={user} classes={classes} cx={cx} />
           </Group>
         </Container>
         <Container>
-          <TabsPassenger  classes={classes} />
+          <TabsDriver  classes={classes} />
         </Container>
-        {/* <PassengerPages /> */}
+
+        {/* <DriverPages /> */}
     </div>
   );
 }

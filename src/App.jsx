@@ -5,7 +5,11 @@ import { BrowserRouter as Router,  } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import {LoadScriptApi  } from "./context/apis/LoadScript";
 import { Pages } from "./pages/Pages";
+import { PublicPages } from "./pages/PublicPages";
 import { ConditionalHeaderContainer } from "./component/principal/Conditional";
+
+
+
 const domain = import.meta.env.VITE_DOMAIN;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
@@ -22,20 +26,21 @@ export default function App() {
   <MantineProvider> 
   <LoadScriptApi>
 <Router>
-
+{/* <PublicPages /> */}
   
     <Auth0Provider
             domain={domain}
             clientId={clientId}
             authorizationParams={{ redirect_uri: redirectUri }}
             >
-    <ConditionalHeaderContainer />
-{/* <HeaderPassenger /> */}
-
+<ConditionalHeaderContainer />
  < Pages />
     </Auth0Provider>
+   
 
+    
             </Router>
+
     </LoadScriptApi>
   </MantineProvider>
     </div>
