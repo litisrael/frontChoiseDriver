@@ -18,6 +18,8 @@ import {
   Box,
   Paper,
   Grid,
+  Modal,
+  Alert
 } from "@mantine/core";
 
 import {
@@ -150,17 +152,16 @@ export function FormOneWay() {
     setDestinationLocation(place.geometry.location);
   };
 
-
-  const formData = {
-    ...FormPassenger.values,
-    ...formOneWay.values,
-    center,
-    directionResponse,
-    originLocation,
-    destinationLocation,
-    duration,
-    distance,
-  };
+if (showSuccessAlert){
+  return(
+    <Alert
+      color="green"
+      title="¡Form successfully submitted! You will soon start receiving prices from the drivers!"
+      onClose={() => setShowSuccessAlert(false)}
+      mt="md"
+    />
+)
+}
   return (
     <>
       <Grid grow>
@@ -189,29 +190,22 @@ export function FormOneWay() {
                   }
                 );
                 const responseData = await reservationRes.json();
-
+console.log(reservationRes);
 
           if (reservationRes.status === 200) {
             formOneWay.reset();
             FormPassenger.reset();
            setShowSuccessAlert(true);
-            setTimeout(() => {
+            // setTimeout(() => {
              
-              window.location.href = window.location.origin;
-            }, 3000); // Redirige después de 3 segundos (ajusta según tus necesidades)
+            //   window.location.href = window.location.origin;
+            // }, 3000); // Redirige después de 3 segundos (ajusta según tus necesidades)
           } else {
             console.error("The server responded with an error", responseData);
           }
         }}
       >
-{showSuccessAlert && (
-  <Alert
-    color="green"
-    title="¡Formulario enviado exitosamente!"
-    onClose={() => setShowSuccessAlert(false)}
-    mt="md"
-  />
-)}
+
 
             
             <TextInput
