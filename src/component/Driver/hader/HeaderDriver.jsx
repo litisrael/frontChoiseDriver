@@ -97,13 +97,13 @@ export function HeaderDriver() {
   const { classes, theme, cx } = useStyles();
 
   const { user, isAuthenticated } = useAuth0();
-  if (!isAuthenticated) {
-    return (
-      <Text>
-        Please log in to access the drivers page. <LoginToggle />{" "}
-      </Text>
-    );
-  }
+  // if (!isAuthenticated) {
+  //   return (
+  //     <Text>
+  //       Please log in to access the drivers page. <LoginToggle />{" "}
+  //     </Text>
+  //   );
+  // }
 
   return (
     <div className={classes.header}>

@@ -2,7 +2,8 @@
 import { useForm } from "@mantine/form";
 import { AutoCompleteInputAddress } from "../../../context/apis/AutocomletInputAdress";
 import { Maps } from "../../../context/apis/Maps";
-
+import { InputTime } from "../../kitComponent/InputTime";
+import { DateInput } from '@mantine/dates';
 import {
   findOrCreatePassengerAccount,
   createPassenger,
@@ -41,7 +42,6 @@ const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
 export function FormOneWay() {
   const { user, isAuthenticated } = useAuth0();
 
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   if (!isAuthenticated) {
     return (
@@ -50,6 +50,8 @@ export function FormOneWay() {
       </Text>
     );
   }
+  
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const FormPassenger = useForm({
     initialValues: {
@@ -162,6 +164,10 @@ if (showSuccessAlert){
     />
 )
 }
+const currentDate = new Date();
+const maxDate = new Date(currentDate);
+maxDate.setFullYear(currentDate.getFullYear() + 1);
+
   return (
     <>
       <Grid grow>
@@ -235,6 +241,8 @@ console.log(reservationRes);
             <NumberInput
               label="number of passengers"
               placeholder="numberof passengers"
+              max={100}
+              min={9}
               withAsterisk
               {...formOneWay.getInputProps("number_of_passengers")}
             />
@@ -258,14 +266,18 @@ console.log(reservationRes);
               }
               onPlaceChanged={handleDestinationPlaceChanged}
             />
-            <TextInput
+      
+            <DateInput
+            minDate={new Date()}
               label="departure_date"
               placeholder="departure_date"
+              
+      maxDate={maxDate}
               withAsterisk
               mt="md"
               {...formOneWay.getInputProps("departure_date")}
             />
-            <TextInput
+            <InputTime
               label="departure_hour"
               placeholder="departure_hour"
               withAsterisk

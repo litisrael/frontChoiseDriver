@@ -6,13 +6,20 @@ import {  AvailableTripsTable} from "../component/Driver/offeredPrice/OfferedOne
 import { FormAddCompany } from "../component/Driver/addCompany/FormAddCompany";
 import { GetDataDriver } from "../component/Driver/update/get1";
 import { MantineProvider, Container } from '@mantine/core';
+import { ExplainPassenger } from "../component/ExplainPassenger";
+
+import { ExplainDrivers } from "../component/ExplainDrivers";
 import { User } from "../component/User";
 export const Pages = () => {
 
     return (
       <Container >
       <Routes>
-        
+   
+      
+      <Route path="/drivers" element={<ExplainDrivers />}/>
+      <Route path="/passenger" element={<ExplainPassenger />} />
+      <Route path="/" element={<ExplainPassenger />} />
       <Route path="/login" element={<User />} />
         <Route path="/passenger/oneWay" element={<FormOneWay />} />
         <Route path="/passenger/pricesOfPassenger" element={<PricesOfPassenger />} />

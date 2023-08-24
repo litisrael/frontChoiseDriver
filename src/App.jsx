@@ -6,7 +6,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import {LoadScriptApi  } from "./context/apis/LoadScript";
 import { Pages } from "./pages/Pages";
 import { PublicPages } from "./pages/PublicPages";
-import { ConditionalHeaderContainer } from "./component/principal/Conditional";
+import { ConditionalHeaderContainer } from "./component/Conditional";
 
 
 
