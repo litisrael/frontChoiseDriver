@@ -1,5 +1,5 @@
 
-const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
+const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
 
 export const hoursArray = [ "HH:MM",
     '00:00', '00:15', '00:30', '00:45', '01:00', '01:15', '01:30', '01:45',
@@ -17,7 +17,24 @@ export const hoursArray = [ "HH:MM",
   ];
 
 
-
+  export const getCompanyData = async (userId) => {
+    const url = `${apiBaseUrl}Register/${userId}`;
+    
+    try {
+      const res = await fetch(url);
+      const responseData = await res.json();
+  
+      if (res.status === 200) {
+        return responseData.company;
+      } else {
+        console.error("The server responded with an error", responseData);
+        return null;
+      }
+    } catch (error) {
+      console.log("This is what went wrong:", error.message);
+      return null;
+    }
+  };
   export const queryGetMulti = async (route,param = '') => {
     try {
       const response = await fetch(

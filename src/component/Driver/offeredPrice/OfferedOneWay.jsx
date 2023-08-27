@@ -17,9 +17,9 @@ import { useForm } from "@mantine/form";
 import { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getDataById, postOfferPriceDriverOneWay} from "../../../data/data.js";
+import {LoginToggle  } from "../../loginToggle.jsx";
 
-
-const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
+const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
 
 // habria que limitar la posinilidad de enviar mas de una ves
 // o borrar una ves que enviaste el precio ya agregue una columna para verificar si ya hay
@@ -28,8 +28,8 @@ export const AvailableTripsTable = () => {
   const { user, isAuthenticated } = useAuth0();
 
   // Verifica si el usuario está autenticado
-  if (!isAuthenticated) {
-    return <div>Inicia sesión para acceder al formulario.</div>;
+  if (!isAuthenticated) { 
+    return <div>Log in to access the form. <LoginToggle /> </div>;
   }
 
   
@@ -46,7 +46,9 @@ export const AvailableTripsTable = () => {
     const fetchData = async () => {
       const url = `${apiBaseUrl}GetAvailableOneWay`
       const tripsData = await getDataById(url,user.sub);
-      if (tripsData === null){ return }
+      console.log("tripsData",tripsData);
+
+      if (tripsData === null){ return <Text>not found</Text>}
       setTrips(tripsData);
       setFormPrices(new Array(tripsData.length).fill(0))
       setIsLoading(false)
@@ -57,15 +59,17 @@ export const AvailableTripsTable = () => {
     fetchData();
   }, [user.sub]);
 
-  if (isLoading  ) {
-    return <Loader />;
+console.log("trips",trips);
 
-}
 if (trips.length < 1  ) { console.log("trips.length < 1 ");
 return <Text>no trips</Text>;
 }
 
    
+if (isLoading  ) {
+  return <Loader />;
+
+}
 
   
   return (

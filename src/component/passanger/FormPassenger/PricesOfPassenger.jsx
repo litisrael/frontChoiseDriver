@@ -22,7 +22,7 @@ import {
   // import { User } from "../../context/user/User";
   
   
-const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
+const apiBaseUrl = "http://localhost:4000/" ||import.meta.env.VITE_API_URL 
   // habria que limitar la posinilidad de enviar mas de una ves
   // o borrar una ves que enviaste el precio
   

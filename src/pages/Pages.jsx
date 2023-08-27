@@ -10,6 +10,9 @@ import { ExplainPassenger } from "../component/ExplainPassenger";
 
 import { ExplainDrivers } from "../component/ExplainDrivers";
 import { User } from "../component/User";
+import {  UpdateFormCompany} from "../component/Driver/update/Update";
+
+
 export const Pages = () => {
 
     return (
@@ -27,7 +30,7 @@ export const Pages = () => {
         <Route path="/drivers/addCompany" element={<FormAddCompany />} />
         
         <Route path="/drivers/offerPrice" element={< AvailableTripsTable />} />
-        <Route path="/drivers/updateCompany" element={< GetDataDriver />} />
+        <Route path="/drivers/updateCompany" element={< UpdateFormCompany />} />
       </Routes>
       </Container>
     );

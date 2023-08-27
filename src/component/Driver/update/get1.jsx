@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Button,Text } from "@mantine/core";
 import { useAuth0 } from "@auth0/auth0-react";
 // import { User } from "../../../context/user/User";
+import { getCompanyData } from "../../../data/data.js";
 
-
-const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
+const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
 
 export const GetDataDriver = () => {
   const { user, isAuthenticated } = useAuth0();
@@ -17,26 +17,14 @@ export const GetDataDriver = () => {
   </Text>
   }
 
-  const handleFetchData = async () => {
-    try {
-      // Construir la URL para la solicitud GET con el auth_id del usuario autenticado
-      const url = `${apiBaseUrl}Register/${user.sub}`;
-console.log(url);
-      const res = await fetch(url);
-      const responseData = await res.json();
 
-      if (res.status === 200) {
-        // Actualizar el estado companyData con los datos recibidos del backend
-        setCompanyData(responseData.company);
-        console.log("Success!", responseData);
-      } else {
-        console.error("The server responded with an error", responseData);
-      }
-    } catch (error) {
-      console.log("This is what went wrong:", error.message);
+  const handleFetchData = async () => {
+    const responseData = await getCompanyData(user.sub);
+    if (responseData) {
+      setCompanyData(responseData);
+      console.log("Success!", responseData);
     }
   };
-
   return (
     <>
       {/* Botón para realizar la solicitud GET */}

@@ -19,7 +19,7 @@ import { User } from "../../User";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
-const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
+const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
 console.log(apiBaseUrl);
 console.log(import.meta.env.VITE_API_URL);
 const days = [
