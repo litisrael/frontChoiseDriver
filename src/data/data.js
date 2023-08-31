@@ -25,7 +25,7 @@ export const hoursArray = [ "HH:MM",
       const responseData = await res.json();
   
       if (res.status === 200) {
-        return responseData.company;
+        return responseData;
       } else {
         console.error("The server responded with an error", responseData);
         return null;
@@ -35,6 +35,8 @@ export const hoursArray = [ "HH:MM",
       return null;
     }
   };
+
+  
   export const queryGetMulti = async (route,param = '') => {
     try {
       const response = await fetch(

@@ -3,7 +3,9 @@ import { Autocomplete } from "@react-google-maps/api";
 import { TextInput } from "@mantine/core";
 
 
-export const AutoCompleteInputAddress = ({ label, placeholder, onChange, onPlaceChanged,  }) => {
+export const AutoCompleteInputAddress = ({ label, placeholder, onChange, onPlaceChanged,
+  // formCompany 
+  }) => {
   const [searchResult, setSearchResult] = useState(null);
   const [formattedAddress, setFormattedAddress] = useState("");
 
@@ -42,6 +44,8 @@ console.log(place );
         placeholder={placeholder}
         value={formattedAddress}
         onChange={(event) => setFormattedAddress(event.target.value)}
+        // {...formCompany.getInputProps("address_company")}
+ 
       />
     </Autocomplete>
   );

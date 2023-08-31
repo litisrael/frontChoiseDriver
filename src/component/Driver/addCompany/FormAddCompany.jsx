@@ -64,10 +64,13 @@ export function FormAddCompany() {
       company_name: user.name,
       company_cell: user.phone_number,
       company_mail: user.email,
+      address_company:"",
       work_zone: null,
       radius: 0,
     },
   });
+
+  
   const formVehicle = useForm({
     initialValues: {
       vehicle: [
@@ -79,16 +82,19 @@ export function FormAddCompany() {
           company_id: "",
           shomer_shabat: null,
           is_available_work_multiple_days: null,
+          days: [...allDaysData],
+
         },
       ],
+      
     },
   });
 
-  const formDays = useForm({
-    initialValues: {
-      days: [...allDaysData],
-    },
-  });
+  // const formDays = useForm({
+  //   initialValues: {
+  //     days: [...allDaysData],
+  //   },
+  // });
 
   const calendarDisableTourist = useForm({
     initialValues: {
@@ -101,7 +107,7 @@ export function FormAddCompany() {
         component="form"
         onSubmit={async (e) => {
           e.preventDefault();
-
+console.log("formVehicle.values",formVehicle.values);
           try {
             const res = await fetch(`${apiBaseUrl}Register`, {
               method: "POST",
@@ -109,10 +115,11 @@ export function FormAddCompany() {
                 data: {
                   formCompany: formCompany.values,
                   formVehicle: formVehicle.values,
-                  formDays: formDays.values,
+                  // formDays: formDays.values,
                   calendarDisableTourist: calendarDisableTourist.values,
                 },
               }),
+              
               headers: {
                 "Content-Type": "application/json",
               },
@@ -123,7 +130,7 @@ export function FormAddCompany() {
             if (res.status === 200) {
               formCompany.reset(); // Resetea el formulario de la compañía
               formVehicle.reset(); // Resetea el formulario del vehículo
-              formDays.reset();
+              // formDays.reset();
               calendarDisableTourist.reset();
               console.log("Success!", responseData);
             } else {
@@ -141,7 +148,7 @@ export function FormAddCompany() {
        
             <Vehicule
               formVehicle={formVehicle}
-              formDays={formDays}
+              // formDays={formDays}
               calendarDisableTourist={calendarDisableTourist}
             />
              <Button fullWidth type="submit">

@@ -11,7 +11,7 @@ export const GetDataDriver = () => {
   const [companyData, setCompanyData] = useState(null);
 
   // Verifica si el usuario está autenticado
-  if (!isAuthenticated) {  <Text>
+  if (!user) {  <Text>
     Please log in to access the form. 
     {/* <User />{" "} */}
   </Text>

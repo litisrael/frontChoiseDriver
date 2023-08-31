@@ -7,7 +7,7 @@ import { FormAddCompany } from "../component/Driver/addCompany/FormAddCompany";
 import { GetDataDriver } from "../component/Driver/update/get1";
 import { MantineProvider, Container } from '@mantine/core';
 import { ExplainPassenger } from "../component/ExplainPassenger";
-
+// import { GetDataDriver } from "../component/Driver/update/get1";
 import { ExplainDrivers } from "../component/ExplainDrivers";
 import { User } from "../component/User";
 import {  UpdateFormCompany} from "../component/Driver/update/Update";

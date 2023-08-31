@@ -38,7 +38,7 @@ export function Calendar({ calendarDisableTourist }) {
           ))}
           <Button
             onClick={() =>
-              calendarDisableTourist.insertListItem(`calendarDisable`, {
+              calendarDisableTourist.insertListItem(`calendarDisable.${index}`, {
                 disable_from: null,
                 disable_until: null,
               })

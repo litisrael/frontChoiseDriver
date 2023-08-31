@@ -16,49 +16,83 @@ import {
 import { IconTrash } from "@tabler/icons-react";
 import { InputTime } from "../../kitComponent/InputTime";
 
-export function AllDays({ formDays }) {
+export function AllDays({ formVehicle, 
+  indexVehicle
+ }) {
+  console.log("formVehicle",formVehicle);
+
+
+  // const formVehicle: UseFormReturnType<{
+  //   vehicle: ({
+  //       number_of_seats: string;
+  //       mispar_rishuy: string;
+  //       build_date: string;
+  //       overtime_price: string;
+  //       company_id: string;
+  //       shomer_shabat: null;
+  //       is_available_work_multiple_days: null;
+  //       days?: undefined;
+  //   } | {
+  //       ...;
+  //   })[];
+
+  // const formDays: UseFormReturnType<{
+//    days:{ const allDaysData: {
+//     day: string;
+//     data: {
+//         unavailable_starting: null;
+//         unavailable_until: null;
+//         vehicle_id: string;
+//     }[];
+// }[]}
   return (
     <Accordion>
       <Accordion.Item value="customization">
         <Accordion.Control>calendar days week</Accordion.Control>
         <Accordion.Panel>
           <Flex wrap="wrap" justify="center" align="flex-start">
-            {formDays.values.days.map((item, index) => (
-              <Flex key={`${item}_${index}`}>
+
+            {formVehicle.values.vehicle[0].days.map((item, dayIndex) => (
+
+
+              <Flex key={`${indexVehicle}-${dayIndex}`}>
                 <Box>
                   <Text align="center">{item.day}</Text>
-
+                
                   {item.data.map((dataItem, dataIndex) => (
-                    <Flex key={dataItem.dataIndex} m="xs" direction="column">
+                    // key={dataItem.dataIndex}
+                    <Flex  key={`${indexVehicle}-${dayIndex}-${dataIndex}`} m="xs" direction="column">
+
                       <InputTime
                         label="disable from time"
-                        {...formDays.getInputProps(
-                          `days.${item}.data.${dataIndex}.unavailable_starting`
+                        {...formVehicle.getInputProps(
+                          `vehicle.${indexVehicle}.days.${dayIndex}.data.${dataIndex}.unavailable_starting`
+                        
                         )}
                       />
                       <InputTime
                         label="until time"
-                        {...formDays.getInputProps(
-                          `days.${item}.data.${dataIndex}.unavailable_until`
+                        {...formVehicle.getInputProps(
+                          `vehicle.${indexVehicle}.days.${dayIndex}.data.${dataIndex}.unavailable_until`
                         )}
                       />
-                      <Box justify="center" align="center">
-                        {/* <ActionIcon
+                      {/* <Box justify="center" align="center">
+                        <ActionIcon
                           color="red"
                           onClick={() =>
                            
-                              formDays.removeListItem(
-                                `days.${index}.data`,
-                                dataIndex 
+                              formVehicle.removeListItem(
+                                `vehicle.${indexVehicle}.days.${dayIndex}.data`,
+                                dataIndex
                             )
                           }
                         >
                           <IconTrash size="1rem" />
-                        </ActionIcon> */}
-                      </Box>
+                        </ActionIcon>
+                      </Box> */}
                       {/* <Button
                         onClick={() =>
-                          formDays.insertListItem(`days.${index}.data`, dataIndex,{
+                          formVehicle.insertListItem(`vehicle.${indexVehicle}.days.${dayIndex}.data`, dataIndex,{
                             unavailable_starting: "",
                             unavailable_until: "",
                           })

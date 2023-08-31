@@ -24,14 +24,14 @@ import { AutoCompleteInputAddress } from "../../../context/apis/AutocomletInputA
 import { Maps } from "../../../context/apis/Maps";
 import { Bottones } from "./Bottones";
 
-
-export function NewFormCompany({ formCompany, 
-  // initialRadius 
-})
- {
+export function NewFormCompany({
+  formCompany,
+  // initialRadius
+}) {
   const [radius, setRadius] = useState(0);
-  const [markerPosition, setMarkerPosition] = useState(null);
+  const [markerPosition, setMarkerPosition] = useState();
   const [mapCenter, setMapCenter] = useState();
+
   const circleOptions = {
     strokeColor: "#87CEFA", // Color celeste claro
     strokeOpacity: 0.8,
@@ -39,11 +39,8 @@ export function NewFormCompany({ formCompany,
     fillColor: "#87CEFA",
     fillOpacity: 0.35,
   };
-  
-
 
   const handleOriginPlaceChanged = (place) => {
-    
     if (place.geometry && place.geometry.location) {
       const markerPosition = place.geometry.location.toJSON();
       const geoJson = {
@@ -51,10 +48,10 @@ export function NewFormCompany({ formCompany,
         coordinates: [markerPosition.lat, markerPosition.lng], // Latitud (lat) primero, longitud (lng) después
       };
       formCompany.setFieldValue("work_zone", geoJson);
-
+      if (formCompany.values.address_company) {
+        setMarkerPosition(formCompany.values.address_company.coordinates)}
       setMarkerPosition(markerPosition);
       setMapCenter(markerPosition);
-  
     }
   };
   useEffect(() => {
@@ -66,9 +63,8 @@ export function NewFormCompany({ formCompany,
   }, [markerPosition]);
 
   const handleRadius = (radius) => {
-  
-      setRadius(radius);
-      formCompany.setFieldValue("radius", radius);
+    setRadius(radius);
+    formCompany.setFieldValue("radius", radius);
     
   };
 
@@ -77,11 +73,13 @@ export function NewFormCompany({ formCompany,
       <Grid.Col span={6}>
         <Maps center={mapCenter} markerPosition={markerPosition}>
           {markerPosition && <Marker position={markerPosition} />}
-          { markerPosition && <Circle
-                center={markerPosition}
-                radius={radius}
-                options={circleOptions}
-              />}
+          {markerPosition && (
+            <Circle
+              center={markerPosition}
+              radius={radius}
+              options={circleOptions}
+            />
+          )}
         </Maps>
       </Grid.Col>
       <Grid.Col span={6}>
@@ -108,15 +106,20 @@ export function NewFormCompany({ formCompany,
             {...formCompany.getInputProps("company_mail")}
           />
 
+        
           <AutoCompleteInputAddress
             label="choose work zone "
             placeholder="choose work zone"
             onPlaceChanged={handleOriginPlaceChanged}
             mt="md"
-            // {...formCompany.getInputProps("work_zone")}
+            // inputProps ={...formCompany.getInputProps("address_company")}
+            formCompany={formCompany}
           />
 
-          <Bottones value={radius} onChange={handleRadius}
+          <Bottones 
+          value={radius} 
+          formCompany={formCompany}  
+          onChange={handleRadius} 
           />
         </Box>
       </Grid.Col>

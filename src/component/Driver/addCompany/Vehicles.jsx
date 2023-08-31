@@ -16,12 +16,12 @@ import { IconTrash } from "@tabler/icons-react";
 import { Calendar } from "./calendar";
 import { AllDays } from "./AllDays";
 
-export function Vehicule({ formVehicle, formDays, calendarDisableTourist }) {
+export function Vehicule({ formVehicle, calendarDisableTourist }) {
   
   return (
     <Box mx="auto">
-      {formVehicle.values.vehicle.map((item, index) => (
-        <Box key={index} justify="center" align="center">
+      {formVehicle.values.vehicle.map((item, indexVehicle) => (
+        <Box key={indexVehicle} justify="center" align="center">
           <Flex
             mt="xs"
             direction="row"
@@ -35,7 +35,7 @@ export function Vehicule({ formVehicle, formDays, calendarDisableTourist }) {
               //  description=""
               placeholder="seats passenger in vehicle"
               withAsterisk
-              {...formVehicle.getInputProps(`vehicle.${index}.number_of_seats`)}
+              {...formVehicle.getInputProps(`vehicle.${indexVehicle}.number_of_seats`)}
             />
             <TextInput
               label="the vehicle registration number"
@@ -43,7 +43,7 @@ export function Vehicule({ formVehicle, formDays, calendarDisableTourist }) {
               placeholder="mispar_rishuy"
               withAsterisk
               // sx={{ flex: 1 }}
-              {...formVehicle.getInputProps(`vehicle.${index}.mispar_rishuy`)}
+              {...formVehicle.getInputProps(`vehicle.${indexVehicle}.mispar_rishuy`)}
             />
             <TextInput
               label="What is the year of the vehicle?"
@@ -51,7 +51,7 @@ export function Vehicule({ formVehicle, formDays, calendarDisableTourist }) {
               placeholder="build_date"
               withAsterisk
               // sx={{ flex: 1 }}
-              {...formVehicle.getInputProps(`vehicle.${index}.build_date`)}
+              {...formVehicle.getInputProps(`vehicle.${indexVehicle}.build_date`)}
             />
             <TextInput
               label="charge for additional waiting hour"
@@ -59,7 +59,7 @@ export function Vehicule({ formVehicle, formDays, calendarDisableTourist }) {
               placeholder="overtime price"
               // withAsterisk
               // sx={{ flex: 1 }}
-              {...formVehicle.getInputProps(`vehicle.${index}.overtime_price`)}
+              {...formVehicle.getInputProps(`vehicle.${indexVehicle}.overtime_price`)}
             />
             {/* <Switch
               label="Active"
@@ -85,13 +85,22 @@ export function Vehicule({ formVehicle, formDays, calendarDisableTourist }) {
             <Calendar calendarDisableTourist={calendarDisableTourist} />
           </Box>
           <Box align="center">
-            <AllDays formDays={formDays} />
+
+
+            
+          { formVehicle.values.vehicle[indexVehicle].days && (
+          <AllDays
+            formVehicle={formVehicle} 
+            indexVehicle={indexVehicle}
+          />
+        
+        )}
           </Box>
           <Button
             leftIcon={<IconTrash />}
             variant="outline"
             color="red"
-            onClick={() => formVehicle.removeListItem("vehicle", index)}
+            onClick={() => formVehicle.removeListItem("vehicle", indexVehicle)}
           >
             remove vehicle
           </Button>
