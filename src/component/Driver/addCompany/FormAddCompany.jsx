@@ -15,7 +15,7 @@ import { Maps } from "../../../context/apis/Maps";
 import { useForm } from "@mantine/form";
 import { NewFormCompany } from "./FormCompany.jsx";
 import { Vehicule } from "./Vehicles.jsx";
-import { User } from "../../User";
+import { LoginToggle } from "../../loginToggle";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -53,7 +53,7 @@ export function FormAddCompany() {
   if (!isAuthenticated) {
     return (
       <Text>
-        Please log in to access the form. <User />{" "}
+        Please log in to access the form. <LoginToggle />{" "}
       </Text>
     );
   }

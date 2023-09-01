@@ -21,30 +21,6 @@ export function AllDays({ formVehicle,
  }) {
   console.log("formVehicle",formVehicle);
 
-
-  // const formVehicle: UseFormReturnType<{
-  //   vehicle: ({
-  //       number_of_seats: string;
-  //       mispar_rishuy: string;
-  //       build_date: string;
-  //       overtime_price: string;
-  //       company_id: string;
-  //       shomer_shabat: null;
-  //       is_available_work_multiple_days: null;
-  //       days?: undefined;
-  //   } | {
-  //       ...;
-  //   })[];
-
-  // const formDays: UseFormReturnType<{
-//    days:{ const allDaysData: {
-//     day: string;
-//     data: {
-//         unavailable_starting: null;
-//         unavailable_until: null;
-//         vehicle_id: string;
-//     }[];
-// }[]}
   return (
     <Accordion>
       <Accordion.Item value="customization">
@@ -52,7 +28,9 @@ export function AllDays({ formVehicle,
         <Accordion.Panel>
           <Flex wrap="wrap" justify="center" align="flex-start">
 
-            {formVehicle.values.vehicle[0].days.map((item, dayIndex) => (
+            {formVehicle.values.vehicle.length > 0 && formVehicle.values.vehicle[0].days && 
+         
+            formVehicle.values.vehicle[0].days.map((item, dayIndex) => (
 
 
               <Flex key={`${indexVehicle}-${dayIndex}`}>
@@ -76,7 +54,7 @@ export function AllDays({ formVehicle,
                           `vehicle.${indexVehicle}.days.${dayIndex}.data.${dataIndex}.unavailable_until`
                         )}
                       />
-                      {/* <Box justify="center" align="center">
+                      <Box justify="center" align="center">
                         <ActionIcon
                           color="red"
                           onClick={() =>
@@ -89,8 +67,8 @@ export function AllDays({ formVehicle,
                         >
                           <IconTrash size="1rem" />
                         </ActionIcon>
-                      </Box> */}
-                      {/* <Button
+                      </Box>
+                      <Button
                         onClick={() =>
                           formVehicle.insertListItem(`vehicle.${indexVehicle}.days.${dayIndex}.data`, dataIndex,{
                             unavailable_starting: "",
@@ -99,7 +77,7 @@ export function AllDays({ formVehicle,
                         }
                       >
                         Add disable
-                      </Button> */}
+                      </Button>
                     </Flex>
                   ))}
                 </Box>

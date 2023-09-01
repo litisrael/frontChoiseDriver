@@ -9,7 +9,7 @@ import {
   ScrollArea,
 } from "@mantine/core";
 import { UserMenu } from "../../Menu/UserMenu";
-import { User } from "../../User";
+// import { User } from "../../User";
 import {LoginToggle  } from "../../loginToggle";
 import { useAuth0 } from "@auth0/auth0-react";
 import { TabsPassenger } from "../../passanger/hader/TabsPassenger";

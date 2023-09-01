@@ -15,7 +15,7 @@ import {
 import { useForm } from "@mantine/form";
 import { NewFormCompany } from "../addCompany/FormCompany";
 import { Vehicule } from "../addCompany/Vehicles";
-import { User } from "../../User";
+
 import {getCompanyData  } from "../../../data/data.js";
 
 import { useAuth0 } from "@auth0/auth0-react";
@@ -54,7 +54,7 @@ export function UpdateFormCompany() {
   if (!isAuthenticated) {
     return (
       <Text>
-        Please log in to access the form. <User />
+        Please log in to access the form. <LoginToggle />
       </Text>
     );
   }

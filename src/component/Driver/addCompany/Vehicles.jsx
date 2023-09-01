@@ -88,13 +88,12 @@ export function Vehicule({ formVehicle, calendarDisableTourist }) {
 
 
             
-          { formVehicle.values.vehicle[indexVehicle].days && (
+      
           <AllDays
             formVehicle={formVehicle} 
             indexVehicle={indexVehicle}
           />
-        
-        )}
+    
           </Box>
           <Button
             leftIcon={<IconTrash />}
