@@ -39,7 +39,7 @@ const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL
 
 // const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
 
-
+let responseData = null
 export function FormOneWay() {
   const { user, isAuthenticated } = useAuth0();
 
@@ -159,10 +159,15 @@ if (showSuccessAlert){
   return(
     <Alert
       color="green"
-      title="¡Form successfully submitted! You will soon start receiving prices from the drivers!"
+      title="¡Form successfully submitted! !"
       onClose={() => setShowSuccessAlert(false)}
       mt="md"
-    />
+    >    {responseData.DriversForOneWay === 'No drivers available' ? (
+      "I'm sorry, but we couldn't send your trip to any drivers at the moment."
+    ) : (
+      `Form successfully submitted! You will soon start receiving prices from the drivers! ${responseData.DriversForOneWay.length} driver(s) have been notified.
+      You will soon start receiving prices from the drivers`
+    )} </Alert>
 )
 }
 const currentDate = new Date();
@@ -196,8 +201,8 @@ maxDate.setFullYear(currentDate.getFullYear() + 1);
                     body: JSON.stringify(reservationData),
                   }
                 );
-                const responseData = await reservationRes.json();
-console.log(reservationRes);
+                 responseData = await reservationRes.json();
+console.log("responseData",responseData);
 
           if (reservationRes.status === 200) {
             formOneWay.reset();
