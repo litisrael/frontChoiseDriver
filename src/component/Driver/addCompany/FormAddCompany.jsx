@@ -37,8 +37,8 @@ const allDaysData = days.map((day) => {
     day,
     data: [
       {
-        unavailable_starting: null,
-        unavailable_until: null,
+        unavailable_starting: "00:00:01",
+        unavailable_until: "00:00:02",
         vehicle_id: "",
       },
     ],

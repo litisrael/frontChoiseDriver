@@ -28,10 +28,13 @@ export const AvailableTripsTable = () => {
   const { user, isAuthenticated } = useAuth0();
 
   // Verifica si el usuario está autenticado
-  if (!isAuthenticated) { 
-    return <div>Log in to access the form. <LoginToggle /> </div>;
+  if (!isAuthenticated) {
+    return (
+      <Text>
+        Please log in to access the form. <LoginToggle />
+      </Text>
+    );
   }
-
   
   
   const [trips, setTrips] = useState([]);
@@ -46,6 +49,7 @@ export const AvailableTripsTable = () => {
     const fetchData = async () => {
       const url = `${apiBaseUrl}GetAvailableOneWay`
       const tripsData = await getDataById(url,user.sub);
+      
       console.log("tripsData",tripsData);
 
       if (tripsData === null){ return <Text>not found</Text>}

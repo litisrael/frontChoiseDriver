@@ -19,7 +19,7 @@ import { InputTime } from "../../kitComponent/InputTime";
 export function AllDays({ formVehicle, 
   indexVehicle
  }) {
-  console.log("formVehicle",formVehicle);
+  // console.log("formVehicle",formVehicle);
 
   return (
     <Accordion>

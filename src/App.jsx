@@ -22,15 +22,15 @@ const redirectUri = window.location.href;
 
 export default function App() {
   return (
-    <div className="App">
+
       <MantineProvider>
         <LoadScriptApi>
-            {/* <PublicPages /> */}
+       
 
             <Auth0Provider
               domain={domain}
               clientId={clientId}
-              authorizationParams={{ redirect_uri: redirectUri }}
+              authorizationParams={{ redirect_uri: window.location.href }}
               >
               <Router>
               <ConditionalHeaderContainer />
@@ -39,6 +39,6 @@ export default function App() {
             </Auth0Provider>
         </LoadScriptApi>
       </MantineProvider>
-    </div>
+  
   );
 }
