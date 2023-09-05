@@ -3,32 +3,31 @@ import { Group, Flex, Code, Accordion, Box ,ActionIcon, Button} from "@mantine/c
 import { DateInput } from "@mantine/dates";
 
 import { IconTrash } from "@tabler/icons-react";
-export function Calendar({ calendarDisableTourist }) {
+export function Calendar({ formVehicle ,indexVehicle}) {
   // const [rangeValue, setRangeValue] = useState();
-
   return (
     <Accordion>
       <Accordion.Item value="customization">
         <Accordion.Control>calendar tourist disable</Accordion.Control>
         <Accordion.Panel>
-          {calendarDisableTourist.values.calendarDisable.map((item, index) => (
+          {  formVehicle.values.vehicle[0].calendarDisable.map((item, index) => (
             <Flex key={index} m="xs" direction="column">
               <DateInput
                 valueFormat="YYYY-MM-DD"
                 label="disable from day"
                 placeholder="disable from day"
-                {...calendarDisableTourist.getInputProps(`calendarDisable.${index}.disable_from`)}
+                {...formVehicle.getInputProps(`vehicle.${indexVehicle}.calendarDisable.${index}.disable_from`)}
               />
               <DateInput
                 valueFormat="YYYY-MM-DD"
                 label="disable until day"
                 placeholder="disable until day"
-                {...calendarDisableTourist.getInputProps(`calendarDisable.${index}.disable_until`)}
+                {...formVehicle.getInputProps(`vehicle.${indexVehicle}.calendarDisable.${index}disable_until`)}
               />
               <Box justify="center" align="center">
                 <ActionIcon
                   color="red"
-                  onClick={() => calendarDisableTourist.removeListItem(`calendarDisable`,index)}
+                  onClick={() => formVehicle.removeListItem(`vehicle.${indexVehicle}.calendarDisable`,index)}
                 >
                   <IconTrash size="1rem" />
                 </ActionIcon>
@@ -38,7 +37,7 @@ export function Calendar({ calendarDisableTourist }) {
           ))}
           <Button
             onClick={() =>
-              calendarDisableTourist.insertListItem(`calendarDisable.${index}`, {
+              formVehicle.insertListItem(`vehicle.${indexVehicle}.calendarDisable`, {
                 disable_from: null,
                 disable_until: null,
               })

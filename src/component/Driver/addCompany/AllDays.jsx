@@ -19,7 +19,8 @@ import { InputTime } from "../../kitComponent/InputTime";
 export function AllDays({ formVehicle, 
   indexVehicle
  }) {
-  // console.log("formVehicle",formVehicle);
+  console.log("fformVehicle.values.vehicle", formVehicle.values.vehicle);
+  
 
   return (
     <Accordion>
@@ -28,7 +29,8 @@ export function AllDays({ formVehicle,
         <Accordion.Panel>
           <Flex wrap="wrap" justify="center" align="flex-start">
 
-            {formVehicle.values.vehicle.length > 0 && formVehicle.values.vehicle[0].days && 
+            {
+            // formVehicle.values.vehicle.length > 0 && formVehicle.values.vehicle[0].days && 
          
             formVehicle.values.vehicle[0].days.map((item, dayIndex) => (
 
@@ -53,17 +55,20 @@ export function AllDays({ formVehicle,
                         {...formVehicle.getInputProps(
                           `vehicle.${indexVehicle}.days.${dayIndex}.data.${dataIndex}.unavailable_until`
                         )}
+                        
                       />
+                      
                       <Box justify="center" align="center">
                         <ActionIcon
                           color="red"
-                          onClick={() =>
-                           
+                          onClick={() =>{
+                           console.log("indexVehicle",indexVehicle)
                               formVehicle.removeListItem(
                                 `vehicle.${indexVehicle}.days.${dayIndex}.data`,
                                 dataIndex
                             )
                           }
+                        }
                         >
                           <IconTrash size="1rem" />
                         </ActionIcon>

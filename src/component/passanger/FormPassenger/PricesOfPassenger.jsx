@@ -42,7 +42,8 @@ const apiBaseUrl = "http://localhost:4000/" ||import.meta.env.VITE_API_URL
 const route = `${apiBaseUrl}PricesOneWay`
 const endpoint= user.sub
         const data = await queryGetMulti(route , endpoint);
-        if(!data){return}
+        console.log("data", data);
+      
         setData(data);
         setIsLoading(false)
       };

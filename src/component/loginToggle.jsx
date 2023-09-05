@@ -17,8 +17,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 
 export const LoginToggle = ({className}) => {
-    const [value, toggle] = useToggle(['login', 'logout']);
   const { logout, loginWithRedirect, isAuthenticated, isLoading, user } = useAuth0();
+    // const [value, toggle] = useToggle(isAuthenticated ? 'logout' : 'login')
   //  if (isLoading){ return <Loader size="lg" />;}
 
 
@@ -28,12 +28,14 @@ export const LoginToggle = ({className}) => {
 
   const handleToggleClick = (e) => {
     e.preventDefault()
-    toggle()
    
-    if (isAuthenticated) {
-      handleLogoutClick();
+   
+    if (!isAuthenticated) {
+      loginWithRedirect();
+      // toggle()
     } else {
-        loginWithRedirect();
+      handleLogoutClick();
+      // toggle()
     }
   };
   

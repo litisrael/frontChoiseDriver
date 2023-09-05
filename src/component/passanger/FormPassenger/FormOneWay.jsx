@@ -32,7 +32,8 @@ import {
 } from "@react-google-maps/api";
 import { useState, useRef, useMemo, useEffect } from "react";
 
-import { LoginToggle } from "../../loginToggle.jsx";
+import { LoginToggle } from "../../loginToggle";
+import { User } from "../../User";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 

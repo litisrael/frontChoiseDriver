@@ -83,7 +83,7 @@ export function FormAddCompany() {
           shomer_shabat: null,
           is_available_work_multiple_days: null,
           days: [...allDaysData],
-
+          calendarDisable: [{ disable_from: null, disable_until: null }]
         },
       ],
       
@@ -96,11 +96,11 @@ export function FormAddCompany() {
   //   },
   // });
 
-  const calendarDisableTourist = useForm({
-    initialValues: {
-      calendarDisable: [{ disable_from: null, disable_until: null }],
-    },
-  });
+  // const calendarDisableTourist = useForm({
+  //   initialValues: {
+  //     calendarDisable: [{ disable_from: null, disable_until: null }],
+  //   },
+  // });
 
   return (
       <Box
@@ -116,7 +116,7 @@ console.log("formVehicle.values",formVehicle.values);
                   formCompany: formCompany.values,
                   formVehicle: formVehicle.values,
                   // formDays: formDays.values,
-                  calendarDisableTourist: calendarDisableTourist.values,
+                  // calendarDisableTourist: calendarDisableTourist.values,
                 },
               }),
               
@@ -149,7 +149,7 @@ console.log("formVehicle.values",formVehicle.values);
             <Vehicule
               formVehicle={formVehicle}
               // formDays={formDays}
-              calendarDisableTourist={calendarDisableTourist}
+              // calendarDisableTourist={calendarDisableTourist}
             />
              <Button fullWidth type="submit">
               upload
