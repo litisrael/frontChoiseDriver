@@ -15,11 +15,10 @@ import {
 import { IconTrash } from "@tabler/icons-react";
 import { Calendar } from "./calendar";
 import { AllDays } from "./AllDays";
-
+import {allDaysData  } from "./FormAddCompany";
 export function Vehicule({ formVehicle }) {
   // use de variable to put in insertListItem
-  const allDaysData = formVehicle.values.vehicle[0].days;
-
+ 
   return (
     <Box mx="auto">
       {formVehicle.values.vehicle.map((item, indexVehicle) => (
@@ -98,14 +97,16 @@ export function Vehicule({ formVehicle }) {
           <Box align="center">
             <AllDays formVehicle={formVehicle} indexVehicle={indexVehicle} />
           </Box>
-          <Button
-            leftIcon={<IconTrash />}
-            variant="outline"
-            color="red"
-            onClick={() => formVehicle.removeListItem("vehicle", indexVehicle)}
-          >
-            remove vehicle
-          </Button>
+          {indexVehicle > 0 && (
+      <Button
+        leftIcon={<IconTrash />}
+        variant="outline"
+        color="red"
+        onClick={() => formVehicle.removeListItem("vehicle", indexVehicle)}
+      >
+        remove vehicle
+      </Button>
+    )}
         </Box>
       ))}
 

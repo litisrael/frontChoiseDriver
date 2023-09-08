@@ -1,11 +1,10 @@
-const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
 
 // const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
 
 export const updatePassenger = async (auth0Id, formValues) => {
     try {
       const updatedPassengerRes = await fetch(
-        `${apiBaseUrl}passenger/${auth0Id}`,
+        `${window.apiBaseUrl}passenger/${auth0Id}`,
         {
           method: "PUT",
           headers: {
@@ -29,7 +28,7 @@ export const updatePassenger = async (auth0Id, formValues) => {
 // Función para realizar la operación de creación (POST) del pasajero
 export const createPassenger = async (values) => {
  
-    const passengerResponse = await fetch(`${apiBaseUrl}passenger`, {
+    const passengerResponse = await fetch(`${window.apiBaseUrl}passenger`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,6 +36,7 @@ export const createPassenger = async (values) => {
       body: JSON.stringify(values),
     });
       const newPassengerData = await passengerResponse.json();
+console.log("newPassengerData.id",newPassengerData);
       return newPassengerData.id; // Devuelve el id del pasajero recién creado
 
      
@@ -63,7 +63,7 @@ export async function prepareReservationData(passengerData,formOneWay) {
     },
     // Resto de los datos de la reserva...
   };
-
+console.log("reservationData",reservationData);
   return reservationData;
 }
 
@@ -71,19 +71,22 @@ export async function findOrCreatePassengerAccount(FormPassenger, formOneWay) {
   try {
     
     const auth0Id = FormPassenger.values.auth_id;
-    console.log(auth0Id, "auth0Id");
 
-    const passengerRes = await fetch(`${apiBaseUrl}passenger/${auth0Id}`, {
+
+    const passengerRes = await fetch(`${window.apiBaseUrl}passenger/${auth0Id}`, {
       method: "GET",
     });
 
     if (!passengerRes.ok) {
       // Si no se encuentra el pasajero, crea uno nuevo
       const newPassengerId = await createPassenger(FormPassenger.values);
+
+      console.log( "newPassengerId",newPassengerId);
       const passengerData = {
         ...FormPassenger.values,
         id: newPassengerId,
       };
+      console.log("passengerData",passengerData);
       return await prepareReservationData(passengerData, formOneWay);
     } else {
       const passengerData = await passengerRes.json();

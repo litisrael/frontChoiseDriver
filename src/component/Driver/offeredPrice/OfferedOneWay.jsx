@@ -19,7 +19,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { getDataById, postOfferPriceDriverOneWay} from "../../../data/data.js";
 import {LoginToggle  } from "../../loginToggle.jsx";
 
-const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
+// const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
 
 // habria que limitar la posinilidad de enviar mas de una ves
 // o borrar una ves que enviaste el precio ya agregue una columna para verificar si ya hay
@@ -47,7 +47,7 @@ export const AvailableTripsTable = () => {
 
  
     const fetchData = async () => {
-      const url = `${apiBaseUrl}GetAvailableOneWay`
+      const url = `${window.apiBaseUrl}GetAvailableOneWay`
       const tripsData = await getDataById(url,user.sub);
       
       console.log("tripsData",tripsData);

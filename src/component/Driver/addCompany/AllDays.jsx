@@ -19,7 +19,6 @@ import { InputTime } from "../../kitComponent/InputTime";
 export function AllDays({ formVehicle, 
   indexVehicle
  }) {
-  console.log("fformVehicle.values.vehicle", formVehicle.values.vehicle);
   
 
   return (
@@ -30,9 +29,10 @@ export function AllDays({ formVehicle,
           <Flex wrap="wrap" justify="center" align="flex-start">
 
             {
-            // formVehicle.values.vehicle.length > 0 && formVehicle.values.vehicle[0].days && 
+            formVehicle.values.vehicle.length > 0 &&
+            //  formVehicle.values.vehicle[0].days && 
          
-            formVehicle.values.vehicle[0].days.map((item, dayIndex) => (
+            formVehicle.values.vehicle[indexVehicle].days.map((item, dayIndex) => (
 
 
               <Flex key={`${indexVehicle}-${dayIndex}`}>
@@ -75,7 +75,7 @@ export function AllDays({ formVehicle,
                       </Box>
                       <Button
                         onClick={() =>
-                          formVehicle.insertListItem(`vehicle.${indexVehicle}.days.${dayIndex}.data`, dataIndex,{
+                          formVehicle.insertListItem(`vehicle.${indexVehicle}.days.${dayIndex}.data`,{
                             unavailable_starting: "",
                             unavailable_until: "",
                           })

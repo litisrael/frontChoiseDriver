@@ -1,5 +1,5 @@
 
-const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
+// const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
 
 export const hoursArray = [ 
   "HH:MM",
@@ -19,7 +19,7 @@ export const hoursArray = [
 
 
   export const getCompanyData = async (userId) => {
-    const url = `${apiBaseUrl}Register/${userId}`;
+    const url = `${window.apiBaseUrl}Register/${userId}`;
     
     try {
       const res = await fetch(url);
@@ -55,7 +55,7 @@ export const hoursArray = [
   };
   export const getDataDriver = async (userId) => {
     try {
-      const response = await fetch( `${apiBaseUrl}Register/${userId}`)
+      const response = await fetch( `${window.apiBaseUrl}Register/${userId}`)
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -123,7 +123,7 @@ export const hoursArray = [
 
 export  const postOfferPriceDriverOneWay = async (id_one_way,company_id, company_name, driver_price,) => {
     try {
-      const res = await fetch(`${apiBaseUrl}responseoneway/${id_one_way}`, {
+      const res = await fetch(`${window.apiBaseUrl}responseoneway/${id_one_way}`, {
         method: "POST",
         body: JSON.stringify({
           // id_one_way,

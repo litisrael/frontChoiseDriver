@@ -4,7 +4,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 // import { User } from "../../../context/user/User";
 import { getCompanyData } from "../../../data/data.js";
 
-const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
 
 export const GetDataDriver = () => {
   const { user, isAuthenticated } = useAuth0();

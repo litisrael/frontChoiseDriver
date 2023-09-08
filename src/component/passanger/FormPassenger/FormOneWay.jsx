@@ -36,7 +36,6 @@ import { LoginToggle } from "../../loginToggle";
 import { User } from "../../User";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
 
 // const apiBaseUrl = import.meta.env.VITE_API_URL ||"http://localhost:4000/"
 
@@ -190,10 +189,11 @@ maxDate.setFullYear(currentDate.getFullYear() + 1);
 
              
                const reservationData = await findOrCreatePassengerAccount(FormPassenger, formOneWay);
-
-                const reservationRes = await fetch(
+console.log("res findOrCreatePassengerAccount de reservationData",reservationData);
+             
+const reservationRes = await fetch(
                   
-                  `${apiBaseUrl}reservationoneway`,
+                  `${window.apiBaseUrl}reservationoneway`,
                   {
                     method: "POST",
                     headers: {
@@ -203,7 +203,6 @@ maxDate.setFullYear(currentDate.getFullYear() + 1);
                   }
                 );
                  responseData = await reservationRes.json();
-console.log("responseData",responseData);
 
           if (reservationRes.status === 200) {
             formOneWay.reset();

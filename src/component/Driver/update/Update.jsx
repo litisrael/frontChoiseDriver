@@ -21,7 +21,6 @@ import {getCompanyData  } from "../../../data/data.js";
 import { useAuth0 } from "@auth0/auth0-react";
 import { LoginToggle } from "../../loginToggle";
 
-const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
 
 const days = [
   "Sunday",

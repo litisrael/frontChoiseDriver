@@ -22,7 +22,6 @@ import {
   // import { User } from "../../context/user/User";
   
   
-const apiBaseUrl = "http://localhost:4000/" ||import.meta.env.VITE_API_URL 
   // habria que limitar la posinilidad de enviar mas de una ves
   // o borrar una ves que enviaste el precio
   
@@ -39,10 +38,10 @@ const apiBaseUrl = "http://localhost:4000/" ||import.meta.env.VITE_API_URL
 
       const fetchData = async () => {
 
-const route = `${apiBaseUrl}PricesOneWay`
+const route = `${window.apiBaseUrl}PricesOneWay`
 const endpoint= user.sub
         const data = await queryGetMulti(route , endpoint);
-        console.log("data", data);
+    
       
         setData(data);
         setIsLoading(false)
@@ -58,7 +57,7 @@ const endpoint= user.sub
       if (isLoading) {
         return < Loader/>;
       }
-if (data.length < 1 ) {
+if (!data || data.length < 1 ) {
   return <Text>no trip</Text>;
 }
     return (

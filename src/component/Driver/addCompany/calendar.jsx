@@ -10,7 +10,7 @@ export function Calendar({ formVehicle ,indexVehicle}) {
       <Accordion.Item value="customization">
         <Accordion.Control>calendar tourist disable</Accordion.Control>
         <Accordion.Panel>
-          {  formVehicle.values.vehicle[0].calendarDisable.map((item, index) => (
+          {  formVehicle.values.vehicle[indexVehicle].calendarDisable.map((item, index) => (
             <Flex key={index} m="xs" direction="column">
               <DateInput
                 valueFormat="YYYY-MM-DD"
@@ -22,7 +22,7 @@ export function Calendar({ formVehicle ,indexVehicle}) {
                 valueFormat="YYYY-MM-DD"
                 label="disable until day"
                 placeholder="disable until day"
-                {...formVehicle.getInputProps(`vehicle.${indexVehicle}.calendarDisable.${index}disable_until`)}
+                {...formVehicle.getInputProps(`vehicle.${indexVehicle}.calendarDisable.${index}.disable_until`)}
               />
               <Box justify="center" align="center">
                 <ActionIcon

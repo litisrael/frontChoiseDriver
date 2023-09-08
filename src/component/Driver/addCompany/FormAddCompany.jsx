@@ -19,8 +19,6 @@ import { LoginToggle } from "../../loginToggle";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
-const apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL 
-console.log(apiBaseUrl);
 console.log(import.meta.env.VITE_API_URL);
 const days = [
   "Sunday",
@@ -32,7 +30,7 @@ const days = [
   "Saturday",
 ];
 
-const allDaysData = days.map((day) => {
+export const allDaysData = days.map((day) => {
   return {
     day,
     data: [
@@ -109,7 +107,7 @@ export function FormAddCompany() {
           e.preventDefault();
 console.log("formVehicle.values",formVehicle.values);
           try {
-            const res = await fetch(`${apiBaseUrl}Register`, {
+            const res = await fetch(`${window.apiBaseUrl}Register`, {
               method: "POST",
               body: JSON.stringify({
                 data: {
@@ -131,7 +129,7 @@ console.log("formVehicle.values",formVehicle.values);
               formCompany.reset(); // Resetea el formulario de la compañía
               formVehicle.reset(); // Resetea el formulario del vehículo
               // formDays.reset();
-              calendarDisableTourist.reset();
+              // calendarDisableTourist.reset();
               console.log("Success!", responseData);
             } else {
               console.error("The server responded with an error", responseData);
