@@ -15,7 +15,7 @@ import { Pages } from "./pages/Pages";
 // import { PublicPages } from "./pages/PublicPages";
 import { ConditionalHeaderContainer } from "./component/Conditional";
 
-window.apiBaseUrl = "http://localhost:4000/" || import.meta.env.VITE_API_URL;
+window.apiBaseUrl =  import.meta.env.VITE_API_URL || "http://localhost:4000/" 
 
 
 const domain = import.meta.env.VITE_DOMAIN;
