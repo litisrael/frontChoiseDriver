@@ -10,6 +10,7 @@ import {
   PasswordInput,
   Box,
   Code,
+  Alert
 } from "@mantine/core";
 import { Maps } from "../../../context/apis/Maps";
 import { useForm } from "@mantine/form";
@@ -19,6 +20,12 @@ import { LoginToggle } from "../../loginToggle";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
+
+
+
+
+
+// probando branch
 console.log(import.meta.env.VITE_API_URL);
 const days = [
   "Sunday",
@@ -56,6 +63,9 @@ export function FormAddCompany() {
     );
   }
   
+  
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
   const formCompany = useForm({
     initialValues: {
       auth_id: user.sub,
@@ -88,17 +98,16 @@ export function FormAddCompany() {
     },
   });
 
-  // const formDays = useForm({
-  //   initialValues: {
-  //     days: [...allDaysData],
-  //   },
-  // });
-
-  // const calendarDisableTourist = useForm({
-  //   initialValues: {
-  //     calendarDisable: [{ disable_from: null, disable_until: null }],
-  //   },
-  // });
+  if (showSuccessAlert){
+    return(
+      <Alert
+        color="green"
+        title="¡Form successfully submitted! !"
+        onClose={() => setShowSuccessAlert(false)}
+        mt="md"
+      >   </Alert>
+  )
+  }
 
   return (
       <Box
@@ -113,8 +122,6 @@ console.log("formVehicle.values",formVehicle.values);
                 data: {
                   formCompany: formCompany.values,
                   formVehicle: formVehicle.values,
-                  // formDays: formDays.values,
-                  // calendarDisableTourist: calendarDisableTourist.values,
                 },
               }),
               
@@ -128,8 +135,8 @@ console.log("formVehicle.values",formVehicle.values);
             if (res.status === 200) {
               formCompany.reset(); // Resetea el formulario de la compañía
               formVehicle.reset(); // Resetea el formulario del vehículo
-              // formDays.reset();
-              // calendarDisableTourist.reset();
+              
+            if(responseData) {setShowSuccessAlert(true);}
               console.log("Success!", responseData);
             } else {
               console.error("The server responded with an error", responseData);
